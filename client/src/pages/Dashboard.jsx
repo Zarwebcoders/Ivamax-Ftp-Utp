@@ -21,7 +21,7 @@ const SectionHeader = ({ title, icon: Icon }) => (
 );
 
 const DetailCard = ({ label, value, subValue, alert }) => (
-    <div className="bg-surface border border-gray-200 rounded-2xl p-2 flex flex-col justify-between hover:border-primary/50 transition-colors shadow-sm">
+    <div className="bg-surface border border-gray-200 rounded-2xl p-2 flex flex-col justify-between hover:border-primary/50 transition-colors shadow-lg">
         <div className="flex justify-between items-start mb-2">
             <span className="text-xs font-bold text-text-muted uppercase tracking-wider">{label}</span>
             {alert && <span className="text-xs text-red-500 font-bold bg-red-50 px-2 py-0.5 rounded-full animate-pulse">!</span>}
@@ -34,19 +34,19 @@ const DetailCard = ({ label, value, subValue, alert }) => (
 );
 
 const StatBox = ({ label, value, icon: Icon, color = "primary" }) => (
-    <div className="bg-surface border border-gray-400 p-3 rounded-2xl shadow-xl shadow-gray-400 hover:shadow-2xl hover:border-golden-400 transition-all flex items-center justify-between group">
+    <div className="bg-surface border border-gray-400 p-3 rounded-2xl shadow-lg shadow-gray-400 hover:shadow-2xl hover:border-golden-400 transition-all flex items-center justify-between group">
         <div>
             <p className="text-xs font-bold text-text-muted uppercase mb-1">{label}</p>
             <h3 className="text-2xl font-bold text-text-main">{value}</h3>
         </div>
-        <div className={`p-3 rounded-xl bg-${color}/10 text-${color} group-hover:scale-110 group-hover:bg-${color} group-hover:text-black transition-transform`}>
+        <div className={`p-3 rounded-xl bg-${color}/10 text-${color} group-hover:scale-110 group-hover:bg-${color} group-hover:text-white transition-transform`}>
             {Icon && <Icon className="w-6 h-6" />}
         </div>
     </div>
 );
 
 const WalletCard = ({ title, items, color = "primary" }) => (
-    <div className="bg-surface border border-gray-400 rounded-2xl p-3 shadow-xl shadow-gray-400 hover:shadow-2xl hover:border-golden-400 transition-all h-full">
+    <div className="bg-surface border border-gray-400 rounded-2xl p-3 shadow-lg shadow-gray-400 hover:shadow-2xl hover:border-golden-400 transition-all h-full">
         <div className="flex justify-between items-center mb-4 border-b border-gray-100 pb-3">
             <h3 className={`text-sm font-bold text-${color} uppercase`}>{title}</h3>
             <Wallet className="w-4 h-4 text-gray-400" />
@@ -64,7 +64,7 @@ const WalletCard = ({ title, items, color = "primary" }) => (
 );
 
 const PerformanceCard = ({ period, yieldVal, income, icon: Icon }) => (
-    <div className="bg-surface border border-gray-400 rounded-2xl p-3 shadow-xl shadow-gray-400 hover:shadow-2xl hover:border-golden-400 transition-all relative overflow-hidden group">
+    <div className="bg-surface border border-gray-400 rounded-2xl p-3 shadow-lg shadow-gray-400 hover:shadow-2xl hover:border-golden-400 transition-all relative overflow-hidden group">
         <div className="flex justify-between items-start mb-6">
             <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 rounded-full bg-green-500"></div>
@@ -128,7 +128,7 @@ const Dashboard = () => {
             {/* Row 1: Profile & Sponsor */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Profile Details */}
-                <div className="lg:col-span-2 bg-white border border-gray-400 rounded-3xl p-6 shadow-xl shadow-gray-400 hover:shadow-2xl transition-all duration-300 hover:shadow-golden-300 hover:border-golden-400">
+                <div className="lg:col-span-2 bg-white border border-gray-400 rounded-3xl p-6 shadow-lg shadow-gray-400 hover:shadow-2xl transition-all duration-300 hover:shadow-golden-300 hover:border-golden-400">
                     <SectionHeader title="Profile Details" icon={User} />
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <DetailCard label="Username" value={user?.username || "Update Profile"} alert={!user?.username} />
@@ -139,7 +139,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* Sponsor Info */}
-                <div className="bg-white border border-gray-400 rounded-3xl p-6 shadow-xl shadow-gray-400 bg-gradient-to-br from-gray-600 to-gray-600 text-white hover:shadow-2xl transition-all duration-300 hover:shadow-golden-300 hover:border-golden-400">
+                <div className="bg-white border border-gray-400 rounded-3xl p-6 shadow-lg shadow-gray-400 bg-gradient-to-br from-gray-600 to-gray-600 text-white hover:shadow-2xl transition-all duration-300 hover:shadow-golden-300 hover:border-golden-400">
                     <div className="flex items-center space-x-2 mb-6">
                         <Shield className="w-5 h-5 text-primary" />
                         <h2 className="text-xl font-bold text-white uppercase tracking-wide border-l-4 border-primary pl-3">
@@ -173,12 +173,12 @@ const Dashboard = () => {
             <div className="space-y-4">
                 <SectionHeader title="Team Overview" icon={Users} />
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <StatBox label="Direct Team" value={mockData.directTeam} icon={Users} color="secondary" />
-                    <StatBox label="Active Direct Team" value={mockData.activeDirectTeam} icon={UserCheck} color="secondary" />
-                    <StatBox label="Inactive Direct Team" value={mockData.inactiveDirectTeam} icon={UserX} color="secondary" />
-                    <StatBox label="Team Size" value={mockData.teamSize} icon={Users} color="secondary" />
-                    <StatBox label="Active Team Size" value={mockData.activeTeamSize} icon={UserCheck} color="secondary" />
-                    <StatBox label="Inactive Team Size" value={mockData.inactiveTeamSize} icon={UserX} color="secondary" />
+                    <StatBox label="Direct Team" value={mockData.directTeam} icon={Users} />
+                    <StatBox label="Active Direct Team" value={mockData.activeDirectTeam} icon={UserCheck} />
+                    <StatBox label="Inactive Direct Team" value={mockData.inactiveDirectTeam} icon={UserX} />
+                    <StatBox label="Team Size" value={mockData.teamSize} icon={Users} />
+                    <StatBox label="Active Team Size" value={mockData.activeTeamSize} icon={UserCheck} />
+                    <StatBox label="Inactive Team Size" value={mockData.inactiveTeamSize} icon={UserX} />
                 </div>
             </div>
 
@@ -238,15 +238,15 @@ const Dashboard = () => {
             <div className="space-y-4">
                 <SectionHeader title="Quick Actions" icon={Target} />
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Link to="/buy-imx" className="bg-primary hover:bg-primary/90 text-white font-bold py-4 px-6 rounded-xl shadow-xl shadow-gray-400 flex items-center justify-center space-x-2 transition-all active:scale-95">
+                    <Link to="/buy-imx" className="bg-primary hover:bg-primary/90 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-gray-400 flex items-center justify-center space-x-2 transition-all active:scale-95">
                         <ShoppingCart className="w-5 h-5" />
                         <span>BUY IMX</span>
                     </Link>
-                    <Link to="/profile" className="bg-white hover:bg-gray-50 border-2 border-primary text-primary font-bold py-4 px-6 rounded-xl shadow-xl shadow-gray-400 flex items-center justify-center space-x-2 transition-all active:scale-95">
+                    <Link to="/profile" className="bg-white hover:bg-gray-50 border-2 border-primary text-primary font-bold py-4 px-6 rounded-xl shadow-lg shadow-gray-400 flex items-center justify-center space-x-2 transition-all active:scale-95">
                         <User className="w-5 h-5" />
                         <span>PROFILE</span>
                     </Link>
-                    <Link to="/support" className="bg-accent hover:bg-accent/90 text-white font-bold py-4 px-6 rounded-xl shadow-xl shadow-gray-400 flex items-center justify-center space-x-2 transition-all active:scale-95">
+                    <Link to="/support" className="bg-accent hover:bg-accent/90 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-gray-400 flex items-center justify-center space-x-2 transition-all active:scale-95">
                         <Headphones className="w-5 h-5" />
                         <span>SUPPORT</span>
                     </Link>

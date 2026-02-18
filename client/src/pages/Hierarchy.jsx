@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Users, Award, DollarSign, Activity, ZoomIn, ZoomOut, User, Search, Filter, List, Network } from 'lucide-react';
 
 const StatCard = ({ title, value, subtext, icon: Icon }) => (
-    <div className="bg-surface border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all group">
+    <div className="bg-surface border border-gray-400 rounded-2xl p-4 shadow-lg shadow-gray-400 hover:shadow-lg transition-all group">
         <div className="flex justify-between items-start mb-2">
             <div>
                 <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">{title}</h3>
@@ -10,7 +10,7 @@ const StatCard = ({ title, value, subtext, icon: Icon }) => (
                 {subtext && <div className="text-xs font-bold text-primary mt-1">{subtext}</div>}
             </div>
             {Icon && (
-                <div className="p-3 bg-gray-50 rounded-xl text-gray-400 group-hover:text-primary group-hover:bg-primary/10 transition-colors">
+                <div className="p-3 bg-gray-50 rounded-xl text-gray-400 group-hover:text-white group-hover:bg-primary transition-colors">
                     <Icon className="w-5 h-5" />
                 </div>
             )}
@@ -48,8 +48,8 @@ const TreeView = ({ node }) => {
     return (
         <div className="flex flex-col items-center">
             {/* Node Card */}
-            <div className="bg-white border-2 border-primary/20 hover:border-primary rounded-xl p-3 w-40 shadow-sm hover:shadow-lg transition-all cursor-pointer flex flex-col items-center text-center z-10 relative">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white mb-2 shadow-md">
+            <div className="bg-white border-2 border-primary/30 hover:border-primary rounded-xl p-3 w-40 shadow-lg shadow-gray-400 hover:shadow-lg transition-all cursor-pointer flex flex-col items-center text-center z-10 relative">
+                <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white mb-2 shadow-lg">
                     <User className="w-5 h-5" />
                 </div>
                 <p className="text-xs font-bold text-gray-400 uppercase mb-0.5">{node.id}</p>
@@ -77,30 +77,25 @@ const TreeView = ({ node }) => {
             {/* Children Container */}
             {hasChildren && (
                 <div className="flex flex-col items-center">
-                    {/* Vertical Line Down from Parent */}
-                    <div className="w-px h-8 bg-gray-300"></div>
+                    {/* Vertical Line from Parent Card Down to Crossbar */}
+                    <div className="w-px h-8 bg-gray-400"></div>
 
-                    {/* Children Row */}
-                    <div className="flex items-start relative gap-8">
-                        {/* Horizontal Connector Line */}
-                        {node.children.length > 1 && (
-                            <div className="absolute top-0 left-0 right-0 h-px bg-gray-300 mx-20 mt-0"></div>
-                        )}
-
+                    {/* Children Row using Padding instead of Gap for continuous lines */}
+                    <div className="flex items-start justify-center">
                         {node.children.map((child, index) => (
-                            <div key={child.id} className="flex flex-col items-center relative">
-                                {/* Vertical Line Up to Parent Connector */}
-                                <div className={`w-px h-8 bg-gray-300 ${node.children.length === 1 ? 'hidden' : ''} absolute -top-8 left-1/2 -translate-x-1/2`}></div>
+                            <div key={child.id} className="flex flex-col items-center relative px-4">
+                                {/* Horizontal Line Left (from center to left edge) */}
+                                {index > 0 && (
+                                    <div className="absolute top-0 left-0 w-1/2 h-px bg-gray-400"></div>
+                                )}
 
-                                {/* Connector Top Bar Logic for sibling connection */}
-                                <div className={`absolute -top-8 left-0 w-1/2 h-px bg-gray-300 
-                                    ${index === 0 ? 'hidden' : ''} 
-                                    ${node.children.length === 1 ? 'hidden' : ''}
-                                `}></div>
-                                <div className={`absolute -top-8 right-0 w-1/2 h-px bg-gray-300 
-                                    ${index === node.children.length - 1 ? 'hidden' : ''}
-                                    ${node.children.length === 1 ? 'hidden' : ''}
-                                `}></div>
+                                {/* Horizontal Line Right (from center to right edge) */}
+                                {index < node.children.length - 1 && (
+                                    <div className="absolute top-0 right-0 w-1/2 h-px bg-gray-400"></div>
+                                )}
+
+                                {/* Vertical Line from Crossbar Down to Child Card */}
+                                <div className="w-px h-8 bg-gray-400"></div>
 
                                 <TreeView node={child} />
                             </div>
@@ -125,9 +120,9 @@ const Hierarchy = () => {
     return (
         <div className="space-y-8 pb-12">
             {/* Page Header */}
-            <div className="bg-surface border border-gray-200 rounded-3xl p-6 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="bg-surface border border-gray-400 rounded-3xl p-4 shadow-lg shadow-gray-400 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
+                    <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white">
                         <Users className="w-6 h-6" />
                     </div>
                     <div>
@@ -137,12 +132,12 @@ const Hierarchy = () => {
                 </div>
 
                 {/* View Switcher */}
-                <div className="flex bg-gray-100 p-1 rounded-xl">
+                <div className="flex bg-gray-300 p-1 rounded-xl">
                     <button
                         onClick={() => setViewMode('genealogy')}
                         className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-bold transition-all ${viewMode === 'genealogy'
-                                ? 'bg-white text-primary shadow-sm'
-                                : 'text-gray-500 hover:text-gray-700'
+                            ? 'bg-white text-primary shadow-lg'
+                            : 'text-gray-500 hover:text-gray-700'
                             }`}
                     >
                         <Network className="w-4 h-4" />
@@ -151,8 +146,8 @@ const Hierarchy = () => {
                     <button
                         onClick={() => setViewMode('list')}
                         className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-bold transition-all ${viewMode === 'list'
-                                ? 'bg-white text-primary shadow-sm'
-                                : 'text-gray-500 hover:text-gray-700'
+                            ? 'bg-white text-primary shadow-lg'
+                            : 'text-gray-500 hover:text-gray-700'
                             }`}
                     >
                         <List className="w-4 h-4" />
@@ -174,7 +169,7 @@ const Hierarchy = () => {
             {/* Genealogy Tree View */}
             {viewMode === 'genealogy' && (
                 <div className="space-y-6">
-                    <div className="bg-surface border border-gray-200 rounded-3xl p-6 shadow-sm h-[600px] flex flex-col relative overflow-hidden">
+                    <div className="bg-surface border border-gray-400 rounded-3xl p-4 shadow-lg shadow-gray-400 h-[600px] flex flex-col relative overflow-hidden">
                         <div className="flex justify-between items-center mb-6">
                             <div className="flex items-center space-x-2">
                                 <Users className="w-5 h-5 text-primary" />
@@ -183,16 +178,16 @@ const Hierarchy = () => {
                                 </h2>
                             </div>
                             <div className="flex space-x-2">
-                                <button onClick={() => setZoom(z => Math.max(0.2, z - 0.1))} className="p-2 bg-gray-100 rounded-lg hover:bg-gray-200 text-gray-600">
+                                <button onClick={() => setZoom(z => Math.max(0.2, z - 0.1))} className="p-2 bg-gray-300 rounded-lg hover:border-gray-400 hover:border-black border hover:text-black transition-all text-gray-600">
                                     <ZoomOut className="w-5 h-5" />
                                 </button>
-                                <button onClick={() => setZoom(z => Math.min(2, z + 0.1))} className="p-2 bg-gray-100 rounded-lg hover:bg-gray-200 text-gray-600">
+                                <button onClick={() => setZoom(z => Math.min(2, z + 0.1))} className="p-2 bg-gray-300 rounded-lg hover:border-gray-400 hover:border-black border hover:text-black transition-all text-gray-600">
                                     <ZoomIn className="w-5 h-5" />
                                 </button>
                             </div>
                         </div>
 
-                        <div className="flex-1 bg-gray-50 rounded-2xl border border-gray-100 overflow-auto relative cursor-grab active:cursor-grabbing">
+                        <div className="flex-1 bg-gray-300 rounded-2xl border border-gray-100 overflow-auto relative cursor-grab active:cursor-grabbing no-scrollbar">
                             <div className="min-w-max min-h-max p-20 flex justify-center origin-top-left transition-transform duration-200"
                                 style={{ transform: `scale(${zoom})`, transformOrigin: 'center top' }}>
                                 <TreeView node={treeData} />
@@ -201,7 +196,7 @@ const Hierarchy = () => {
                     </div>
 
                     {/* Rank Legend */}
-                    <div className="bg-surface border border-gray-200 rounded-3xl p-6 shadow-sm">
+                    <div className="bg-surface border border-gray-400 shadow-lg shadow-gray-400 rounded-2xl p-4">
                         <h3 className="text-sm font-bold text-primary uppercase mb-4 flex items-center">
                             <Award className="w-4 h-4 mr-2" />
                             Rank Legend
@@ -222,7 +217,7 @@ const Hierarchy = () => {
             {viewMode === 'list' && (
                 <div className="space-y-6">
                     {/* Search and Filter Section - Dark Theme */}
-                    <div className="bg-black rounded-3xl p-6 shadow-xl border border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div className="bg-black rounded-3xl p-4 shadow-lg shadow-gray-600 border border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
                         <div className="relative w-full md:w-96">
                             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
                             <input
@@ -236,7 +231,7 @@ const Hierarchy = () => {
 
                         <div className="flex items-center space-x-3 w-full md:w-auto">
                             <Filter className="text-primary w-5 h-5" />
-                            <span className="text-white font-bold text-xs uppercase">Status:</span>
+                            <span className="text-white font-bold text-xs uppercase">Status :</span>
                             <select
                                 className="bg-gray-900 border border-gray-700 text-white rounded-xl py-2 px-4 focus:outline-none focus:border-primary text-xs font-bold uppercase"
                                 value={statusFilter}
@@ -250,7 +245,7 @@ const Hierarchy = () => {
                     </div>
 
                     {/* Team Members Table - Dark Theme */}
-                    <div className="bg-black rounded-3xl border border-gray-800 overflow-hidden shadow-xl min-h-[400px]">
+                    <div className="bg-black rounded-3xl border border-gray-800 shadow-gray-600 overflow-hidden shadow-lg min-h-[400px]">
                         <div className="overflow-x-auto">
                             <table className="w-full">
                                 <thead>

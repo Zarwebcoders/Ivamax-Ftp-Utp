@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ShoppingCart, TrendingUp, RefreshCw, History } from 'lucide-react';
 
 const InfoCard = ({ title, value, subtext, highlight, icon: Icon }) => (
-    <div className="bg-surface border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all relative overflow-hidden group">
+    <div className="bg-surface border border-gray-400 rounded-2xl p-4 shadow-lg shadow-gray-400 hover:shadow-lg transition-all relative overflow-hidden group">
         <div className="flex justify-between items-start mb-4">
             <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider">{title}</h3>
             {Icon && (
@@ -28,7 +28,7 @@ const BuyIMX = () => {
         <div className="space-y-8 pb-12">
             {/* Header */}
             <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
+                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white">
                     <ShoppingCart className="w-6 h-6" />
                 </div>
                 <div>
@@ -75,9 +75,9 @@ const BuyIMX = () => {
 
             {/* Configuration Section */}
             <div className="max-w-3xl mx-auto w-full">
-                <div className="bg-black rounded-3xl p-8 shadow-xl border border-gray-800 relative overflow-hidden">
+                <div className="bg-black rounded-3xl p-8 shadow-lg shadow-gray-600 border border-gray-800 relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-8 opacity-10">
-                        <ShoppingCart className="w-32 h-32 text-primary" />
+                        <ShoppingCart className="w-32 h-32 text-white" />
                     </div>
 
                     <h2 className="text-center text-white font-bold uppercase tracking-widest mb-8">Configuration</h2>
@@ -112,7 +112,7 @@ const BuyIMX = () => {
             </div>
 
             {/* Purchase Records */}
-            <div className="bg-black rounded-3xl border border-gray-800 overflow-hidden shadow-xl">
+            <div className="bg-black rounded-3xl shadow-gray-600 border border-gray-800 overflow-hidden shadow-lg">
                 <div className="p-6 border-b border-gray-800 flex justify-between items-center">
                     <div className="flex items-center space-x-2">
                         <History className="w-5 h-5 text-primary" />
