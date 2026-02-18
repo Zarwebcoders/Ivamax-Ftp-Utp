@@ -1,89 +1,232 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuthStore } from '../store/useAuthStore';
-import { Mail, Phone, Shield, Copy, Check } from 'lucide-react';
+import {
+    User,
+    Mail,
+    Share2,
+    Copy,
+    Check,
+    Instagram,
+    Send,
+    MessageCircle,
+    Award,
+    Zap,
+    Trophy,
+    Activity,
+    Layers,
+    Users,
+    Wallet,
+    TrendingUp,
+    Shield,
+    Coins,
+    Star
+} from 'lucide-react';
 
 const Profile = () => {
     const user = useAuthStore((state) => state.user);
-    const [copied, setCopied] = React.useState(false);
+    const [copied, setCopied] = useState(false);
 
     const copyRef = () => {
-        navigator.clipboard.writeText(`https://ivamax.com/register?sponsor=${user?.userId}`);
+        if (!user?.userId) return;
+        navigator.clipboard.writeText(`https://app.ivamax.finance/?ref=${user.userId}`);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
 
     return (
-        <div className="space-y-6">
-            <div className="bg-white border border-gray-200 rounded-3xl p-8 shadow-sm">
-                <h2 className="text-2xl font-bold mb-8 text-text-main">Profile Settings</h2>
-
-                <div className="flex flex-col md:flex-row gap-8">
-                    {/* Avatar Section */}
-                    <div className="md:w-1/3 flex flex-col items-center p-6 bg-gray-50 rounded-3xl border border-gray-100">
-                        <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-5xl font-bold text-white mb-4 shadow-xl shadow-primary/20">
-                            {user?.name?.[0] || 'U'}
+        <div className="space-y-8 pb-12">
+            {/* Header */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                <div>
+                    <h1 className="text-3xl font-bold text-text-main uppercase tracking-tighter">Profile</h1>
+                    <div className="flex items-center gap-2 mt-2">
+                        <div className="px-3 py-1 bg-primary/10 rounded-full border border-primary/20">
+                            <span className="text-xs font-bold text-primary uppercase tracking-wider">
+                                {user?.rank || 'Member'}
+                            </span>
                         </div>
-                        <h3 className="text-2xl font-bold text-text-main">{user?.name}</h3>
-                        <span className="text-primary bg-primary/10 px-4 py-1.5 rounded-full text-sm font-bold mt-2 uppercase tracking-wide">
-                            {user?.rank || 'Member'}
-                        </span>
-                        <p className="text-text-muted mt-2 font-mono bg-white px-3 py-1 rounded-lg border border-gray-200">ID: {user?.userId}</p>
                     </div>
+                </div>
+                <div className="text-right">
+                    <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Joined Date</p>
+                    <p className="text-sm font-bold text-text-main">{new Date(user?.createdAt || Date.now()).toLocaleDateString()}</p>
+                </div>
+            </div>
 
-                    {/* Details Section */}
-                    <div className="md:w-2/3 space-y-6">
-                        <div className="bg-white border border-gray-200 rounded-2xl p-5 flex items-center shadow-sm hover:shadow-md transition-shadow">
-                            <div className="p-3 bg-blue-50 rounded-xl mr-4">
-                                <Mail className="w-6 h-6 text-blue-500" />
-                            </div>
-                            <div>
-                                <p className="text-xs text-text-muted font-bold uppercase tracking-wider mb-1">Email Address</p>
-                                <p className="text-text-main font-medium text-lg">{user?.email}</p>
-                            </div>
+            {/* Top Stats Row (Black Cards) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {/* IVAMAX/Captok */}
+                <div className="bg-black rounded-2xl p-5 border border-gray-800 shadow-xl flex flex-col justify-between relative overflow-hidden group">
+                    <div className="absolute right-0 top-0 w-24 h-24 bg-primary/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/20 transition-all"></div>
+                    <div className="flex justify-between items-start mb-4 relative z-10">
+                        <div className="p-2 bg-gray-900 rounded-lg text-primary">
+                            <Wallet className="w-5 h-5" />
                         </div>
+                    </div>
+                    <div className="relative z-10">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Captok Balance</p>
+                        <h3 className="text-xl font-bold text-white">0 USDT</h3>
+                    </div>
+                </div>
 
-                        <div className="bg-white border border-gray-200 rounded-2xl p-5 flex items-center shadow-sm hover:shadow-md transition-shadow">
-                            <div className="p-3 bg-green-50 rounded-xl mr-4">
-                                <Phone className="w-6 h-6 text-green-500" />
-                            </div>
-                            <div>
-                                <p className="text-xs text-text-muted font-bold uppercase tracking-wider mb-1">Mobile Number</p>
-                                <p className="text-text-main font-medium text-lg">{user?.mobile}</p>
-                            </div>
+                {/* Invested */}
+                <div className="bg-black rounded-2xl p-5 border border-gray-800 shadow-xl flex flex-col justify-between relative overflow-hidden group">
+                    <div className="absolute right-0 top-0 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/20 transition-all"></div>
+                    <div className="flex justify-between items-start mb-4 relative z-10">
+                        <div className="p-2 bg-gray-900 rounded-lg text-blue-400">
+                            <TrendingUp className="w-5 h-5" />
                         </div>
+                    </div>
+                    <div className="relative z-10">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Invested</p>
+                        <h3 className="text-xl font-bold text-white">0 USDT</h3>
+                    </div>
+                </div>
 
-                        <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border border-primary/20 rounded-2xl p-5 flex items-center justify-between">
-                            <div className="flex items-center">
-                                <div className="p-3 bg-white rounded-xl mr-4 shadow-sm">
-                                    <Shield className="w-6 h-6 text-primary" />
-                                </div>
-                                <div>
-                                    <p className="text-xs text-text-muted font-bold uppercase tracking-wider mb-1">Referral Link</p>
-                                    <p className="text-text-main font-medium text-sm truncate max-w-[250px] md:max-w-md">
-                                        https://ivamax.com/register?sponsor={user?.userId}
-                                    </p>
-                                </div>
-                            </div>
-                            <button
-                                onClick={copyRef}
-                                className="p-3 bg-white hover:bg-gray-50 rounded-xl transition-colors shadow-sm border border-gray-100"
-                                title="Copy Link"
-                            >
-                                {copied ? <Check className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5 text-primary" />}
-                            </button>
+                {/* Earned */}
+                <div className="bg-black rounded-2xl p-5 border border-gray-800 shadow-xl flex flex-col justify-between relative overflow-hidden group">
+                    <div className="absolute right-0 top-0 w-24 h-24 bg-green-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-green-500/20 transition-all"></div>
+                    <div className="flex justify-between items-start mb-4 relative z-10">
+                        <div className="p-2 bg-gray-900 rounded-lg text-green-400">
+                            <Coins className="w-5 h-5" />
                         </div>
+                    </div>
+                    <div className="relative z-10">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Earned</p>
+                        <h3 className="text-xl font-bold text-white">0.00 USDT</h3>
+                    </div>
+                </div>
+
+                {/* Network */}
+                <div className="bg-black rounded-2xl p-5 border border-gray-800 shadow-xl flex flex-col justify-between relative overflow-hidden group">
+                    <div className="absolute right-0 top-0 w-24 h-24 bg-purple-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-purple-500/20 transition-all"></div>
+                    <div className="flex justify-between items-start mb-4 relative z-10">
+                        <div className="p-2 bg-gray-900 rounded-lg text-purple-400">
+                            <Users className="w-5 h-5" />
+                        </div>
+                    </div>
+                    <div className="relative z-10">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Network</p>
+                        <h3 className="text-xl font-bold text-white">0 Members</h3>
                     </div>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-gray-50 border border-gray-200 rounded-3xl p-8 opacity-60 cursor-not-allowed">
-                    <h3 className="font-bold text-lg mb-2 text-text-main">Change Password</h3>
-                    <p className="text-sm text-text-muted">Security settings coming soon.</p>
+            {/* Income Overview */}
+            <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-primary"></div>
+                    <h3 className="text-sm font-bold text-text-main uppercase tracking-widest">Income Overview</h3>
                 </div>
-                <div className="bg-gray-50 border border-gray-200 rounded-3xl p-8 opacity-60 cursor-not-allowed">
-                    <h3 className="font-bold text-lg mb-2 text-text-main">KYC Verification</h3>
-                    <p className="text-sm text-text-muted">KYC modules coming soon.</p>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    {/* Intro Club */}
+                    <div className="bg-white border border-gray-200 p-4 rounded-2xl shadow-sm hover:border-primary/50 transition-colors">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">Intro Club</p>
+                        <h4 className="text-lg font-bold text-text-main">$0.00</h4>
+                    </div>
+                    {/* Start Royalty */}
+                    <div className="bg-white border border-gray-200 p-4 rounded-2xl shadow-sm hover:border-primary/50 transition-colors">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">Start Royalty</p>
+                        <h4 className="text-lg font-bold text-text-main">$0.00</h4>
+                    </div>
+                    {/* PayPer Royalty */}
+                    <div className="bg-white border border-gray-200 p-4 rounded-2xl shadow-sm hover:border-primary/50 transition-colors">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">PayPer Royalty</p>
+                        <h4 className="text-lg font-bold text-text-main">$0.00</h4>
+                    </div>
+                    {/* FTP Rewards */}
+                    <div className="bg-white border border-gray-200 p-4 rounded-2xl shadow-sm hover:border-primary/50 transition-colors">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">FTP Rewards</p>
+                        <h4 className="text-lg font-bold text-text-main">$0.00</h4>
+                    </div>
+                    {/* UTP Rewards */}
+                    <div className="bg-white border border-gray-200 p-4 rounded-2xl shadow-sm hover:border-primary/50 transition-colors">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">UTP Rewards</p>
+                        <h4 className="text-lg font-bold text-text-main">$0.00</h4>
+                    </div>
+                </div>
+            </div>
+
+            {/* Bottom Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Contact Settings */}
+                <div className="space-y-6">
+                    <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-primary"></div>
+                        <h3 className="text-sm font-bold text-text-main uppercase tracking-widest">Contact Settings</h3>
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-3xl p-8 shadow-xl space-y-6">
+                        <div>
+                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Username</label>
+                            <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 flex items-center gap-3">
+                                <User className="w-5 h-5 text-gray-400" />
+                                <span className="font-bold text-text-main">{user?.name || 'Enter Username'}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Registered Email</label>
+                            <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 flex items-center gap-3">
+                                <Mail className="w-5 h-5 text-gray-400" />
+                                <span className="font-bold text-text-main">{user?.email || 'Enter Email'}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Account User ID</label>
+                            <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 flex items-center gap-3">
+                                <Shield className="w-5 h-5 text-primary" />
+                                <span className="font-bold text-primary font-mono">{user?.userId || 'IVA...'}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Social Propagation */}
+                <div className="space-y-6">
+                    <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-primary"></div>
+                        <h3 className="text-sm font-bold text-text-main uppercase tracking-widest">Social Propagation</h3>
+                    </div>
+                    <div className="bg-black border border-gray-800 rounded-3xl p-8 shadow-xl relative overflow-hidden flex flex-col justify-between h-full">
+                        {/* Background Accent */}
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+
+                        <div className="relative z-10 space-y-6">
+                            <div>
+                                <h4 className="text-white font-bold uppercase mb-1 flex items-center gap-2">
+                                    <Share2 className="w-4 h-4 text-primary" />
+                                    Amplify Your Network Presence
+                                </h4>
+                                <p className="text-xs text-gray-500 uppercase">Share your unique access link to expand your hierarchy.</p>
+                            </div>
+
+                            <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 flex items-center justify-between group hover:border-primary/50 transition-colors">
+                                <div className="truncate text-gray-400 text-xs font-mono mr-4">
+                                    https://app.ivamax.finance/?ref={user?.userId || '...'}
+                                </div>
+                                <button
+                                    onClick={copyRef}
+                                    className="p-2 bg-black rounded-lg text-primary hover:bg-primary hover:text-white transition-all"
+                                >
+                                    {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                                </button>
+                            </div>
+
+                            <div className="grid grid-cols-3 gap-4 mt-8">
+                                <button className="bg-green-900/20 border border-green-900/50 hover:bg-green-900/40 p-4 rounded-xl flex flex-col items-center justify-center gap-2 transition-all group">
+                                    <MessageCircle className="w-6 h-6 text-green-500 group-hover:scale-110 transition-transform" />
+                                    <span className="text-[10px] font-bold text-green-500 uppercase tracking-wider">WhatsApp</span>
+                                </button>
+                                <button className="bg-blue-900/20 border border-blue-900/50 hover:bg-blue-900/40 p-4 rounded-xl flex flex-col items-center justify-center gap-2 transition-all group">
+                                    <Send className="w-6 h-6 text-blue-500 group-hover:scale-110 transition-transform" />
+                                    <span className="text-[10px] font-bold text-blue-500 uppercase tracking-wider">Telegram</span>
+                                </button>
+                                <button className="bg-pink-900/20 border border-pink-900/50 hover:bg-pink-900/40 p-4 rounded-xl flex flex-col items-center justify-center gap-2 transition-all group">
+                                    <Instagram className="w-6 h-6 text-pink-500 group-hover:scale-110 transition-transform" />
+                                    <span className="text-[10px] font-bold text-pink-500 uppercase tracking-wider">Instagram</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -32,10 +32,8 @@ const Layout = () => {
                 return { title: 'Withdraw', subtitle: 'Manage your withdrawals' };
             case '/wallet-statement':
                 return { title: 'Wallet Statement', subtitle: 'View your transaction history' };
-            case '/support':
-                return { title: 'Support', subtitle: 'Get help with your account' };
-            case '/marketing-material':
-                return { title: 'Marketing Material', subtitle: 'Promotional resources for your business' };
+            case '/company':
+                return { title: 'Company', subtitle: 'Manage your company information' };
             case '/profile':
                 return { title: 'Profile Settings', subtitle: 'Manage your account settings' };
             default:

@@ -1,26 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import {
-    LayoutDashboard,
-    User,
-    Wallet,
-    Users,
-    Coins,
-    TrendingUp,
-    LogOut,
-    FileText,
-    Headphones,
-    ChevronLeft,
-    ShoppingCart,
-    Network,
-    ArrowRightLeft,
-    Activity,
-    Award,
-
-    Banknote,
-    ScrollText,
-    Presentation
-} from 'lucide-react';
+import { LayoutDashboard, Wallet, Users, ArrowRightLeft, FileText, Activity, MessageSquare, User, Network, ShoppingCart, LogOut, ChevronLeft, ChevronRight, Share2, Headphones, Presentation, Award, Star, BadgeDollarSign, ScrollText, Building2, Banknote } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 import { cn } from '../utils/cn';
 
@@ -39,9 +19,8 @@ const Sidebar = () => {
         { name: 'Wallet', path: '/wallet', icon: Wallet },
         { name: 'All Rewards', path: '/all-rewards', icon: Award },
         { name: 'Withdraw', path: '/withdraw', icon: Banknote },
-        { name: 'Wallet Statement', path: '/wallet-statement', icon: ScrollText },
-        { name: 'Support', path: '/support', icon: Headphones },
-        { name: 'Marketing Material', path: '/marketing-material', icon: Presentation },
+        { name: 'Wallet Statements', path: '/wallet-statement', icon: ScrollText },
+        { name: 'Company', path: '/company', icon: Building2 },
         { name: 'Profile', path: '/profile', icon: User },
     ];
 

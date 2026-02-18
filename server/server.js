@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:5173', // Vite default port
+  origin: ['http://localhost:5173', 'https://ivamax-ftp-utp.vercel.app'],
   credentials: true
 }));
 app.use(cookieParser());

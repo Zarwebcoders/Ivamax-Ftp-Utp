@@ -8,7 +8,6 @@ import Profile from './pages/Profile';
 import Wallet from './pages/Wallet';
 import Network from './pages/Network';
 import Stake from './pages/Stake';
-import Support from './pages/Support';
 import BuyIMX from './pages/BuyIMX';
 import Hierarchy from './pages/Hierarchy';
 import AllRewards from './pages/AllRewards';
@@ -18,7 +17,7 @@ import UTP from './pages/UTP';
 
 import Withdraw from './pages/Withdraw';
 import WalletStatement from './pages/WalletStatement';
-import MarketingMaterial from './pages/MarketingMaterial';
+import Company from './pages/Company';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import UserManagement from './pages/admin/UserManagement';
 import DepositRequests from './pages/admin/DepositRequests';
@@ -53,7 +52,6 @@ function App() {
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/network" element={<Network />} />
           <Route path="/stake" element={<Stake />} />
-          <Route path="/support" element={<Support />} />
           <Route path="/buy-imx" element={<BuyIMX />} />
           <Route path="/hierarchy" element={<Hierarchy />} />
 
@@ -63,7 +61,7 @@ function App() {
           <Route path="/all-rewards" element={<AllRewards />} />
           <Route path="/withdraw" element={<Withdraw />} />
           <Route path="/wallet-statement" element={<WalletStatement />} />
-          <Route path="/marketing-material" element={<MarketingMaterial />} />
+          <Route path="/company" element={<Company />} />
 
           {/* Admin Routes */}
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
