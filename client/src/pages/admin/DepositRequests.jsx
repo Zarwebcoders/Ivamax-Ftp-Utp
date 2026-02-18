@@ -45,48 +45,50 @@ const DepositRequests = () => {
             <h1 className="text-2xl font-bold text-gray-800">Pending Deposits</h1>
 
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                <table className="w-full text-left">
-                    <thead className="bg-gray-50 border-b border-gray-100 text-gray-500 font-bold uppercase text-xs">
-                        <tr>
-                            <th className="px-6 py-4">User</th>
-                            <th className="px-6 py-4">Amount</th>
-                            <th className="px-6 py-4">Date</th>
-                            <th className="px-6 py-4">Status</th>
-                            <th className="px-6 py-4 text-right">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                        {deposits.map((tx) => (
-                            <tr key={tx._id} className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4">
-                                    <div className="font-bold text-gray-800">{tx.userId?.name}</div>
-                                    <div className="text-xs text-gray-500">{tx.userId?.userId}</div>
-                                </td>
-                                <td className="px-6 py-4 font-bold text-green-600">${tx.amount}</td>
-                                <td className="px-6 py-4 text-sm text-gray-500">{new Date(tx.createdAt).toLocaleDateString()}</td>
-                                <td className="px-6 py-4">
-                                    <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs font-bold">Pending</span>
-                                </td>
-                                <td className="px-6 py-4 text-right flex justify-end space-x-2">
-                                    <button
-                                        onClick={() => handleAction(tx._id, 'approve')}
-                                        disabled={loading}
-                                        className="bg-green-100 text-green-600 p-2 rounded-lg hover:bg-green-200"
-                                    >
-                                        <Check className="w-4 h-4" />
-                                    </button>
-                                    <button
-                                        onClick={() => handleAction(tx._id, 'reject')}
-                                        disabled={loading}
-                                        className="bg-red-100 text-red-600 p-2 rounded-lg hover:bg-red-200"
-                                    >
-                                        <X className="w-4 h-4" />
-                                    </button>
-                                </td>
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left">
+                        <thead className="bg-gray-50 border-b border-gray-100 text-gray-500 font-bold uppercase text-xs">
+                            <tr>
+                                <th className="px-6 py-4 white-space-nowrap">User</th>
+                                <th className="px-6 py-4 white-space-nowrap">Amount</th>
+                                <th className="px-6 py-4 white-space-nowrap">Date</th>
+                                <th className="px-6 py-4 white-space-nowrap">Status</th>
+                                <th className="px-6 py-4 text-right white-space-nowrap">Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody className="divide-y divide-gray-100">
+                            {deposits.map((tx) => (
+                                <tr key={tx._id} className="hover:bg-gray-50 transition-colors">
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <div className="font-bold text-gray-800">{tx.userId?.name}</div>
+                                        <div className="text-xs text-gray-500">{tx.userId?.userId}</div>
+                                    </td>
+                                    <td className="px-6 py-4 font-bold text-green-600 whitespace-nowrap">${tx.amount}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{new Date(tx.createdAt).toLocaleDateString()}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs font-bold">Pending</span>
+                                    </td>
+                                    <td className="px-6 py-4 text-right flex justify-end space-x-2 whitespace-nowrap">
+                                        <button
+                                            onClick={() => handleAction(tx._id, 'approve')}
+                                            disabled={loading}
+                                            className="bg-green-100 text-green-600 p-2 rounded-lg hover:bg-green-200"
+                                        >
+                                            <Check className="w-4 h-4" />
+                                        </button>
+                                        <button
+                                            onClick={() => handleAction(tx._id, 'reject')}
+                                            disabled={loading}
+                                            className="bg-red-100 text-red-600 p-2 rounded-lg hover:bg-red-200"
+                                        >
+                                            <X className="w-4 h-4" />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
                 {deposits.length === 0 && (
                     <div className="p-8 text-center text-gray-400">No pending deposits</div>
                 )}

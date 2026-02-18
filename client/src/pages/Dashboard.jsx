@@ -118,8 +118,8 @@ const Dashboard = () => {
     return (
         <div className="space-y-8 pb-12">
             {/* Header */}
-            <h1 className="text-2xl font-bold text-text-main flex items-center">
-                <span className="bg-primary text-white p-2 rounded-lg mr-3 shadow-lg shadow-primary/30">
+            <h1 className="text-2xl font-bold text-text-main flex flex-col md:flex-row md:items-center items-start gap-3 md:gap-0">
+                <span className="bg-primary text-white p-2 rounded-lg mr-3 shadow-lg shadow-primary/30 inline-flex">
                     <Award className="w-6 h-6" />
                 </span>
                 IVAMAX DASHBOARD

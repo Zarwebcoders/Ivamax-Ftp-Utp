@@ -32,7 +32,7 @@ const IntroductionClubContent = () => {
              */}
 
             <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
+                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white">
                     <Award className="w-6 h-6" />
                 </div>
                 <div>
@@ -41,10 +41,10 @@ const IntroductionClubContent = () => {
                 </div>
             </div>
 
-            <div className="bg-black rounded-3xl border border-gray-800 p-6 shadow-lg flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="bg-black rounded-3xl border border-gray-800 p-4 shadow-lg shadow-gray-600 flex flex-col md:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-3 w-full md:w-auto">
                     <Filter className="w-5 h-5 text-primary" />
-                    <span className="text-white font-bold uppercase text-xs tracking-wider whitespace-nowrap">Filter by Level:</span>
+                    <span className="text-white font-bold uppercase text-xs tracking-wider whitespace-nowrap">Filter by Level :</span>
                 </div>
 
                 <div className="relative w-full md:w-64">
@@ -63,8 +63,8 @@ const IntroductionClubContent = () => {
                 </div>
             </div>
 
-            <div className="bg-black rounded-3xl border border-gray-800 overflow-hidden shadow-lg">
-                <div className="p-6 border-b border-gray-800 flex items-center justify-between gap-4">
+            <div className="bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden shadow-lg">
+                <div className="p-4 border-b border-gray-800 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-2">
                         <Download className="w-4 h-4 text-primary" />
                         <h3 className="text-white font-bold uppercase text-sm tracking-wider">Reward History</h3>
@@ -103,18 +103,23 @@ const IntroductionClubContent = () => {
 const StarRoyaltyContent = () => {
     return (
         <div className="space-y-6">
-            <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
-                    <Award className="w-6 h-6" />
+            <div className="flex flex-col md:flex-row md:items-center gap-4 md:space-x-4">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white shrink-0">
+                        <Award className="w-6 h-6" />
+                    </div>
+                    <div className="md:hidden">
+                        <h1 className="text-xl font-bold text-text-main uppercase">Rank Rewards</h1>
+                    </div>
                 </div>
                 <div>
-                    <h1 className="text-2xl font-bold text-text-main uppercase">Rank Rewards</h1>
-                    <p className="text-sm font-bold text-text-muted uppercase">Monthly Rank Royalty Income Statement</p>
+                    <h1 className="hidden md:block text-2xl font-bold text-text-main uppercase">Rank Rewards</h1>
+                    <p className="text-xs md:text-sm font-bold text-text-muted uppercase">Monthly Rank Royalty Income Statement</p>
                 </div>
             </div>
 
-            <div className="bg-black rounded-3xl border border-gray-800 overflow-hidden shadow-lg">
-                <div className="p-6 border-b border-gray-800 flex items-center gap-3">
+            <div className="bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden shadow-lg">
+                <div className="p-4 border-b border-gray-800 flex items-center gap-3">
                     <Crown className="w-4 h-4 text-primary" />
                     <h3 className="text-white font-bold uppercase text-sm tracking-wider">Your Royalty Earnings</h3>
                 </div>
@@ -150,7 +155,7 @@ const PayPerRoyaltyContent = () => {
     return (
         <div className="space-y-6">
             <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
+                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white">
                     <BadgeDollarSign className="w-6 h-6" />
                 </div>
                 <div>
@@ -159,10 +164,10 @@ const PayPerRoyaltyContent = () => {
                 </div>
             </div>
 
-            <div className="bg-black rounded-3xl border border-gray-800 p-6 shadow-lg flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="bg-black rounded-3xl border border-gray-800 p-4 shadow-lg shadow-gray-600 flex flex-col md:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-3 w-full md:w-auto">
                     <Filter className="w-5 h-5 text-primary" />
-                    <span className="text-white font-bold uppercase text-xs tracking-wider whitespace-nowrap">Filter by Level:</span>
+                    <span className="text-white font-bold uppercase text-xs tracking-wider whitespace-nowrap">Filter by Level :</span>
                 </div>
 
                 <div className="relative w-full md:w-64">
@@ -181,8 +186,8 @@ const PayPerRoyaltyContent = () => {
                 </div>
             </div>
 
-            <div className="bg-black rounded-3xl border border-gray-800 overflow-hidden shadow-lg">
-                <div className="p-6 border-b border-gray-800 flex items-center gap-3">
+            <div className="bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden shadow-lg">
+                <div className="p-4 border-b border-gray-800 flex items-center gap-3">
                     <Download className="w-4 h-4 text-primary" />
                     <h3 className="text-white font-bold uppercase text-sm tracking-wider">Reward History</h3>
                 </div>
@@ -220,9 +225,9 @@ const AllRewards = () => {
     return (
         <div className="space-y-8 pb-12">
             {/* Top Navigation / Header Area */}
-            <div className="bg-surface border border-gray-200 rounded-3xl p-6 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="bg-surface border border-gray-400 shadow-lg shadow-gray-400 rounded-3xl p-4 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
+                    <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white">
                         <Trophy className="w-6 h-6" />
                     </div>
                     <div>
@@ -232,12 +237,12 @@ const AllRewards = () => {
                 </div>
 
                 {/* Tab Switcher */}
-                <div className="flex bg-gray-100 p-1 rounded-xl overflow-x-auto max-w-full">
+                <div className="flex bg-gray-300 p-1 rounded-xl overflow-x-auto max-w-full">
                     <button
                         onClick={() => setActiveTab('intro')}
                         className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-bold transition-all whitespace-nowrap ${activeTab === 'intro'
-                                ? 'bg-white text-primary shadow-sm'
-                                : 'text-gray-500 hover:text-gray-700'
+                            ? 'bg-white text-primary shadow-sm'
+                            : 'text-gray-500 hover:text-gray-700'
                             }`}
                     >
                         <Award className="w-4 h-4" />
@@ -246,8 +251,8 @@ const AllRewards = () => {
                     <button
                         onClick={() => setActiveTab('star')}
                         className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-bold transition-all whitespace-nowrap ${activeTab === 'star'
-                                ? 'bg-white text-primary shadow-sm'
-                                : 'text-gray-500 hover:text-gray-700'
+                            ? 'bg-white text-primary shadow-sm'
+                            : 'text-gray-500 hover:text-gray-700'
                             }`}
                     >
                         <Crown className="w-4 h-4" />
@@ -256,8 +261,8 @@ const AllRewards = () => {
                     <button
                         onClick={() => setActiveTab('payper')}
                         className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-bold transition-all whitespace-nowrap ${activeTab === 'payper'
-                                ? 'bg-white text-primary shadow-sm'
-                                : 'text-gray-500 hover:text-gray-700'
+                            ? 'bg-white text-primary shadow-sm'
+                            : 'text-gray-500 hover:text-gray-700'
                             }`}
                     >
                         <BadgeDollarSign className="w-4 h-4" />

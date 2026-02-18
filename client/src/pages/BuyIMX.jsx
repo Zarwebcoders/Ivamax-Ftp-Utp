@@ -27,13 +27,18 @@ const BuyIMX = () => {
     return (
         <div className="space-y-8 pb-12">
             {/* Header */}
-            <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white">
-                    <ShoppingCart className="w-6 h-6" />
+            <div className="flex flex-col md:flex-row md:items-center gap-4 md:space-x-4">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white shrink-0">
+                        <ShoppingCart className="w-6 h-6" />
+                    </div>
+                    <div className="md:hidden">
+                        <h1 className="text-xl font-bold text-text-main uppercase tracking-tight">PURCHASE CENTER</h1>
+                    </div>
                 </div>
                 <div>
-                    <h1 className="text-2xl font-bold text-text-main uppercase tracking-tight">PURCHASE CENTER</h1>
-                    <p className="text-sm font-bold text-text-muted uppercase tracking-wide">ACQUIRE IMX VIA SECURE GATEWAY</p>
+                    <h1 className="hidden md:block text-2xl font-bold text-text-main uppercase tracking-tight">PURCHASE CENTER</h1>
+                    <p className="text-xs md:text-sm font-bold text-text-muted uppercase tracking-wide">ACQUIRE IMX VIA SECURE GATEWAY</p>
                 </div>
             </div>
 

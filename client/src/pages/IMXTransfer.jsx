@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Wallet, History, ArrowRightLeft, CreditCard, Layers, Activity } from 'lucide-react';
 
 const WalletCard = ({ title, items, icon: Icon }) => (
-    <div className="bg-surface border border-gray-200 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
+    <div className="bg-surface border border-gray-400 rounded-3xl p-4 shadow-lg shadow-gray-400 hover:shadow-md transition-all group relative overflow-hidden">
         <div className="flex justify-between items-center mb-6 relative z-10">
             <h3 className="text-sm font-bold text-primary uppercase tracking-wider flex items-center gap-2">
                 {Icon && <Icon className="w-4 h-4" />}
                 {title}
             </h3>
-            <div className="p-2 bg-gray-50 rounded-lg text-gray-300 group-hover:text-primary transition-colors">
+            <div className="p-2 bg-gray-50 rounded-lg text-gray-400 group-hover:text-primary transition-colors">
                 <Wallet className="w-4 h-4" />
             </div>
         </div>
@@ -29,21 +29,21 @@ const WalletCard = ({ title, items, icon: Icon }) => (
 );
 
 const HistorySection = ({ title, activeTab, onTabChange }) => (
-    <div className="bg-black rounded-3xl border border-gray-800 overflow-hidden shadow-lg">
-        <div className="p-6 border-b border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div className="bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden">
+        <div className="p-4 border-b border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
             <h3 className="text-white font-bold uppercase text-sm tracking-wider flex items-center gap-2">
                 {title}
             </h3>
             <div className="flex gap-2">
                 <button
                     onClick={() => onTabChange('FTP')}
-                    className={`px-4 py-2 rounded-lg text-xs font-bold uppercase transition-all ${activeTab === 'FTP' ? 'bg-primary text-black' : 'bg-gray-900 text-gray-400 hover:bg-gray-800'}`}
+                    className={`px-4 py-2 rounded-lg text-xs font-bold uppercase transition-all ${activeTab === 'FTP' ? 'bg-primary text-black' : 'bg-gray-700 text-gray-400 hover:bg-gray-800'}`}
                 >
                     FTP {title.split(' ')[0]}
                 </button>
                 <button
                     onClick={() => onTabChange('UTP')}
-                    className={`px-4 py-2 rounded-lg text-xs font-bold uppercase transition-all ${activeTab === 'UTP' ? 'bg-secondary text-white' : 'bg-gray-900 text-gray-400 hover:bg-gray-800'}`}
+                    className={`px-4 py-2 rounded-lg text-xs font-bold uppercase transition-all ${activeTab === 'UTP' ? 'bg-secondary text-white' : 'bg-gray-700 text-gray-400 hover:bg-gray-800'}`}
                 >
                     UTP {title.split(' ')[0]}
                 </button>
@@ -62,13 +62,18 @@ const IMXTransfer = () => {
     return (
         <div className="space-y-8 pb-12">
             {/* Page Header */}
-            <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
-                    <Wallet className="w-6 h-6" />
+            <div className="flex flex-col md:flex-row md:items-center gap-4 md:space-x-4">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white shrink-0">
+                        <Wallet className="w-6 h-6" />
+                    </div>
+                    <div className="md:hidden">
+                        <h1 className="text-xl font-bold text-text-main uppercase">Reward Center</h1>
+                    </div>
                 </div>
                 <div>
-                    <h1 className="text-2xl font-bold text-text-main uppercase">Reward Center</h1>
-                    <p className="text-sm font-bold text-text-muted uppercase">Manage Assets & Transfers</p>
+                    <h1 className="hidden md:block text-2xl font-bold text-text-main uppercase">Reward Center</h1>
+                    <p className="text-xs md:text-sm font-bold text-text-muted uppercase">Manage Assets & Transfers</p>
                 </div>
             </div>
 

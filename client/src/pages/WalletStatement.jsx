@@ -9,7 +9,7 @@ const WalletStatement = () => {
     return (
         <div className="space-y-6 pb-12">
             {/* Header Section */}
-            <header className="bg-black rounded-3xl p-6 shadow-xl border border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden">
+            <header className="bg-black rounded-3xl p-4 shadow-xl border border-gray-800 shadow-gray-400 flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden">
                 {/* Background Decoration */}
                 <div className="absolute top-0 left-0 w-64 h-64 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl pointer-events-none"></div>
 
@@ -44,7 +44,7 @@ const WalletStatement = () => {
             </header>
 
             {/* Main Content - Empty State */}
-            <div className="bg-white rounded-3xl border border-gray-200 shadow-xl shadow-gray-200/50 min-h-[500px] flex flex-col items-center justify-center p-8 relative overflow-hidden">
+            <div className="bg-white rounded-3xl border border-gray-400 shadow-xl shadow-gray-400 min-h-[500px] flex flex-col items-center justify-center p-8 relative overflow-hidden">
                 <div className="text-center space-y-6 z-10">
                     <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mx-auto border-4 border-gray-100 shadow-inner">
                         <Search className="w-10 h-10 text-gray-300" />

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Package, History, DollarSign, Activity, TrendingUp, Layers } from 'lucide-react';
 
 const BalanceCard = ({ title, imxValue, usdValue, code }) => (
-    <div className="bg-surface border border-gray-200 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
+    <div className="bg-surface border border-gray-400 rounded-3xl p-6 shadow-lg shadow-gray-600 hover:shadow-md transition-all group relative overflow-hidden">
         <div className="flex justify-between items-start mb-4 relative z-10">
             <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider">{title}</h3>
             <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold border ${code === 'C' ? 'bg-primary/10 text-primary border-primary/20' : 'bg-secondary/10 text-secondary border-secondary/20'}`}>
@@ -25,7 +25,7 @@ const BalanceCard = ({ title, imxValue, usdValue, code }) => (
 );
 
 const HistoryTable = ({ title, subtitle, columns, data = [], emptyMessage, icon: Icon }) => (
-    <div className="bg-black rounded-3xl border border-gray-800 overflow-hidden shadow-lg">
+    <div className="bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden">
         <div className="p-6 border-b border-gray-800 flex items-center gap-3">
             {Icon && <div className="p-2 bg-gray-900 rounded-lg text-primary"><Icon className="w-4 h-4" /></div>}
             <div>
@@ -78,13 +78,18 @@ const UTP = () => {
     return (
         <div className="space-y-8 pb-12">
             {/* Page Header */}
-            <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
-                    <Package className="w-6 h-6" />
+            <div className="flex flex-col md:flex-row md:items-center gap-4 md:space-x-4">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white shrink-0">
+                        <Package className="w-6 h-6" />
+                    </div>
+                    <div className="md:hidden">
+                        <h1 className="text-xl font-bold text-text-main uppercase">United Tenure Package</h1>
+                    </div>
                 </div>
                 <div>
-                    <h1 className="text-2xl font-bold text-text-main uppercase">United Tenure Package</h1>
-                    <p className="text-sm font-bold text-text-muted uppercase">Asset Performance & Reward Distributions</p>
+                    <h1 className="hidden md:block text-2xl font-bold text-text-main uppercase">United Tenure Package</h1>
+                    <p className="text-xs md:text-sm font-bold text-text-muted uppercase">Asset Performance & Reward Distributions</p>
                 </div>
             </div>
 
@@ -95,12 +100,12 @@ const UTP = () => {
             </div>
 
             {/* Create Investment (Unit Plan) */}
-            <div className="bg-black rounded-3xl border border-gray-800 p-8 shadow-xl">
+            <div className="bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 p-8">
                 <h2 className="text-white font-bold uppercase text-center mb-8 tracking-widest text-sm">Invest in Unit Plan</h2>
 
                 <div className="space-y-6">
                     <div className="flex justify-between items-center text-xs font-bold uppercase">
-                        <span className="text-white bg-gray-800 px-3 py-1 rounded">Available:</span>
+                        <span className="text-white bg-gray-700 px-3 py-1 rounded">Available :</span>
                         <span className="text-primary">0.0000 IMX = $0.00</span>
                     </div>
 

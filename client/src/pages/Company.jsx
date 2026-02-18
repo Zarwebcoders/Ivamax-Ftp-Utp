@@ -57,13 +57,18 @@ const SupportContent = () => {
     return (
         <div className="space-y-8 pb-12">
             {/* Header */}
-            <header className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
-                    <ShieldCheck className="w-6 h-6" />
+            <header className="flex flex-col md:flex-row md:items-center gap-4 md:space-x-4">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary shrink-0">
+                        <ShieldCheck className="w-6 h-6" />
+                    </div>
+                    <div className="md:hidden">
+                        <h1 className="text-xl font-bold text-text-main uppercase">Support Terminal</h1>
+                    </div>
                 </div>
                 <div>
-                    <h1 className="text-2xl font-bold text-text-main uppercase">Support Terminal</h1>
-                    <p className="text-sm font-bold text-text-muted uppercase">Protocol Assistance and Technical Resolution Center</p>
+                    <h1 className="hidden md:block text-2xl font-bold text-text-main uppercase">Support Terminal</h1>
+                    <p className="text-xs md:text-sm font-bold text-text-muted uppercase">Protocol Assistance and Technical Resolution Center</p>
                 </div>
             </header>
 
@@ -282,13 +287,18 @@ const MarketingContent = () => {
     return (
         <div className="space-y-8 pb-12">
             {/* Header */}
-            <header className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
-                    <Library className="w-6 h-6" />
+            <header className="flex flex-col md:flex-row md:items-center gap-4 md:space-x-4">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary shrink-0">
+                        <Library className="w-6 h-6" />
+                    </div>
+                    <div className="md:hidden">
+                        <h1 className="text-xl font-bold text-text-main uppercase">Resource Center</h1>
+                    </div>
                 </div>
                 <div>
-                    <h1 className="text-2xl font-bold text-text-main uppercase">Resource Center</h1>
-                    <p className="text-sm font-bold text-text-muted uppercase">Official Marketing Materials & Documentation</p>
+                    <h1 className="hidden md:block text-2xl font-bold text-text-main uppercase">Resource Center</h1>
+                    <p className="text-xs md:text-sm font-bold text-text-muted uppercase">Official Marketing Materials & Documentation</p>
                 </div>
             </header>
 

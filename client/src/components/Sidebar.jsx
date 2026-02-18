@@ -4,7 +4,7 @@ import { LayoutDashboard, Wallet, Users, ArrowRightLeft, FileText, Activity, Mes
 import { useAuthStore } from '../store/useAuthStore';
 import { cn } from '../utils/cn';
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
     const logout = useAuthStore((state) => state.logout);
 
     const user = useAuthStore((state) => state.user);
@@ -32,8 +32,11 @@ const Sidebar = () => {
     ];
 
     return (
-        <aside className="w-64 bg-white border-r border-gray-400 h-screen flex flex-col fixed left-0 top-0 zs-50 shadow-xl shadow-gray-600">
-            <div className="p-3 flex items-center justify-between flex-shrink-0">
+        <aside className={cn(
+            "fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-400 shadow-xl shadow-gray-600 transform transition-transform duration-300 ease-in-out lg:translate-x-0 flex flex-col",
+            isOpen ? "translate-x-0" : "-translate-x-full"
+        )}>
+            <div className="p-3 flex items-center justify-between flex-shrink-0 h-16 md:h-auto">
                 <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center text-primary font-bold text-xl">
                         IV
@@ -42,8 +45,12 @@ const Sidebar = () => {
                         IVAMAX
                     </h1>
                 </div>
-                <button className="p-1 rounded-full hover:bg-gray-100 text-gray-400">
-                    <ChevronLeft className="w-5 h-5" />
+                {/* Mobile Close Button */}
+                <button
+                    onClick={onClose}
+                    className="p-1 rounded-full hover:bg-gray-100 text-gray-400 lg:hidden"
+                >
+                    <ChevronLeft className="w-6 h-6" />
                 </button>
             </div>
 
@@ -52,6 +59,7 @@ const Sidebar = () => {
                     <NavLink
                         key={item.path}
                         to={item.path}
+                        onClick={() => onClose && onClose()} // Close on mobile navigation
                         className={({ isActive }) =>
                             cn(
                                 "flex items-center space-x-3 px-4 py-3.5 rounded-xl transition-all duration-200 group font-medium",
@@ -63,7 +71,7 @@ const Sidebar = () => {
                     >
                         {({ isActive }) => (
                             <>
-                                <item.icon className={cn("w-5 h-5", isActive ? "fill-current" : "")} />
+                                <item.icon className={cn("w-5 h-5 flex-shrink-0", isActive ? "fill-current" : "")} />
                                 <span className="text-sm font-semibold">{item.name}</span>
                             </>
                         )}
@@ -77,6 +85,7 @@ const Sidebar = () => {
                             <NavLink
                                 key={item.path}
                                 to={item.path}
+                                onClick={() => onClose && onClose()}
                                 className={({ isActive }) =>
                                     cn(
                                         "flex items-center space-x-3 px-4 py-3.5 rounded-xl transition-all duration-200 group font-medium",
@@ -88,7 +97,7 @@ const Sidebar = () => {
                             >
                                 {({ isActive }) => (
                                     <>
-                                        <item.icon className={cn("w-5 h-5", isActive ? "fill-current" : "")} />
+                                        <item.icon className={cn("w-5 h-5 flex-shrink-0", isActive ? "fill-current" : "")} />
                                         <span className="text-sm font-semibold">{item.name}</span>
                                     </>
                                 )}
@@ -98,16 +107,16 @@ const Sidebar = () => {
                 )}
             </nav>
 
-            <div className="border-t border-gray-100 flex-shrink-0">
-                <div className="bg-gray-100 rounded-xl p-4 mb-4 flex items-center gap-5">
-                    <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-bold">
-                        T
+            <div className="border-t border-gray-100 flex-shrink-0 p-4">
+                <div className="bg-gray-100 rounded-xl p-4 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gray-300 flex-shrink-0 flex items-center justify-center text-gray-600 font-bold">
+                        {user?.name?.[0] || 'U'}
                     </div>
-                    <div className="overflow-hidden">
-                        <p className="text-sm font-bold text-text-main truncate">Test User</p>
-                        <p className="text-xs text-text-muted truncate">ID: IVA100001</p>
+                    <div className="overflow-hidden min-w-0">
+                        <p className="text-sm font-bold text-text-main truncate">{user?.name || 'User'}</p>
+                        <p className="text-xs text-text-muted truncate">ID: {user?.userId || '000'}</p>
                     </div>
-                    <LogOut onClick={logout} className="w-5 h-5 text-red-400 cursor-pointer ml-auto mr-2 hover:text-red-500" />
+                    <LogOut onClick={logout} className="w-5 h-5 text-red-400 cursor-pointer ml-auto hover:text-red-500 flex-shrink-0" />
                 </div>
             </div>
         </aside >
