@@ -71,7 +71,7 @@ const Network = () => {
     const fetchTree = async (nodeId) => {
         try {
             setLoading(true);
-            const res = await axios.get(`http://localhost:5000/api/user/tree/${nodeId || 'null'}`, {
+            const res = await axios.get(`https://ivamax-ftp-utp-backend.vercel.app/api/user/tree/${nodeId || 'null'}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const { root, left, right } = res.data;

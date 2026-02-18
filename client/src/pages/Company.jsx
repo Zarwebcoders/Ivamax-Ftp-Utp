@@ -31,7 +31,7 @@ const SupportContent = () => {
 
     const fetchTickets = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/support/my-tickets', {
+            const res = await axios.get('https://ivamax-ftp-utp-backend.vercel.app/api/support/my-tickets', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTickets(res.data);
@@ -73,8 +73,8 @@ const SupportContent = () => {
                 <button
                     onClick={() => setView(view === 'create' ? 'home' : 'create')}
                     className={`text-left rounded-3xl p-8 border transition-all duration-300 relative overflow-hidden group ${view === 'create'
-                            ? 'bg-black border-primary shadow-xl shadow-primary/20'
-                            : 'bg-black border-gray-800 hover:border-primary/50'
+                        ? 'bg-black border-primary shadow-xl shadow-primary/20'
+                        : 'bg-black border-gray-800 hover:border-primary/50'
                         }`}
                 >
                     <div className="absolute top-4 right-4">
@@ -91,8 +91,8 @@ const SupportContent = () => {
                 <button
                     onClick={() => setView(view === 'list' ? 'home' : 'list')}
                     className={`text-left rounded-3xl p-8 border transition-all duration-300 relative overflow-hidden group ${view === 'list'
-                            ? 'bg-black border-primary shadow-xl shadow-primary/20'
-                            : 'bg-black border-gray-800 hover:border-primary/50'
+                        ? 'bg-black border-primary shadow-xl shadow-primary/20'
+                        : 'bg-black border-gray-800 hover:border-primary/50'
                         }`}
                 >
                     <div className="absolute top-4 right-4">
@@ -174,7 +174,7 @@ const SupportContent = () => {
                                         <p className="text-xs font-bold text-gray-400 mt-1 uppercase tracking-wide">{new Date(ticket.createdAt).toLocaleDateString()} • {ticket.category}</p>
                                     </div>
                                     <span className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider ${ticket.status === 'Resolved' ? 'bg-green-100 text-green-700' :
-                                            ticket.status === 'Open' ? 'bg-blue-100 text-blue-700' : 'bg-gray-200 text-gray-700'
+                                        ticket.status === 'Open' ? 'bg-blue-100 text-blue-700' : 'bg-gray-200 text-gray-700'
                                         }`}>
                                         {ticket.status}
                                     </span>
@@ -431,8 +431,8 @@ const Company = () => {
                     <button
                         onClick={() => setActiveTab('support')}
                         className={`px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'support'
-                                ? 'bg-white text-text-main shadow-sm'
-                                : 'text-gray-500 hover:text-gray-700'
+                            ? 'bg-white text-text-main shadow-sm'
+                            : 'text-gray-500 hover:text-gray-700'
                             }`}
                     >
                         Support
@@ -440,8 +440,8 @@ const Company = () => {
                     <button
                         onClick={() => setActiveTab('marketing')}
                         className={`px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'marketing'
-                                ? 'bg-white text-text-main shadow-sm'
-                                : 'text-gray-500 hover:text-gray-700'
+                            ? 'bg-white text-text-main shadow-sm'
+                            : 'text-gray-500 hover:text-gray-700'
                             }`}
                     >
                         Marketing Material

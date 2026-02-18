@@ -14,7 +14,7 @@ const UserManagement = () => {
 
     const fetchUsers = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/admin/users', {
+            const res = await axios.get('https://ivamax-ftp-utp-backend.vercel.app/api/admin/users', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUsers(res.data);

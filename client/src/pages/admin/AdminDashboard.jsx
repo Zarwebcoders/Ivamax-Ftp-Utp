@@ -13,7 +13,7 @@ const AdminDashboard = () => {
 
     const fetchStats = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/admin/stats', {
+            const res = await axios.get('https://ivamax-ftp-utp-backend.vercel.app/api/admin/stats', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setStats(res.data);

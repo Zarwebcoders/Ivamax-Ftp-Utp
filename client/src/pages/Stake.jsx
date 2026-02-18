@@ -18,7 +18,7 @@ const Stake = () => {
 
     const fetchStakes = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/stake', {
+            const res = await axios.get('https://ivamax-ftp-utp-backend.vercel.app/api/stake', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setStakes(res.data);

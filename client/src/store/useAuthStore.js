@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/auth';
+const API_URL = 'https://ivamax-ftp-utp-backend.vercel.app/api/auth';
 
 export const useAuthStore = create((set) => ({
     user: null,
@@ -57,7 +57,7 @@ export const useAuthStore = create((set) => ({
         if (!token) return;
 
         try {
-            const response = await axios.get('http://localhost:5000/api/user/profile', {
+            const response = await axios.get('https://ivamax-ftp-utp-backend.vercel.app/api/user/profile', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             set({ user: response.data, isAuthenticated: true });

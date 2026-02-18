@@ -15,7 +15,7 @@ const SupportAdmin = () => {
 
     const fetchTickets = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/support/all', {
+            const res = await axios.get('https://ivamax-ftp-utp-backend.vercel.app/api/support/all', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTickets(res.data);

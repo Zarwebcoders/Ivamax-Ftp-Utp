@@ -14,7 +14,7 @@ const DepositRequests = () => {
 
     const fetchDeposits = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/admin/deposits/pending', {
+            const res = await axios.get('https://ivamax-ftp-utp-backend.vercel.app/api/admin/deposits/pending', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setDeposits(res.data);
