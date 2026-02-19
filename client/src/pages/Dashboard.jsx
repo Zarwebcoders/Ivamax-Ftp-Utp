@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../lib/axios';
 import { useAuthStore } from '../store/useAuthStore';
 import {
     User, Mail, Hash, Award, Shield,
@@ -89,31 +89,79 @@ const Dashboard = () => {
     const token = useAuthStore((state) => state.token);
     const user = useAuthStore((state) => state.user);
     const [data, setData] = useState(null);
-
-    // Mock data for UI development if backend data is missing specific fields
-    const mockData = {
-        slots: 0,
-        totalIMX: "0.00 IMX",
-        totalValue: "$0.00",
-        directTeam: 0,
-        activeDirectTeam: 0,
-        inactiveDirectTeam: 0,
-        teamSize: 0,
-        activeTeamSize: 0,
-        inactiveTeamSize: 0,
-        selfBusiness: "$0",
-        directTeamBusiness: "$0.00",
-        teamBusiness: "$0.00",
-        captok: { balance: "$0.00", used: "$0.00", free: "$0.00" },
-        protok: { balance: "$0.00", ftp: "$0.00", utp: "$0.00" },
-        ftpPlan: { stake: "$0.00", pro: "$0.00" },
-        utpPlan: { unit: "$0.00", stake: "$0.00", pro: "$0.00" }
-    };
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Fetch real data here
-        // For now sticking to mock/user data
-    }, []);
+        const fetchDashboardData = async () => {
+            try {
+                // Using shared api instance, interceptor handles token
+                const response = await api.get('/user/dashboard');
+                setData(response.data);
+            } catch (error) {
+                console.error("Failed to fetch dashboard data", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (token) {
+            fetchDashboardData();
+        }
+    }, [token]);
+
+    // Fallback/Loading UI or existing mock data structure mapping
+    if (loading) {
+        return <div className="flex items-center justify-center min-h-[60vh]"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div></div>;
+    }
+
+    const displayedData = data ? {
+        // Mapping API response to UI expected format
+        slots: data.plans?.slots || 0,
+        totalIMX: `${data.wallet?.captok?.main?.toFixed(2) || '0.00'} IMX`,
+        totalValue: `$${(data.plans?.totalInvestment || 0).toFixed(2)}`,
+
+        directTeam: data.teamCounts?.direct || 0,
+        activeDirectTeam: data.teamCounts?.activeDirect || 0,
+        inactiveDirectTeam: data.teamCounts?.inactiveDirect || 0,
+
+        teamSize: data.teamCounts?.total || 0,
+        activeTeamSize: data.teamCounts?.activeTotal || 0,
+        inactiveTeamSize: data.teamCounts?.inactiveTotal || 0,
+
+        selfBusiness: `$${data.business?.self?.toFixed(2) || '0.00'}`,
+        directTeamBusiness: `$${data.business?.directTeam?.toFixed(2) || '0.00'}`,
+        teamBusiness: `$${data.business?.team?.toFixed(2) || '0.00'}`,
+
+        captok: {
+            balance: `${data.wallet?.captok?.main?.toFixed(2) || '0.00'} IMX`,
+            used: `${data.wallet?.captok?.used?.toFixed(2) || '0.00'} IMX`,
+            free: `${data.wallet?.captok?.free?.toFixed(2) || '0.00'} IMX`
+        },
+        protok: {
+            balance: `${data.wallet?.protok?.profit?.toFixed(2) || '0.00'} IMX`, // Assuming profit is main protok balance?
+            ftp: "0.00 IMX", // Separated in UI but maybe not in backend model yet
+            utp: "0.00 IMX"
+        },
+        ftpPlan: {
+            stake: `${data.plans?.ftp?.invested?.toFixed(2) || '0.00'} IMX`,
+            pro: "0.00 IMX"
+        },
+        utpPlan: {
+            unit: "0.00 IMX",
+            stake: `${data.plans?.utp?.invested?.toFixed(2) || '0.00'} IMX`,
+            pro: "0.00 IMX"
+        }
+    } : {
+        // Empty Fallback
+        slots: 0, totalIMX: "0.00 IMX", totalValue: "$0.00",
+        directTeam: 0, activeDirectTeam: 0, inactiveDirectTeam: 0,
+        teamSize: 0, activeTeamSize: 0, inactiveTeamSize: 0,
+        selfBusiness: "$0", directTeamBusiness: "$0.00", teamBusiness: "$0.00",
+        captok: { balance: "0.00", used: "0.00", free: "0.00" },
+        protok: { balance: "0.00", ftp: "0.00", utp: "0.00" },
+        ftpPlan: { stake: "0.00", pro: "0.00" },
+        utpPlan: { unit: "0.00", stake: "0.00", pro: "0.00" }
+    };
 
     return (
         <div className="space-y-8 pb-12">
@@ -131,10 +179,10 @@ const Dashboard = () => {
                 <div className="lg:col-span-2 bg-white border border-gray-400 rounded-3xl p-6 shadow-lg shadow-gray-400 hover:shadow-2xl transition-all duration-300 hover:shadow-golden-300 hover:border-golden-400">
                     <SectionHeader title="Profile Details" icon={User} />
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <DetailCard label="Username" value={user?.username || "Update Profile"} alert={!user?.username} />
-                        <DetailCard label="Email" value={user?.email || "Update Profile"} alert={!user?.email} />
-                        <DetailCard label="Account" value="0xa887...508854" subValue="Connected" />
-                        <DetailCard label="Rank" value={user?.rank || "No Rank"} subValue="Current Status" />
+                        <DetailCard label="Username" value={user?.username || data?.user?.username || "Update Profile"} alert={!user?.username} />
+                        <DetailCard label="Email" value={user?.email || data?.user?.email || "Update Profile"} alert={!user?.email} />
+                        <DetailCard label="Account" value={data?.user?.sponsorAddress || "0xa887...508854"} subValue="Connected" />
+                        <DetailCard label="Rank" value={data?.user?.rank || "No Rank"} subValue="Current Status" />
                     </div>
                 </div>
 
@@ -149,11 +197,11 @@ const Dashboard = () => {
                     <div className="space-y-4">
                         <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/5">
                             <p className="text-xs font-bold text-gray-400 uppercase mb-1">Sponsor Name</p>
-                            <p className="text-lg font-bold text-white">{user?.sponsorName || "APSL4BDC"}</p>
+                            <p className="text-lg font-bold text-white">{data?.user?.sponsorName || "N/A"}</p>
                         </div>
                         <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/5">
                             <p className="text-xs font-bold text-gray-400 uppercase mb-1">Sponsor Address</p>
-                            <p className="text-sm font-bold text-white/80 font-mono truncate">{user?.sponsorAddress || "0x51ca...a76bdc"}</p>
+                            <p className="text-sm font-bold text-white/80 font-mono truncate">{data?.user?.sponsorAddress || "N/A"}</p>
                         </div>
                     </div>
                 </div>
@@ -163,9 +211,9 @@ const Dashboard = () => {
             <div className="space-y-4">
                 <SectionHeader title="Self Investment Overview" icon={Layers} />
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <StatBox label="No of Slot" value={mockData.slots} icon={TrendingUp} color="primary" />
-                    <StatBox label="Total IMX" value={mockData.totalIMX} icon={Layers} color="primary" />
-                    <StatBox label="Total Value" value={mockData.totalValue} icon={DollarSign} color="primary" />
+                    <StatBox label="No of Slot" value={displayedData.slots} icon={TrendingUp} color="primary" />
+                    <StatBox label="Total IMX" value={displayedData.totalIMX} icon={Layers} color="primary" />
+                    <StatBox label="Total Value" value={displayedData.totalValue} icon={DollarSign} color="primary" />
                 </div>
             </div>
 
@@ -173,12 +221,12 @@ const Dashboard = () => {
             <div className="space-y-4">
                 <SectionHeader title="Team Overview" icon={Users} />
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <StatBox label="Direct Team" value={mockData.directTeam} icon={Users} />
-                    <StatBox label="Active Direct Team" value={mockData.activeDirectTeam} icon={UserCheck} />
-                    <StatBox label="Inactive Direct Team" value={mockData.inactiveDirectTeam} icon={UserX} />
-                    <StatBox label="Team Size" value={mockData.teamSize} icon={Users} />
-                    <StatBox label="Active Team Size" value={mockData.activeTeamSize} icon={UserCheck} />
-                    <StatBox label="Inactive Team Size" value={mockData.inactiveTeamSize} icon={UserX} />
+                    <StatBox label="Direct Team" value={displayedData.directTeam} icon={Users} />
+                    <StatBox label="Active Direct Team" value={displayedData.activeDirectTeam} icon={UserCheck} />
+                    <StatBox label="Inactive Direct Team" value={displayedData.inactiveDirectTeam} icon={UserX} />
+                    <StatBox label="Team Size" value={displayedData.teamSize} icon={Users} />
+                    <StatBox label="Active Team Size" value={displayedData.activeTeamSize} icon={UserCheck} />
+                    <StatBox label="Inactive Team Size" value={displayedData.inactiveTeamSize} icon={UserX} />
                 </div>
             </div>
 
@@ -186,9 +234,9 @@ const Dashboard = () => {
             <div className="space-y-4">
                 <SectionHeader title="Business Overview" icon={Briefcase} />
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <StatBox label="Self Business" value={mockData.selfBusiness} icon={Briefcase} color="primary" />
-                    <StatBox label="Direct Team Business" value={mockData.directTeamBusiness} icon={Briefcase} color="primary" />
-                    <StatBox label="Team Business" value={mockData.teamBusiness} icon={Briefcase} color="primary" />
+                    <StatBox label="Self Business" value={displayedData.selfBusiness} icon={Briefcase} color="primary" />
+                    <StatBox label="Direct Team Business" value={displayedData.directTeamBusiness} icon={Briefcase} color="primary" />
+                    <StatBox label="Team Business" value={displayedData.teamBusiness} icon={Briefcase} color="primary" />
                 </div>
             </div>
 
@@ -200,35 +248,35 @@ const Dashboard = () => {
                         title="Captok Wallet"
                         color="green-600"
                         items={[
-                            { label: "Captok Balance", value: mockData.captok.balance, subValue: "0.00 IMX", highlight: true },
-                            { label: "Used Balance", value: mockData.captok.used, subValue: "0.00 IMX", highlight: true },
-                            { label: "Free Balance", value: mockData.captok.free, subValue: "0.00 IMX", highlight: true },
+                            { label: "Captok Balance", value: displayedData.captok.balance, subValue: "0.00 IMX", highlight: true },
+                            { label: "Used Balance", value: displayedData.captok.used, subValue: "0.00 IMX", highlight: true },
+                            { label: "Free Balance", value: displayedData.captok.free, subValue: "0.00 IMX", highlight: true },
                         ]}
                     />
                     <WalletCard
                         title="Protok Wallet"
                         color="blue-600"
                         items={[
-                            { label: "Protok Balance", value: mockData.protok.balance, subValue: "0.00 IMX", highlight: true },
-                            { label: "FTP Pro Balance", value: mockData.protok.ftp, subValue: "0.00 IMX", highlight: true },
-                            { label: "UTP Pro Balance", value: mockData.protok.utp, subValue: "0.00 IMX", highlight: true },
+                            { label: "Protok Balance", value: displayedData.protok.balance, subValue: "0.00 IMX", highlight: true },
+                            { label: "FTP Pro Balance", value: displayedData.protok.ftp, subValue: "0.00 IMX", highlight: true },
+                            { label: "UTP Pro Balance", value: displayedData.protok.utp, subValue: "0.00 IMX", highlight: true },
                         ]}
                     />
                     <WalletCard
                         title="FTP Plan"
                         color="orange-600"
                         items={[
-                            { label: "FTP Stake Inv.", value: mockData.ftpPlan.stake, subValue: "0.00 IMX", highlight: true },
-                            { label: "FTP Pro Balance", value: mockData.ftpPlan.pro, subValue: "0.00 IMX", highlight: true },
+                            { label: "FTP Stake Inv.", value: displayedData.ftpPlan.stake, subValue: "0.00 IMX", highlight: true },
+                            { label: "FTP Pro Balance", value: displayedData.ftpPlan.pro, subValue: "0.00 IMX", highlight: true },
                         ]}
                     />
                     <WalletCard
                         title="UTP Plan"
                         color="indigo-600"
                         items={[
-                            { label: "UTP Unit", value: mockData.utpPlan.unit, subValue: "0.00 IMX", highlight: true },
-                            { label: "UTP Stake Inv.", value: mockData.utpPlan.stake, subValue: "0.00 IMX", highlight: true },
-                            { label: "UTP Pro Balance", value: mockData.utpPlan.pro, subValue: "0.00 IMX", highlight: true },
+                            { label: "UTP Unit", value: displayedData.utpPlan.unit, subValue: "0.00 IMX", highlight: true },
+                            { label: "UTP Stake Inv.", value: displayedData.utpPlan.stake, subValue: "0.00 IMX", highlight: true },
+                            { label: "UTP Pro Balance", value: displayedData.utpPlan.pro, subValue: "0.00 IMX", highlight: true },
                         ]}
                     />
                 </div>
@@ -266,5 +314,4 @@ const Dashboard = () => {
         </div>
     );
 };
-
 export default Dashboard;

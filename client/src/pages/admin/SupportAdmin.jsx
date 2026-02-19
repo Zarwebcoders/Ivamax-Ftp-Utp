@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../../lib/axios';
 import { useAuthStore } from '../../store/useAuthStore';
 import { MessageSquare, Send } from 'lucide-react';
 
@@ -15,9 +15,7 @@ const SupportAdmin = () => {
 
     const fetchTickets = async () => {
         try {
-            const res = await axios.get('https://ivamax-ftp-utp-backend.vercel.app/api/support/all', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await api.get('/support/all');
             setTickets(res.data);
         } catch (err) {
             console.error(err);
@@ -27,10 +25,7 @@ const SupportAdmin = () => {
     const handleReply = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/support/reply',
-                { ticketId: selectedTicket.ticketId, reply: replyText, status: 'Resolved' },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            await api.post('/support/reply', { ticketId: selectedTicket.ticketId, reply: replyText, status: 'Resolved' });
             setReplyText('');
             setSelectedTicket(null);
             fetchTickets();

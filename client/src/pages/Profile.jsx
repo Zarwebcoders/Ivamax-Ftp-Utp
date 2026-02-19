@@ -1,30 +1,17 @@
 import React, { useState } from 'react';
 import { useAuthStore } from '../store/useAuthStore';
 import {
-    User,
-    Mail,
-    Share2,
-    Copy,
-    Check,
-    Instagram,
-    Send,
-    MessageCircle,
-    Award,
-    Zap,
-    Trophy,
-    Activity,
-    Layers,
-    Users,
-    Wallet,
-    TrendingUp,
-    Shield,
-    Coins,
-    Star
+    User, Mail, Share2, Copy, Check, Instagram, Send, MessageCircle,
+    Wallet, TrendingUp, Coins, Users, Shield, Lock, Phone, Calendar,
+    CreditCard, Settings, LayoutGrid, Key
 } from 'lucide-react';
+import { cn } from '../utils/cn';
 
 const Profile = () => {
     const user = useAuthStore((state) => state.user);
+    const [activeTab, setActiveTab] = useState('profile'); // mobile tab state
     const [copied, setCopied] = useState(false);
+    const [passwords, setPasswords] = useState({ old: '', new: '', confirm: '' });
 
     const copyRef = () => {
         if (!user?.userId) return;
@@ -33,199 +20,236 @@ const Profile = () => {
         setTimeout(() => setCopied(false), 2000);
     };
 
+    // --- Components for Sections ---
+
+    const ProfileDetails = () => (
+        <div className="bg-white border border-gray-400 hover:border-gray-600 shadow-lg shadow-gray-400 rounded-3xl p-4 space-y-6">
+            <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+                <User className="w-5 h-5 text-primary" /> Profile Details
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
+                    <label className="text-xs font-bold text-gray-400 uppercase block mb-1">User ID</label>
+                    <p className="font-mono font-bold text-primary">{user?.userId}</p>
+                </div>
+                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
+                    <label className="text-xs font-bold text-gray-400 uppercase block mb-1">Full Name</label>
+                    <p className="font-bold text-gray-800">{user?.name}</p>
+                </div>
+                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
+                    <label className="text-xs font-bold text-gray-400 uppercase block mb-1">Email</label>
+                    <p className="font-medium text-gray-600 truncate">{user?.email}</p>
+                </div>
+                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
+                    <label className="text-xs font-bold text-gray-400 uppercase block mb-1">Mobile</label>
+                    <p className="font-medium text-gray-600">{user?.mobile || 'N/A'}</p>
+                </div>
+                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
+                    <label className="text-xs font-bold text-gray-400 uppercase block mb-1">Joined Date</label>
+                    <p className="font-medium text-gray-600">{new Date(user?.createdAt || Date.now()).toLocaleDateString()}</p>
+                </div>
+                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
+                    <label className="text-xs font-bold text-gray-400 uppercase block mb-1">Sponsor ID</label>
+                    <p className="font-mono font-bold text-gray-800">{user?.sponsorId || 'ROOT'}</p>
+                </div>
+                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100 md:col-span-2">
+                    <label className="text-xs font-bold text-gray-400 uppercase block mb-1">Sponsor Name</label>
+                    <p className="font-bold text-gray-800">{user?.sponsorName || 'N/A'}</p>
+                </div>
+            </div>
+        </div>
+    );
+
+    const SecuritySettings = () => (
+        <div className="bg-white border border-gray-400 hover:border-gray-600 shadow-lg shadow-gray-400 rounded-3xl p-4 space-y-6">
+            <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+                <Lock className="w-5 h-5 text-primary" /> Security
+            </h3>
+            <div className="space-y-4">
+                <div>
+                    <label className="text-xs font-bold text-gray-400 uppercase block mb-1">Old Password</label>
+                    <input type="password" placeholder="Enter current password" className="w-full bg-gray-300 border border-gray-400 rounded-xl p-3 focus:outline-none focus:border-primary transition-colors" />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label className="text-xs font-bold text-gray-400 uppercase block mb-1">New Password</label>
+                        <input type="password" placeholder="Enter new password" className="w-full bg-gray-300 border border-gray-400 rounded-xl p-3 focus:outline-none focus:border-primary transition-colors" />
+                    </div>
+                    <div>
+                        <label className="text-xs font-bold text-gray-400 uppercase block mb-1">Confirm Password</label>
+                        <input type="password" placeholder="Confirm new password" className="w-full bg-gray-300 border border-gray-400 rounded-xl p-3 focus:outline-none focus:border-primary transition-colors" />
+                    </div>
+                </div>
+                <button className="w-full bg-black text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition-colors">
+                    Update Password
+                </button>
+            </div>
+        </div>
+    );
+
+    const WalletInfo = () => (
+        <div className="bg-white border border-gray-400 hover:border-gray-600 shadow-lg shadow-gray-400 rounded-3xl p-4 space-y-6">
+            <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+                <CreditCard className="w-5 h-5 text-primary" /> Wallet Details
+            </h3>
+            <div className="space-y-4">
+                <div className="bg-gray-300 p-4 rounded-xl border border-gray-100 flex items-center justify-between">
+                    <div>
+                        <label className="text-xs font-bold text-gray-400 uppercase block mb-1">Network</label>
+                        <p className="font-bold text-gray-800">BEP20 / TRC20</p>
+                    </div>
+                    <div className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-bold">Active</div>
+                </div>
+                <div>
+                    <label className="text-xs font-bold text-gray-400 uppercase block mb-1">Wallet Address</label>
+                    <div className="flex gap-2">
+                        <input
+                            type="text"
+                            value={user?.walletAddress || 'No wallet linked'}
+                            readOnly
+                            className="w-full bg-gray-300 border border-gray-200 rounded-xl p-3 text-sm font-mono text-gray-600 focus:outline-none"
+                        />
+                        <button className="bg-primary hover:bg-primary/90 text-white px-4 rounded-xl font-bold transition-colors">
+                            Change
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+
+    const SocialAndRef = () => (
+        <div className="space-y-6">
+            {/* Referral */}
+            <div className="bg-black text-white rounded-3xl p-4 shadow-lg shadow-gray-600 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
+                <h3 className="text-lg font-bold mb-4 flex items-center gap-2 relative z-10">
+                    <Share2 className="w-5 h-5 text-primary" /> Referral Link
+                </h3>
+                <div className="bg-gray-900 border border-gray-800 rounded-xl p-3 flex items-center justify-between relative z-10">
+                    <div className="truncate text-gray-400 text-xs font-mono mr-2">
+                        https://app.ivamax.finance/?ref={user?.userId}
+                    </div>
+                    <button onClick={copyRef} className="p-2 bg-gray-800 rounded-lg text-white hover:bg-primary transition-colors">
+                        {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                    </button>
+                </div>
+            </div>
+
+            {/* Social */}
+            <div className="grid grid-cols-3 gap-3">
+                <button className="bg-green-50 border border-green-400 hover:bg-green-200 shadow-lg shadow-gray-400 p-4 rounded-2xl flex flex-col items-center justify-center gap-2 transition-all">
+                    <MessageCircle className="w-6 h-6 text-green-600" />
+                    <span className="text-[10px] font-bold text-green-700 uppercase">WhatsApp</span>
+                </button>
+                <button className="bg-blue-50 border border-blue-400 hover:bg-blue-200 shadow-lg shadow-gray-400 p-4 rounded-2xl flex flex-col items-center justify-center gap-2 transition-all">
+                    <Send className="w-6 h-6 text-blue-600" />
+                    <span className="text-[10px] font-bold text-blue-700 uppercase">Telegram</span>
+                </button>
+                <button className="bg-pink-50 border border-pink-400 hover:bg-pink-200 shadow-lg shadow-gray-400 p-4 rounded-2xl flex flex-col items-center justify-center gap-2 transition-all">
+                    <Instagram className="w-6 h-6 text-pink-600" />
+                    <span className="text-[10px] font-bold text-pink-700 uppercase">Instagram</span>
+                </button>
+            </div>
+        </div>
+    );
+
+    const SystemStatus = () => (
+        <div className="bg-white border border-gray-400 rounded-3xl p-4 shadow-lg shadow-gray-400 space-y-4">
+            <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+                <Settings className="w-5 h-5 text-primary" /> System Status
+            </h3>
+            {[
+                { label: 'Login System', status: 'Active', color: 'green' },
+                { label: 'Registration System', status: 'Active', color: 'green' },
+                { label: 'Token Buy System', status: 'Active', color: 'green' },
+                { label: 'Support System', status: 'Active', color: 'green' },
+                { label: 'Material Support', status: 'Review', color: 'orange' },
+            ].map((item, idx) => (
+                <div key={idx} className="flex justify-between items-center p-3 bg-gray-300 rounded-xl border border-gray-100">
+                    <span className="text-sm font-bold text-gray-700">{item.label}</span>
+                    <span className={`text-xs font-bold px-2 py-1 rounded-md bg-${item.color}-100 text-${item.color}-700 uppercase`}>
+                        {item.status}
+                    </span>
+                </div>
+            ))}
+        </div>
+    );
+
     return (
-        <div className="space-y-8 pb-12">
+        <div className="space-y-6 pb-20 md:pb-12">
             {/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-text-main uppercase tracking-tighter">Profile</h1>
+                    <h1 className="text-3xl font-bold text-text-main uppercase tracking-tighter">My Account</h1>
                     <div className="flex items-center gap-2 mt-2">
-                        <div className="px-3 py-1 bg-primary/10 rounded-full border border-primary/20">
-                            <span className="text-xs font-bold text-primary uppercase tracking-wider">
+                        <div className="px-3 py-1 bg-primary rounded-full border border-primary">
+                            <span className="text-xs font-bold text-white uppercase tracking-wider">
                                 {user?.rank || 'Member'}
                             </span>
                         </div>
                     </div>
                 </div>
-                <div className="text-right">
-                    <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Joined Date</p>
-                    <p className="text-sm font-bold text-text-main">{new Date(user?.createdAt || Date.now()).toLocaleDateString()}</p>
-                </div>
             </div>
 
-            {/* Top Stats Row (Black Cards) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {/* IVAMAX/Captok */}
-                <div className="bg-black rounded-2xl p-5 border border-gray-800 shadow-xl flex flex-col justify-between relative overflow-hidden group">
-                    <div className="absolute right-0 top-0 w-24 h-24 bg-primary/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/20 transition-all"></div>
-                    <div className="flex justify-between items-start mb-4 relative z-10">
-                        <div className="p-2 bg-gray-900 rounded-lg text-primary">
-                            <Wallet className="w-5 h-5" />
-                        </div>
-                    </div>
-                    <div className="relative z-10">
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Captok Balance</p>
-                        <h3 className="text-xl font-bold text-white">0 USDT</h3>
-                    </div>
-                </div>
-
-                {/* Invested */}
-                <div className="bg-black rounded-2xl p-5 border border-gray-800 shadow-xl flex flex-col justify-between relative overflow-hidden group">
-                    <div className="absolute right-0 top-0 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/20 transition-all"></div>
-                    <div className="flex justify-between items-start mb-4 relative z-10">
-                        <div className="p-2 bg-gray-900 rounded-lg text-blue-400">
-                            <TrendingUp className="w-5 h-5" />
-                        </div>
-                    </div>
-                    <div className="relative z-10">
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Invested</p>
-                        <h3 className="text-xl font-bold text-white">0 USDT</h3>
-                    </div>
-                </div>
-
-                {/* Earned */}
-                <div className="bg-black rounded-2xl p-5 border border-gray-800 shadow-xl flex flex-col justify-between relative overflow-hidden group">
-                    <div className="absolute right-0 top-0 w-24 h-24 bg-green-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-green-500/20 transition-all"></div>
-                    <div className="flex justify-between items-start mb-4 relative z-10">
-                        <div className="p-2 bg-gray-900 rounded-lg text-green-400">
-                            <Coins className="w-5 h-5" />
-                        </div>
-                    </div>
-                    <div className="relative z-10">
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Earned</p>
-                        <h3 className="text-xl font-bold text-white">0.00 USDT</h3>
-                    </div>
-                </div>
-
-                {/* Network */}
-                <div className="bg-black rounded-2xl p-5 border border-gray-800 shadow-xl flex flex-col justify-between relative overflow-hidden group">
-                    <div className="absolute right-0 top-0 w-24 h-24 bg-purple-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-purple-500/20 transition-all"></div>
-                    <div className="flex justify-between items-start mb-4 relative z-10">
-                        <div className="p-2 bg-gray-900 rounded-lg text-purple-400">
-                            <Users className="w-5 h-5" />
-                        </div>
-                    </div>
-                    <div className="relative z-10">
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Network</p>
-                        <h3 className="text-xl font-bold text-white">0 Members</h3>
-                    </div>
-                </div>
+            {/* Mobile Tabs */}
+            <div className="md:hidden flex space-x-2 overflow-x-auto pb-2 scrollbar-none">
+                {['profile', 'security', 'wallet', 'system'].map((tab) => (
+                    <button
+                        key={tab}
+                        onClick={() => setActiveTab(tab)}
+                        className={cn(
+                            "px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all",
+                            activeTab === tab
+                                ? "bg-black text-white shadow-lg"
+                                : "bg-white text-gray-500 border border-gray-200"
+                        )}
+                    >
+                        {tab}
+                    </button>
+                ))}
             </div>
 
-            {/* Income Overview */}
-            <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-primary"></div>
-                    <h3 className="text-sm font-bold text-text-main uppercase tracking-widest">Income Overview</h3>
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                    {/* Intro Club */}
-                    <div className="bg-white border border-gray-200 p-4 rounded-2xl shadow-sm hover:border-primary/50 transition-colors">
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">Intro Club</p>
-                        <h4 className="text-lg font-bold text-text-main">$0.00</h4>
-                    </div>
-                    {/* Start Royalty */}
-                    <div className="bg-white border border-gray-200 p-4 rounded-2xl shadow-sm hover:border-primary/50 transition-colors">
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">Start Royalty</p>
-                        <h4 className="text-lg font-bold text-text-main">$0.00</h4>
-                    </div>
-                    {/* PayPer Royalty */}
-                    <div className="bg-white border border-gray-200 p-4 rounded-2xl shadow-sm hover:border-primary/50 transition-colors">
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">PayPer Royalty</p>
-                        <h4 className="text-lg font-bold text-text-main">$0.00</h4>
-                    </div>
-                    {/* FTP Rewards */}
-                    <div className="bg-white border border-gray-200 p-4 rounded-2xl shadow-sm hover:border-primary/50 transition-colors">
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">FTP Rewards</p>
-                        <h4 className="text-lg font-bold text-text-main">$0.00</h4>
-                    </div>
-                    {/* UTP Rewards */}
-                    <div className="bg-white border border-gray-200 p-4 rounded-2xl shadow-sm hover:border-primary/50 transition-colors">
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">UTP Rewards</p>
-                        <h4 className="text-lg font-bold text-text-main">$0.00</h4>
-                    </div>
-                </div>
-            </div>
+            {/* Content Area */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Left Column (Main Info) */}
+                <div className={cn("lg:col-span-2 space-y-6",
+                    // On mobile, only show if appropriate tab is active
+                    "md:block",
+                    activeTab === 'profile' || activeTab === 'wallet' ? 'block' : 'hidden md:block'
+                )}>
+                    {/* On Desktop show everything, on mobile filtered by tab if we wanted strict separation, 
+                        but here I will use conditional rendering based on tab for mobile, and show all for desktop */}
 
-            {/* Bottom Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Contact Settings */}
-                <div className="space-y-6">
-                    <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-primary"></div>
-                        <h3 className="text-sm font-bold text-text-main uppercase tracking-widest">Contact Settings</h3>
+                    <div className={cn("md:block", activeTab === 'profile' ? 'block' : 'hidden md:block')}>
+                        <ProfileDetails />
                     </div>
-                    <div className="bg-white border border-gray-200 rounded-3xl p-8 shadow-xl space-y-6">
-                        <div>
-                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Username</label>
-                            <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 flex items-center gap-3">
-                                <User className="w-5 h-5 text-gray-400" />
-                                <span className="font-bold text-text-main">{user?.name || 'Enter Username'}</span>
-                            </div>
-                        </div>
-                        <div>
-                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Registered Email</label>
-                            <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 flex items-center gap-3">
-                                <Mail className="w-5 h-5 text-gray-400" />
-                                <span className="font-bold text-text-main">{user?.email || 'Enter Email'}</span>
-                            </div>
-                        </div>
-                        <div>
-                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Account User ID</label>
-                            <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 flex items-center gap-3">
-                                <Shield className="w-5 h-5 text-primary" />
-                                <span className="font-bold text-primary font-mono">{user?.userId || 'IVA...'}</span>
-                            </div>
-                        </div>
+
+                    <div className={cn("md:block", activeTab === 'wallet' ? 'block' : 'hidden md:block mt-6')}>
+                        <WalletInfo />
                     </div>
                 </div>
 
-                {/* Social Propagation */}
-                <div className="space-y-6">
-                    <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-primary"></div>
-                        <h3 className="text-sm font-bold text-text-main uppercase tracking-widest">Social Propagation</h3>
+                {/* Right Column (Security, Social, System) */}
+                <div className={cn("lg:col-span-1 space-y-6",
+                    "md:block",
+                    activeTab === 'security' || activeTab === 'system' ? 'block' : 'hidden md:block'
+                )}>
+                    <div className={cn("md:block", activeTab === 'profile' ? 'block' : 'hidden md:block')}>
+                        {/* Show Social on Profile tab in mobile for better flow, or separate? 
+                            Let's put Social in 'profile' tab for mobile consistency or 'system'?
+                            Actually user asked for "Profile" page details.
+                            Let's keep generic right column visibility.
+                        */}
+                        <SocialAndRef />
                     </div>
-                    <div className="bg-black border border-gray-800 rounded-3xl p-8 shadow-xl relative overflow-hidden flex flex-col justify-between h-full">
-                        {/* Background Accent */}
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
-                        <div className="relative z-10 space-y-6">
-                            <div>
-                                <h4 className="text-white font-bold uppercase mb-1 flex items-center gap-2">
-                                    <Share2 className="w-4 h-4 text-primary" />
-                                    Amplify Your Network Presence
-                                </h4>
-                                <p className="text-xs text-gray-500 uppercase">Share your unique access link to expand your hierarchy.</p>
-                            </div>
+                    <div className={cn("md:block", activeTab === 'security' ? 'block' : 'hidden md:block')}>
+                        <SecuritySettings />
+                    </div>
 
-                            <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 flex items-center justify-between group hover:border-primary/50 transition-colors">
-                                <div className="truncate text-gray-400 text-xs font-mono mr-4">
-                                    https://app.ivamax.finance/?ref={user?.userId || '...'}
-                                </div>
-                                <button
-                                    onClick={copyRef}
-                                    className="p-2 bg-black rounded-lg text-primary hover:bg-primary hover:text-white transition-all"
-                                >
-                                    {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                                </button>
-                            </div>
-
-                            <div className="grid grid-cols-3 gap-4 mt-8">
-                                <button className="bg-green-900/20 border border-green-900/50 hover:bg-green-900/40 p-4 rounded-xl flex flex-col items-center justify-center gap-2 transition-all group">
-                                    <MessageCircle className="w-6 h-6 text-green-500 group-hover:scale-110 transition-transform" />
-                                    <span className="text-[10px] font-bold text-green-500 uppercase tracking-wider">WhatsApp</span>
-                                </button>
-                                <button className="bg-blue-900/20 border border-blue-900/50 hover:bg-blue-900/40 p-4 rounded-xl flex flex-col items-center justify-center gap-2 transition-all group">
-                                    <Send className="w-6 h-6 text-blue-500 group-hover:scale-110 transition-transform" />
-                                    <span className="text-[10px] font-bold text-blue-500 uppercase tracking-wider">Telegram</span>
-                                </button>
-                                <button className="bg-pink-900/20 border border-pink-900/50 hover:bg-pink-900/40 p-4 rounded-xl flex flex-col items-center justify-center gap-2 transition-all group">
-                                    <Instagram className="w-6 h-6 text-pink-500 group-hover:scale-110 transition-transform" />
-                                    <span className="text-[10px] font-bold text-pink-500 uppercase tracking-wider">Instagram</span>
-                                </button>
-                            </div>
-                        </div>
+                    <div className={cn("md:block", activeTab === 'system' ? 'block' : 'hidden md:block')}>
+                        <SystemStatus />
                     </div>
                 </div>
             </div>

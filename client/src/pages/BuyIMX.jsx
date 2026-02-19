@@ -20,13 +20,14 @@ const InfoCard = ({ title, value, subtext, highlight, icon: Icon }) => (
 
 const BuyIMX = () => {
     const [slots, setSlots] = useState(1);
+    const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'buy', 'history'
     const tokenPrice = 0.1;
     const tokensPerSlot = 250;
     const slotValue = 25;
 
     return (
         <div className="space-y-8 pb-12">
-            {/* Header */}
+            {/* Page Header */}
             <div className="flex flex-col md:flex-row md:items-center gap-4 md:space-x-4">
                 <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white shrink-0">
@@ -42,8 +43,39 @@ const BuyIMX = () => {
                 </div>
             </div>
 
+            {/* Mobile Tab Navigation */}
+            <div className="md:hidden bg-black p-2 rounded-2xl border border-gray-800 flex gap-2 mb-6">
+                <button
+                    onClick={() => setActiveTab('overview')}
+                    className={`flex-1 py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${activeTab === 'overview'
+                            ? 'bg-primary text-black shadow-lg shadow-primary/20'
+                            : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        }`}
+                >
+                    Overview
+                </button>
+                <button
+                    onClick={() => setActiveTab('buy')}
+                    className={`flex-1 py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${activeTab === 'buy'
+                            ? 'bg-primary text-black shadow-lg shadow-primary/20'
+                            : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        }`}
+                >
+                    Buy Slot
+                </button>
+                <button
+                    onClick={() => setActiveTab('history')}
+                    className={`flex-1 py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${activeTab === 'history'
+                            ? 'bg-primary text-black shadow-lg shadow-primary/20'
+                            : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        }`}
+                >
+                    History
+                </button>
+            </div>
+
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${activeTab === 'overview' ? 'block' : 'hidden'} md:grid`}>
                 <InfoCard
                     title="Running Slab Slot"
                     value="Slab 1"
@@ -79,7 +111,7 @@ const BuyIMX = () => {
             </div>
 
             {/* Configuration Section */}
-            <div className="max-w-3xl mx-auto w-full">
+            <div className={`max-w-3xl mx-auto w-full ${activeTab === 'buy' ? 'block' : 'hidden'} md:block`}>
                 <div className="bg-black rounded-3xl p-8 shadow-lg shadow-gray-600 border border-gray-800 relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-8 opacity-10">
                         <ShoppingCart className="w-32 h-32 text-white" />
@@ -117,7 +149,7 @@ const BuyIMX = () => {
             </div>
 
             {/* Purchase Records */}
-            <div className="bg-black rounded-3xl shadow-gray-600 border border-gray-800 overflow-hidden shadow-lg">
+            <div className={`bg-black rounded-3xl shadow-gray-600 border border-gray-800 overflow-hidden shadow-lg ${activeTab === 'history' ? 'block' : 'hidden'} md:block`}>
                 <div className="p-6 border-b border-gray-800 flex justify-between items-center">
                     <div className="flex items-center space-x-2">
                         <History className="w-5 h-5 text-primary" />

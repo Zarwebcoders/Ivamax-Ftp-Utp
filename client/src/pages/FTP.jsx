@@ -1,30 +1,19 @@
 import React, { useState } from 'react';
 import { FileText, History, DollarSign, Calendar, TrendingUp, Clock } from 'lucide-react';
 
-const BalanceCard = ({ title, imxValue, usdValue, code }) => (
+const SummaryCard = ({ title, value, subValue }) => (
     <div className="bg-surface border border-gray-400 shadow-lg shadow-gray-600 hover:shadow-md rounded-3xl p-6 transition-all group relative overflow-hidden">
-        <div className="flex justify-between items-start mb-4 relative z-10">
-            <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider">{title}</h3>
-            <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold border text-white ${code === 'C' ? 'bg-primary text-primary border-primary' : 'bg-secondary text-secondary border-secondary'}`}>
-                {code}
-            </div>
-        </div>
-        <div className="relative z-10">
-            <div className="flex items-baseline justify-between mb-2">
-                <span className="text-xs font-bold text-gray-400">IMX</span>
-                <span className="text-2xl font-bold text-text-main">{imxValue}</span>
-            </div>
-            <div className="flex items-baseline justify-between">
-                <span className="text-xs font-bold text-gray-400">$ VALUE</span>
-                <span className={`text-base font-bold ${code === 'C' ? 'text-primary' : 'text-secondary'}`}>{usdValue}</span>
-            </div>
+        <div className="relative z-10 text-center">
+            <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-2">{title}</h3>
+            <div className="text-2xl font-bold text-text-main mb-1">{value}</div>
+            {subValue && <div className="text-xs font-bold text-primary">{subValue}</div>}
         </div>
         {/* Decorative background */}
-        <div className={`absolute -bottom-6 -right-6 w-24 h-24 rounded-full blur-2xl opacity-50 ${code === 'C' ? 'bg-primary/10' : 'bg-secondary/10'}`}></div>
+        <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full blur-2xl opacity-50 bg-primary/10"></div>
     </div>
 );
 
-const HistoryTable = ({ title, subtitle, columns, data = [], emptyMessage, icon: Icon }) => (
+const HistoryTable = ({ title, subtitle, columns, data = [], emptyMessage, icon: Icon, showViewAction }) => (
     <div className="bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden">
         <div className="p-6 border-b border-gray-800 flex items-center gap-3">
             {Icon && <div className="p-2 bg-gray-900 rounded-lg text-primary"><Icon className="w-4 h-4" /></div>}
@@ -57,11 +46,18 @@ const HistoryTable = ({ title, subtitle, columns, data = [], emptyMessage, icon:
                                 {Object.values(row).map((val, i) => (
                                     <td key={i} className="py-4 px-6 text-xs text-gray-300 font-medium whitespace-nowrap">{val}</td>
                                 ))}
+                                {showViewAction && (
+                                    <td className="py-4 px-6 text-xs text-center">
+                                        <button className="bg-primary/20 text-primary border border-primary/50 hover:bg-primary hover:text-black transition-all rounded px-3 py-1 text-[10px] font-bold uppercase">
+                                            View
+                                        </button>
+                                    </td>
+                                )}
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan={columns.length} className="py-16 text-center">
+                            <td colSpan={columns.length + (showViewAction ? 1 : 0)} className="py-16 text-center">
                                 <p className="text-gray-600 font-bold uppercase text-xs tracking-widest">{emptyMessage}</p>
                             </td>
                         </tr>
@@ -74,6 +70,7 @@ const HistoryTable = ({ title, subtitle, columns, data = [], emptyMessage, icon:
 
 const FTP = () => {
     const [amount, setAmount] = useState('');
+    const [activeTab, setActiveTab] = useState('records');
 
     return (
         <div className="space-y-8 pb-12">
@@ -83,25 +80,23 @@ const FTP = () => {
                     <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white shrink-0">
                         <FileText className="w-6 h-6" />
                     </div>
-                    <div className="md:hidden">
-                        <h1 className="text-xl font-bold text-text-main uppercase">Finance Tenure Package</h1>
+                    <div>
+                        <h1 className="text-2xl font-bold text-text-main uppercase">FTP Stake</h1>
+                        <p className="text-xs font-bold text-text-muted uppercase">Manage Your Finance Tenure Package</p>
                     </div>
                 </div>
-                <div>
-                    <h1 className="hidden md:block text-2xl font-bold text-text-main uppercase">Finance Tenure Package</h1>
-                    <p className="text-xs md:text-sm font-bold text-text-muted uppercase">Earn Rewards by purchasing for a fixed 24-month term</p>
-                </div>
             </div>
 
-            {/* Top Balances */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <BalanceCard title="Captok Balance" imxValue="0.0000" usdValue="$0.00" code="C" />
-                <BalanceCard title="FTP Protok Balance" imxValue="0.0000" usdValue="$0.00" code="P" />
+            {/* Top Summary Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <SummaryCard title="No of Unit" value="0" />
+                <SummaryCard title="FTP Investment" value="$0.00" subValue="0.00 IMX" />
+                <SummaryCard title="FTP Profit" value="$0.00" subValue="0.00 IMX" />
             </div>
 
-            {/* Create Investment (Dark Theme Container to match image) */}
+            {/* Invest FTP Stake Process */}
             <div className="bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 p-8">
-                <h2 className="text-white font-bold uppercase text-center mb-8 tracking-widest text-sm">Create New Investment</h2>
+                <h2 className="text-white font-bold uppercase text-center mb-8 tracking-widest text-sm">Invest FTP Stake Process</h2>
 
                 <div className="space-y-6">
                     <div className="flex justify-between items-center text-xs font-bold uppercase">
@@ -110,11 +105,11 @@ const FTP = () => {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Investment Amount ($)</label>
+                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Stake Volume (Units)</label>
                         <div className="relative">
                             <input
                                 type="number"
-                                placeholder="Min $50"
+                                placeholder="Enter Units"
                                 className="w-full bg-gray-900 border border-gray-700 text-white rounded-xl py-4 pl-4 pr-12 focus:outline-none focus:border-primary font-bold placeholder-gray-600"
                                 value={amount}
                                 onChange={(e) => setAmount(e.target.value)}
@@ -136,31 +131,73 @@ const FTP = () => {
                 </div>
             </div>
 
-            {/* History Tables */}
-            <div className="space-y-8">
-                <HistoryTable
-                    title="FTP Investment History"
-                    subtitle="Compounding & Growth Records"
-                    icon={TrendingUp}
-                    columns={['SR No', 'Stake Amount', 'Monthly Fix', 'Start Date', 'Maturity Date', '6M (25%)', '12M (60%)', '18M (100%)', '24M (150%)', 'Profit']}
-                    emptyMessage="No Active FTP Records"
-                />
+            {/* Tables Section with Tabs */}
+            <div className="space-y-6">
+                {/* Custom Tab Navigation */}
+                <div className="bg-black p-2 rounded-2xl border border-gray-800 flex flex-wrap gap-2">
+                    <button
+                        onClick={() => setActiveTab('records')}
+                        className={`flex-1 py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'records'
+                            ? 'bg-primary text-black shadow-lg shadow-primary/20'
+                            : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                            }`}
+                    >
+                        FTP Stake Records
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('active')}
+                        className={`flex-1 py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'active'
+                            ? 'bg-primary text-black shadow-lg shadow-primary/20'
+                            : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                            }`}
+                    >
+                        Active FTP Stake Detail
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('deactive')}
+                        className={`flex-1 py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'deactive'
+                            ? 'bg-primary text-black shadow-lg shadow-primary/20'
+                            : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                            }`}
+                    >
+                        Deactive FTP Stake Profit
+                    </button>
+                </div>
 
-                <HistoryTable
-                    title="Captok Transition History"
-                    subtitle="Credits, Debits & Rewards Log"
-                    icon={History}
-                    columns={['SR No', 'Transition Date', 'Transition Amount', 'Transition Tokens', 'Transition Type', 'Source']}
-                    emptyMessage="No Transition History Found"
-                />
+                {/* 1. FTP Stake Records */}
+                {activeTab === 'records' && (
+                    <HistoryTable
+                        title="FTP Stake Records"
+                        subtitle="History of all stakes"
+                        icon={History}
+                        columns={['SR.NO', 'DATE', 'STAKE VOLUME', 'STAKE VALUE', 'CURRENT STATUS']}
+                        emptyMessage="No Stake Records Found"
+                    />
+                )}
 
-                <HistoryTable
-                    title="FTP Pro-Tok History"
-                    subtitle="Rewards & Yield Distribution Log"
-                    icon={History}
-                    columns={['SR No', 'Transition Date', 'Invested Amount', 'Plan Status', 'Booked Profit', 'Type', 'Source']}
-                    emptyMessage="No FTP Pro-Tok History Found"
-                />
+                {/* 2. Active FTP Stake Detail */}
+                {activeTab === 'active' && (
+                    <HistoryTable
+                        title="Active FTP Stake Detail"
+                        subtitle="Currently active stakes"
+                        icon={TrendingUp}
+                        columns={['SR.NO', 'ACTIVATE DATE', 'MATURITY DATE', 'STAKE VOLUME', 'STAKE VALUE', 'STATUS', 'COMPLETE MONTH', 'CURRENT PROFIT', 'DETAIL']}
+                        emptyMessage="No Active Stakes Found"
+                        showViewAction={true}
+                    />
+                )}
+
+                {/* 3. Deactive FTP Stake Profit */}
+                {activeTab === 'deactive' && (
+                    <HistoryTable
+                        title="Deactive FTP Stake Profit"
+                        subtitle="Completed or Closed Stakes"
+                        icon={DollarSign}
+                        columns={['SR.NO', 'ACTIVATE DATE', 'CLOSING DATE', 'STAKE VOLUME', 'STAKE VALUE', 'STATUS', 'COMPLETE MONTH', 'BOOKED PROFIT', 'DETAIL']}
+                        emptyMessage="No Deactive Stakes Found"
+                        showViewAction={true}
+                    />
+                )}
             </div>
         </div>
     );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../../lib/axios';
 import { useAuthStore } from '../../store/useAuthStore';
 import { Search } from 'lucide-react';
 
@@ -14,9 +14,7 @@ const UserManagement = () => {
 
     const fetchUsers = async () => {
         try {
-            const res = await axios.get('https://ivamax-ftp-utp-backend.vercel.app/api/admin/users', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await api.get('/admin/users');
             setUsers(res.data);
         } catch (err) {
             console.error(err);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../lib/axios';
 import { useAuthStore } from '../store/useAuthStore';
 import { User, ZoomIn, ZoomOut } from 'lucide-react';
 import { cn } from '../utils/cn';
@@ -71,9 +71,7 @@ const Network = () => {
     const fetchTree = async (nodeId) => {
         try {
             setLoading(true);
-            const res = await axios.get(`https://ivamax-ftp-utp-backend.vercel.app/api/user/tree/${nodeId || 'null'}`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await api.get(`/user/tree/${nodeId || 'null'}`);
             const { root, left, right } = res.data;
             setTreeData({ ...root, left, right });
         } catch (err) {

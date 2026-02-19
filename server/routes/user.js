@@ -12,4 +12,7 @@ router.get('/direct-team', auth, userController.getDirectTeam);
 // Get Network Tree (Downline)
 router.get('/tree/:nodeId', auth, userController.getNetworkTree);
 
+// Get Dashboard Stats
+router.get('/dashboard', auth, userController.getDashboardStats);
+
 module.exports = router;

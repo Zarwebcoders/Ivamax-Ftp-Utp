@@ -1,7 +1,5 @@
 import { create } from 'zustand';
-import axios from 'axios';
-
-const API_URL = 'https://ivamax-ftp-utp-backend.vercel.app/api/auth';
+import api from '../lib/axios';
 
 export const useAuthStore = create((set) => ({
     user: null,
@@ -13,7 +11,7 @@ export const useAuthStore = create((set) => ({
     login: async (userId, password) => {
         set({ isLoading: true, error: null });
         try {
-            const response = await axios.post(`${API_URL}/login`, { userId, password });
+            const response = await api.post('/auth/login', { userId, password });
             const { token, user } = response.data;
 
             localStorage.setItem('token', token);
@@ -31,7 +29,7 @@ export const useAuthStore = create((set) => ({
     register: async (userData) => {
         set({ isLoading: true, error: null });
         try {
-            const response = await axios.post(`${API_URL}/register`, userData);
+            const response = await api.post('/auth/register', userData);
             const { token, user } = response.data;
 
             localStorage.setItem('token', token);
@@ -57,9 +55,8 @@ export const useAuthStore = create((set) => ({
         if (!token) return;
 
         try {
-            const response = await axios.get('https://ivamax-ftp-utp-backend.vercel.app/api/user/profile', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            // Headers are automatically handled by the interceptor in lib/axios.js
+            const response = await api.get('/user/profile');
             set({ user: response.data, isAuthenticated: true });
         } catch (error) {
             console.error("Failed to load user", error);

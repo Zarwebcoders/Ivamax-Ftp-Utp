@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../lib/axios';
 import { useAuthStore } from '../store/useAuthStore';
 import { TrendingUp, Clock, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { cn } from '../utils/cn';
@@ -18,9 +18,7 @@ const Stake = () => {
 
     const fetchStakes = async () => {
         try {
-            const res = await axios.get('https://ivamax-ftp-utp-backend.vercel.app/api/stake', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await api.get('/stake');
             setStakes(res.data);
         } catch (err) {
             console.error(err);
@@ -33,10 +31,7 @@ const Stake = () => {
 
         setLoading(true);
         try {
-            await axios.post('http://localhost:5000/api/stake/invest',
-                { planType: activeTab, amount, durationMonths: duration },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            await api.post('/stake/invest', { planType: activeTab, amount, durationMonths: duration });
             setAmount('');
             fetchStakes();
             alert('Investment Successful!');

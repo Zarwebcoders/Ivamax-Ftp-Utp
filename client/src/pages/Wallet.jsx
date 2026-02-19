@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Wallet as WalletIcon, ArrowDownLeft, ArrowUpRight, DollarSign, Layers, CreditCard, Activity, Landmark, Download } from 'lucide-react';
+import { Wallet as WalletIcon, ArrowDownLeft, ArrowUpRight, DollarSign, Layers, CreditCard, Activity, Landmark, Download, TrendingUp, PieChart, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const ActionButton = ({ icon: Icon, label, colorClass, onClick, link }) => {
@@ -19,32 +19,100 @@ const ActionButton = ({ icon: Icon, label, colorClass, onClick, link }) => {
     return <button onClick={onClick} className="w-full"><Content /></button>;
 };
 
-const WalletCard = ({ title, items, icon: Icon }) => (
-    <div className="bg-surface border border-gray-400 rounded-3xl p-4 shadow-lg shadow-gray-400 hover:shadow-md transition-all group relative overflow-hidden">
-        <div className="flex justify-between items-center mb-6 relative z-10">
-            <h3 className="text-sm font-bold text-primary uppercase tracking-wider flex items-center gap-2">
-                {Icon && <Icon className="w-4 h-4" />}
-                {title}
-            </h3>
-            <div className="p-2 bg-gray-50 rounded-lg text-gray-400 group-hover:text-primary transition-colors">
-                <WalletIcon className="w-4 h-4" />
+const WalletCard = ({ title, items, icon: Icon }) => {
+    // Function to determine gradient based on title
+    const getGradient = () => {
+        switch (title) {
+            case 'Captok Wallet':
+                return 'from-blue-600 to-blue-400';
+            case 'Protok Wallet':
+                return 'from-purple-600 to-purple-400';
+            case 'FTP Plan':
+                return 'from-amber-600 to-amber-400';
+            case 'UTP Plan':
+                return 'from-emerald-600 to-emerald-400';
+            default:
+                return 'from-gray-600 to-gray-400';
+        }
+    };
+
+    return (
+        <div className="group relative">
+            {/* Card Container with Glassmorphism effect */}
+            <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 border border-gray-700 shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]">
+
+                {/* Background Pattern */}
+                <div className="absolute inset-0 opacity-10">
+                    <div className="absolute inset-0" style={{
+                        backgroundImage: 'radial-gradient(circle at 2px 2px, gray 1px, transparent 0)',
+                        backgroundSize: '32px 32px'
+                    }}></div>
+                </div>
+
+                {/* Animated Gradient Orbs */}
+                <div className={`absolute -top-20 -right-20 w-48 h-48 bg-gradient-to-r ${getGradient()} rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500`}></div>
+                <div className={`absolute -bottom-20 -left-20 w-48 h-48 bg-gradient-to-r ${getGradient()} rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500`}></div>
+
+                {/* Header with Icon and Title */}
+                <div className="relative z-10 flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                        <div className={`p-3 rounded-xl bg-gradient-to-r ${getGradient()} shadow-lg`}>
+                            {Icon && <Icon className="w-5 h-5 text-white" />}
+                        </div>
+                        <h3 className="text-lg font-bold text-white tracking-tight">{title}</h3>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className="text-xs font-medium text-gray-400 bg-gray-800/50 px-3 py-1 rounded-full border border-gray-700">
+                            Active
+                        </span>
+                    </div>
+                </div>
+
+                {/* Stats Grid */}
+                <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-3">
+                    {items.map((item, idx) => (
+                        <div
+                            key={idx}
+                            className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 border border-gray-700 hover:border-gray-600 transition-all group/card"
+                        >
+                            <div className="flex flex-col">
+                                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">
+                                    {item.label}
+                                </span>
+                                <span className="text-2xl font-bold text-white mb-1">
+                                    {item.value}
+                                </span>
+                                <span className="text-xs font-medium text-gray-500 flex items-center gap-1">
+                                    <TrendingUp className="w-3 h-3" />
+                                    {item.subtext}
+                                </span>
+                            </div>
+
+                            {/* Mini trend indicator */}
+                            {idx === 0 && (
+                                <div className="mt-2 w-full h-1 bg-gray-700 rounded-full overflow-hidden">
+                                    <div className={`h-full w-3/4 bg-gradient-to-r ${getGradient()} rounded-full`}></div>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+
+                {/* Footer Stats */}
+                <div className="relative z-10 mt-4 pt-4 border-t border-gray-700/50 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                        <Shield className="w-3 h-3 text-gray-500" />
+                        <span className="text-xs text-gray-500">Secured</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <PieChart className="w-3 h-3 text-gray-500" />
+                        <span className="text-xs text-gray-500">Updated live</span>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
-            {items.map((item, idx) => (
-                <div key={idx} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                    <p className="text-[10px] font-bold text-gray-400 uppercase mb-1">{item.label}</p>
-                    <p className="text-lg font-bold text-text-main text-green-600">{item.value}</p>
-                    <p className="text-[10px] font-bold text-text-muted mt-1">{item.subtext}</p>
-                </div>
-            ))}
-        </div>
-
-        {/* Decorative background element */}
-        <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-all"></div>
-    </div>
-);
+    );
+};
 
 const Wallet = () => {
     // These could fulfill the "Add Funds" and "Withdraw" actions
@@ -66,33 +134,6 @@ const Wallet = () => {
                     <h1 className="hidden md:block text-2xl font-bold text-text-main uppercase">Financial Center</h1>
                     <p className="text-xs md:text-sm font-bold text-text-muted uppercase">Ecosystem Liquidity & Portfolio Overview</p>
                 </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <ActionButton
-                    icon={ArrowDownLeft}
-                    label="Add Funds"
-                    colorClass="text-green-500"
-                />
-                <ActionButton
-                    icon={ArrowUpRight}
-                    label="Withdraw"
-                    colorClass="text-red-500"
-                    link="/withdraw"
-                />
-                <ActionButton
-                    icon={Landmark}
-                    label="Stake FTP"
-                    colorClass="text-yellow-500"
-                    link="/ftp"
-                />
-                <ActionButton
-                    icon={Download}
-                    label="Stake UTP"
-                    colorClass="text-blue-500"
-                    link="/utp"
-                />
             </div>
 
             {/* Wallet Holdings Section */}

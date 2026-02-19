@@ -157,14 +157,14 @@ const Hierarchy = () => {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <StatCard title="Self Business" value="$0.00" subtext="0 IMX" icon={DollarSign} />
                 <StatCard title="Direct Team" value="0" icon={Users} />
                 <StatCard title="Direct Self Business" value="$0.00" subtext="0 IMX" icon={Activity} />
                 <StatCard title="Total Team" value="0" icon={Award} />
                 <StatCard title="Team Business" value="$0.00" icon={DollarSign} />
                 <StatCard title="Rank" value="Unranked" icon={Award} />
-            </div>
+            </div> */}
 
             {/* Genealogy Tree View */}
             {viewMode === 'genealogy' && (

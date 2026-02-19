@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../../lib/axios';
 import { useAuthStore } from '../../store/useAuthStore';
 import { Check, X, Loader } from 'lucide-react';
 
@@ -14,9 +14,7 @@ const DepositRequests = () => {
 
     const fetchDeposits = async () => {
         try {
-            const res = await axios.get('https://ivamax-ftp-utp-backend.vercel.app/api/admin/deposits/pending', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await api.get('/admin/deposits/pending');
             setDeposits(res.data);
         } catch (err) {
             console.error(err);
@@ -28,10 +26,7 @@ const DepositRequests = () => {
         setLoading(true);
         try {
             const url = action === 'approve' ? 'approve' : 'reject';
-            await axios.post(`http://localhost:5000/api/admin/deposits/${url}`,
-                { transactionId: id },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            await api.post(`/admin/deposits/${url}`, { transactionId: id });
             fetchDeposits();
         } catch (err) {
             alert('Action failed');

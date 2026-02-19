@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../../lib/axios';
 import { useAuthStore } from '../../store/useAuthStore';
 import { Users, DollarSign, Activity } from 'lucide-react';
 
@@ -13,9 +13,7 @@ const AdminDashboard = () => {
 
     const fetchStats = async () => {
         try {
-            const res = await axios.get('https://ivamax-ftp-utp-backend.vercel.app/api/admin/stats', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await api.get('/admin/stats');
             setStats(res.data);
         } catch (err) {
             console.error(err);

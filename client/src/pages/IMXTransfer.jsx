@@ -58,6 +58,8 @@ const HistorySection = ({ title, activeTab, onTabChange }) => (
 const IMXTransfer = () => {
     const [captokTab, setCaptokTab] = useState('FTP');
     const [protokTab, setProtokTab] = useState('FTP');
+    const [activeTab, setActiveTab] = useState('holdings'); // 'holdings', 'history'
+    const [historyType, setHistoryType] = useState('captok'); // 'captok', 'protok'
 
     return (
         <div className="space-y-8 pb-12">
@@ -77,8 +79,30 @@ const IMXTransfer = () => {
                 </div>
             </div>
 
+            {/* Mobile Tab Navigation */}
+            <div className="md:hidden bg-black p-2 rounded-2xl border border-gray-800 flex gap-2 mb-6">
+                <button
+                    onClick={() => setActiveTab('holdings')}
+                    className={`flex-1 py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${activeTab === 'holdings'
+                        ? 'bg-primary text-black shadow-lg shadow-primary/20'
+                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        }`}
+                >
+                    Holdings
+                </button>
+                <button
+                    onClick={() => setActiveTab('history')}
+                    className={`flex-1 py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${activeTab === 'history'
+                        ? 'bg-primary text-black shadow-lg shadow-primary/20'
+                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        }`}
+                >
+                    History
+                </button>
+            </div>
+
             {/* Wallet Holdings Section */}
-            <div className="space-y-6">
+            <div className={`space-y-6 ${activeTab === 'holdings' ? 'block' : 'hidden'} md:block`}>
                 <h2 className="text-xl font-bold text-text-main uppercase border-l-4 border-primary pl-4">Wallet Holdings</h2>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -121,20 +145,46 @@ const IMXTransfer = () => {
             </div>
 
             {/* Transaction History Section */}
-            <div className="space-y-6 pt-6">
+            <div className={`space-y-6 pt-6 ${activeTab === 'history' ? 'block' : 'hidden'} md:block`}>
                 <h2 className="text-xl font-bold text-text-main uppercase border-l-4 border-secondary pl-4">Transaction History</h2>
 
+                {/* History Type Tabs */}
+                <div className="flex gap-4 border-b border-gray-800 pb-2 mb-4 overflow-x-auto">
+                    <button
+                        onClick={() => setHistoryType('captok')}
+                        className={`text-sm font-bold uppercase tracking-wider pb-2 border-b-2 transition-all whitespace-nowrap ${historyType === 'captok'
+                            ? 'text-primary border-primary'
+                            : 'text-gray-500 border-transparent hover:text-gray-300'
+                            }`}
+                    >
+                        Captok History
+                    </button>
+                    <button
+                        onClick={() => setHistoryType('protok')}
+                        className={`text-sm font-bold uppercase tracking-wider pb-2 border-b-2 transition-all whitespace-nowrap ${historyType === 'protok'
+                            ? 'text-primary border-primary'
+                            : 'text-gray-500 border-transparent hover:text-gray-300'
+                            }`}
+                    >
+                        Protok History
+                    </button>
+                </div>
+
                 <div className="space-y-6">
-                    <HistorySection
-                        title="Captok History"
-                        activeTab={captokTab}
-                        onTabChange={setCaptokTab}
-                    />
-                    <HistorySection
-                        title="Protok History"
-                        activeTab={protokTab}
-                        onTabChange={setProtokTab}
-                    />
+                    {historyType === 'captok' && (
+                        <HistorySection
+                            title="Captok History"
+                            activeTab={captokTab}
+                            onTabChange={setCaptokTab}
+                        />
+                    )}
+                    {historyType === 'protok' && (
+                        <HistorySection
+                            title="Protok History"
+                            activeTab={protokTab}
+                            onTabChange={setProtokTab}
+                        />
+                    )}
                 </div>
             </div>
         </div>
