@@ -234,13 +234,13 @@ const Hierarchy = () => {
             {viewMode === 'list' && (
                 <div className="space-y-6">
                     {/* Search and Filter Section - Dark Theme */}
-                    <div className="bg-black rounded-3xl p-4 shadow-lg shadow-gray-600 border border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div className="bg-white rounded-3xl p-4 shadow-lg shadow-gray-600 border border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
                         <div className="relative w-full md:w-96">
                             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
                             <input
                                 type="text"
                                 placeholder="SEARCH USERNAME, EMAIL OR ADDRESS"
-                                className="w-full bg-gray-900 border border-gray-700 text-white rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-primary text-xs font-bold uppercase tracking-wider"
+                                className="w-full bg-gray-300 border border-gray-700 text-black rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-primary text-xs font-bold uppercase tracking-wider"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
@@ -248,9 +248,9 @@ const Hierarchy = () => {
 
                         <div className="flex items-center space-x-3 w-full md:w-auto">
                             <Filter className="text-primary w-5 h-5" />
-                            <span className="text-white font-bold text-xs uppercase">Status :</span>
+                            <span className="text-black font-bold text-xs uppercase">Status :</span>
                             <select
-                                className="bg-gray-900 border border-gray-700 text-white rounded-xl py-2 px-4 focus:outline-none focus:border-primary text-xs font-bold uppercase"
+                                className="bg-gray-300 border border-gray-700 text-black rounded-xl py-2 px-4 focus:outline-none focus:border-primary text-xs font-bold uppercase"
                                 value={statusFilter}
                                 onChange={(e) => setStatusFilter(e.target.value)}
                             >
@@ -262,33 +262,37 @@ const Hierarchy = () => {
                     </div>
 
                     {/* Team Members Table - Dark Theme */}
-                    <div className="bg-black rounded-3xl border border-gray-800 shadow-gray-600 overflow-hidden shadow-lg min-h-[400px]">
+                    <div className="bg-white rounded-3xl border border-gray-800 shadow-gray-600 overflow-hidden shadow-lg min-h-[400px]">
                         <div className="overflow-x-auto">
                             <table className="w-full">
                                 <thead>
                                     <tr className="border-b border-gray-800">
-                                        <th className="text-left py-4 px-6 text-xs font-bold text-white uppercase">User Info</th>
-                                        <th className="text-left py-4 px-6 text-xs font-bold text-white uppercase">Status</th>
-                                        <th className="text-left py-4 px-6 text-xs font-bold text-white uppercase">Business</th>
-                                        <th className="text-left py-4 px-6 text-xs font-bold text-white uppercase">FTP Stake</th>
-                                        <th className="text-left py-4 px-6 text-xs font-bold text-white uppercase">UTP Stake</th>
-                                        <th className="text-left py-4 px-6 text-xs font-bold text-white uppercase">Team Info</th>
-                                        <th className="text-left py-4 px-6 text-xs font-bold text-white uppercase">Joined Date</th>
+                                        <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">User Info</th>
+                                        <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">Status</th>
+                                        <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">Business</th>
+                                        <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">FTP Stake</th>
+                                        <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">UTP Stake</th>
+                                        <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">Team Info</th>
+                                        <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">Joined Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {teamMembers.length > 0 ? (
                                         teamMembers.map((member, index) => (
                                             <tr key={index} className="border-b border-gray-800 hover:bg-gray-900/50 transition-colors">
-                                                <td className="py-4 px-6 text-white">{member.name}</td>
-                                                <td className="py-4 px-6 text-white">{member.status}</td>
-                                                {/* ... other columns ... */}
+                                                <td className="py-4 px-6 text-black">{member.name}</td>
+                                                <td className="py-4 px-6 text-black">{member.status}</td>
+                                                <td className="py-4 px-6 text-black">{member.business}</td>
+                                                <td className="py-4 px-6 text-black">{member.ftpStake}</td>
+                                                <td className="py-4 px-6 text-black">{member.utpStake}</td>
+                                                <td className="py-4 px-6 text-black">{member.teamInfo}</td>
+                                                <td className="py-4 px-6 text-black">{member.joinedDate}</td>
                                             </tr>
                                         ))
                                     ) : (
                                         <tr>
                                             <td colSpan="7" className="py-20 text-center">
-                                                <p className="text-white font-bold uppercase text-xs tracking-wider">No Team Members Found</p>
+                                                <p className="text-black font-bold uppercase text-xs tracking-wider">No Team Members Found</p>
                                             </td>
                                         </tr>
                                     )}

@@ -14,11 +14,11 @@ const SummaryCard = ({ title, value, subValue }) => (
 );
 
 const HistoryTable = ({ title, subtitle, columns, data = [], emptyMessage, icon: Icon, showViewAction }) => (
-    <div className="bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden">
+    <div className="bg-white rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden">
         <div className="p-6 border-b border-gray-800 flex items-center gap-3">
-            {Icon && <div className="p-2 bg-gray-900 rounded-lg text-primary"><Icon className="w-4 h-4" /></div>}
+            {Icon && <div className="p-2 bg-primary rounded-lg text-white"><Icon className="w-4 h-4" /></div>}
             <div>
-                <h3 className="text-white font-bold uppercase text-sm tracking-wider">{title}</h3>
+                <h3 className="text-black font-bold uppercase text-sm tracking-wider">{title}</h3>
                 {subtitle && <p className="text-gray-500 text-[10px] uppercase font-bold tracking-wide">{subtitle}</p>}
             </div>
 
@@ -31,7 +31,7 @@ const HistoryTable = ({ title, subtitle, columns, data = [], emptyMessage, icon:
         <div className="overflow-x-auto">
             <table className="w-full">
                 <thead>
-                    <tr className="bg-gray-900/50">
+                    <tr className="border-b border-gray-800">
                         {columns.map((col, idx) => (
                             <th key={idx} className="text-left py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">
                                 {col}
@@ -89,12 +89,12 @@ const FTP = () => {
             </div>
 
             {/* Mobile Tab Navigation */}
-            <div className="md:hidden bg-black p-2 rounded-2xl border border-gray-800 flex gap-2">
+            <div className="md:hidden bg-gray-300 p-2 rounded-2xl border border-gray-800 flex gap-2">
                 <button
                     onClick={() => setMobileTab('overview')}
                     className={`flex-1 flex flex-col items-center justify-center py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'overview'
                         ? 'bg-primary text-black shadow-lg shadow-primary/20'
-                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        : 'text-gray-500 hover:text-white hover:bg-gray-900'
                         }`}
                 >
                     <Activity className="w-5 h-5 mb-1" />
@@ -104,7 +104,7 @@ const FTP = () => {
                     onClick={() => setMobileTab('invest')}
                     className={`flex-1 flex flex-col items-center justify-center py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'invest'
                         ? 'bg-primary text-black shadow-lg shadow-primary/20'
-                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        : 'text-gray-500 hover:text-white hover:bg-gray-900'
                         }`}
                 >
                     <TrendingUp className="w-5 h-5 mb-1" />
@@ -114,7 +114,7 @@ const FTP = () => {
                     onClick={() => setMobileTab('history')}
                     className={`flex-1 flex flex-col items-center justify-center py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'history'
                         ? 'bg-primary text-black shadow-lg shadow-primary/20'
-                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        : 'text-gray-500 hover:text-white hover:bg-gray-900'
                         }`}
                 >
                     <History className="w-5 h-5 mb-1" />
@@ -130,8 +130,8 @@ const FTP = () => {
             </div>
 
             {/* Invest FTP Stake Process */}
-            <div className={`bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 p-8 ${mobileTab === 'invest' ? 'block' : 'hidden'} md:block`}>
-                <h2 className="text-white font-bold uppercase text-center mb-8 tracking-widest text-sm">Invest FTP Stake Process</h2>
+            <div className={`bg-white rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 p-8 ${mobileTab === 'invest' ? 'block' : 'hidden'} md:block`}>
+                <h2 className="text-black font-bold uppercase text-center mb-8 tracking-widest text-sm">Invest FTP Stake Process</h2>
 
                 <div className="space-y-6">
                     <div className="flex justify-between items-center text-xs font-bold uppercase">
@@ -140,12 +140,12 @@ const FTP = () => {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Stake Volume (Units)</label>
+                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Stake Volume (Units)</label>
                         <div className="relative">
                             <input
                                 type="number"
                                 placeholder="Enter Units"
-                                className="w-full bg-gray-900 border border-gray-700 text-white rounded-xl py-4 pl-4 pr-12 focus:outline-none focus:border-primary font-bold placeholder-gray-600"
+                                className="w-full bg-gray-900 border border-gray-700 text-white rounded-xl py-4 pl-4 pr-12 focus:outline-none focus:border-primary font-bold placeholder-gray-300"
                                 value={amount}
                                 onChange={(e) => setAmount(e.target.value)}
                             />
@@ -153,8 +153,8 @@ const FTP = () => {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Term</label>
-                        <div className="w-full bg-gray-900 border border-gray-700 text-white rounded-xl py-4 px-4 font-bold flex justify-between items-center">
+                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Term</label>
+                        <div className="w-full bg-gray-900 border border-gray-700 text-white rounded-xl py-4 px-4 font-bold flex justify-between items-center placeholder-gray-300">
                             <span>24 MO</span>
                             <Clock className="w-4 h-4 text-gray-500" />
                         </div>
@@ -169,30 +169,30 @@ const FTP = () => {
             {/* Tables Section with Tabs */}
             <div className={`space-y-6 ${mobileTab === 'history' ? 'block' : 'hidden'} md:block`}>
                 {/* Custom Tab Navigation */}
-                <div className="bg-black p-2 rounded-2xl border border-gray-800 flex flex-wrap gap-2">
+                <div className="bg-gray-300 p-2 rounded-lg border border-gray-800 flex flex-wrap gap-2">
                     <button
                         onClick={() => setActiveTab('records')}
-                        className={`flex-1 py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'records'
+                        className={`flex-1 py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'records'
                             ? 'bg-primary text-black shadow-lg shadow-primary/20'
-                            : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                            : 'text-gray-500 hover:text-white hover:bg-gray-900'
                             }`}
                     >
                         FTP Stake Records
                     </button>
                     <button
                         onClick={() => setActiveTab('active')}
-                        className={`flex-1 py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'active'
+                        className={`flex-1 py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'active'
                             ? 'bg-primary text-black shadow-lg shadow-primary/20'
-                            : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                            : 'text-gray-500 hover:text-white hover:bg-gray-900'
                             }`}
                     >
                         Active FTP Stake Detail
                     </button>
                     <button
                         onClick={() => setActiveTab('deactive')}
-                        className={`flex-1 py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'deactive'
+                        className={`flex-1 py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'deactive'
                             ? 'bg-primary text-black shadow-lg shadow-primary/20'
-                            : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                            : 'text-gray-500 hover:text-white hover:bg-gray-900'
                             }`}
                     >
                         Deactive FTP Stake Profit

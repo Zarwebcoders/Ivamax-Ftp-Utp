@@ -115,16 +115,16 @@ const BuyIMX = () => {
 
             {/* Configuration Section */}
             <div className={`max-w-3xl mx-auto w-full ${activeTab === 'buy' ? 'block' : 'hidden'} md:block`}>
-                <div className="bg-black rounded-3xl p-4 shadow-lg shadow-gray-600 border border-gray-800 relative overflow-hidden">
+                <div className="bg-white rounded-3xl p-4 shadow-lg shadow-gray-600 border border-gray-800 relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-2 opacity-10">
                         <ShoppingCart className="w-32 h-32 text-white" />
                     </div>
 
-                    <h2 className="text-center text-white font-bold uppercase tracking-widest mb-8">Quantity</h2>
+                    <h2 className="text-center text-primary font-bold uppercase tracking-widest mb-8">Quantity</h2>
 
                     <div className="space-y-6 relative z-10">
                         {/* Custom Input with +/- buttons */}
-                        <div className="bg-[#13161f] border border-[#2a2d36] rounded-xl flex items-center p-2">
+                        <div className="bg-[#13161f] border border-[#2a2d36] rounded-xl flex items-center">
                             <button
                                 onClick={() => setSlots(Math.max(1, slots - 1))}
                                 className="w-12 h-12 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
@@ -148,7 +148,7 @@ const BuyIMX = () => {
                             </button>
                         </div>
 
-                        <div className="bg-[#13161f] rounded-xl p-6 border border-[#2a2d36]">
+                        <div className="bg-[#13161f] rounded-xl p-3 border border-[#2a2d36]">
                             <div className="flex justify-between items-center mb-4">
                                 <span className="text-gray-400 font-bold text-xs uppercase">Volume</span>
                                 <span className="text-white font-bold text-lg">{slots * tokensPerSlot} IMX</span>
@@ -167,11 +167,11 @@ const BuyIMX = () => {
             </div>
 
             {/* Purchase Records */}
-            <div className={`bg-black rounded-3xl shadow-gray-600 border border-gray-800 overflow-hidden shadow-lg ${activeTab === 'history' ? 'block' : 'hidden'} md:block`}>
+            <div className={`bg-white rounded-3xl shadow-gray-600 border border-gray-800 overflow-hidden shadow-lg ${activeTab === 'history' ? 'block' : 'hidden'} md:block`}>
                 <div className="p-6 border-b border-gray-800 flex justify-between items-center">
                     <div className="flex items-center space-x-2">
                         <History className="w-5 h-5 text-primary" />
-                        <h2 className="text-white font-bold uppercase tracking-wide">Purchase Records</h2>
+                        <h2 className="text-black font-bold uppercase tracking-wide">Purchase Records</h2>
                     </div>
                     <button className="flex items-center space-x-2 bg-primary text-black px-4 py-2 rounded-lg text-xs font-bold uppercase hover:bg-primary/90 transition-colors">
                         <RefreshCw className="w-3 h-3" />
@@ -183,12 +183,12 @@ const BuyIMX = () => {
                     <table className="w-full">
                         <thead>
                             <tr className="border-b border-gray-800">
-                                <th className="text-left py-4 px-6 text-xs font-bold text-gray-400 uppercase">Date</th>
-                                <th className="text-left py-4 px-6 text-xs font-bold text-gray-400 uppercase">Total Lot</th>
-                                <th className="text-left py-4 px-6 text-xs font-bold text-gray-400 uppercase">Value</th>
-                                <th className="text-left py-4 px-6 text-xs font-bold text-gray-400 uppercase">Tokens</th>
-                                <th className="text-left py-4 px-6 text-xs font-bold text-gray-400 uppercase">Status</th>
-                                <th className="text-left py-4 px-6 text-xs font-bold text-gray-400 uppercase">Token Type</th>
+                                <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">Date</th>
+                                <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">Total Lot</th>
+                                <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">Value</th>
+                                <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">Tokens</th>
+                                <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">Status</th>
+                                <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">Token Type</th>
                             </tr>
                         </thead>
                         <tbody>

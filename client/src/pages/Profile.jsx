@@ -27,34 +27,34 @@ const Profile = () => {
             <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
                 <User className="w-5 h-5 text-primary" /> Profile Details
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4">
                 <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
-                    <label className="text-xs font-bold text-gray-400 uppercase block mb-1">User ID</label>
-                    <p className="font-mono font-bold text-primary">{user?.userId}</p>
+                    <label className="text-[10px] md:text-xs font-bold text-gray-400 uppercase block mb-1">User ID</label>
+                    <p className="font-mono text-sm md:text-base font-bold text-primary truncate">{user?.userId}</p>
                 </div>
                 <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
-                    <label className="text-xs font-bold text-gray-400 uppercase block mb-1">Full Name</label>
-                    <p className="font-bold text-gray-800">{user?.name}</p>
+                    <label className="text-[10px] md:text-xs font-bold text-gray-400 uppercase block mb-1">Full Name</label>
+                    <p className="font-bold text-sm md:text-base text-gray-800 truncate">{user?.name}</p>
+                </div>
+                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100 col-span-2 md:col-span-1">
+                    <label className="text-[10px] md:text-xs font-bold text-gray-400 uppercase block mb-1">Email</label>
+                    <p className="font-medium text-sm md:text-base text-gray-600 truncate">{user?.email}</p>
                 </div>
                 <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
-                    <label className="text-xs font-bold text-gray-400 uppercase block mb-1">Email</label>
-                    <p className="font-medium text-gray-600 truncate">{user?.email}</p>
+                    <label className="text-[10px] md:text-xs font-bold text-gray-400 uppercase block mb-1">Mobile</label>
+                    <p className="font-medium text-sm md:text-base text-gray-600 truncate">{user?.mobile || 'N/A'}</p>
                 </div>
                 <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
-                    <label className="text-xs font-bold text-gray-400 uppercase block mb-1">Mobile</label>
-                    <p className="font-medium text-gray-600">{user?.mobile || 'N/A'}</p>
+                    <label className="text-[10px] md:text-xs font-bold text-gray-400 uppercase block mb-1">Joined Date</label>
+                    <p className="font-medium text-sm md:text-base text-gray-600 truncate">{new Date(user?.createdAt || Date.now()).toLocaleDateString()}</p>
                 </div>
                 <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
-                    <label className="text-xs font-bold text-gray-400 uppercase block mb-1">Joined Date</label>
-                    <p className="font-medium text-gray-600">{new Date(user?.createdAt || Date.now()).toLocaleDateString()}</p>
+                    <label className="text-[10px] md:text-xs font-bold text-gray-400 uppercase block mb-1">Sponsor ID</label>
+                    <p className="font-mono text-sm md:text-base font-bold text-gray-800 truncate">{user?.sponsorId || 'ROOT'}</p>
                 </div>
-                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
-                    <label className="text-xs font-bold text-gray-400 uppercase block mb-1">Sponsor ID</label>
-                    <p className="font-mono font-bold text-gray-800">{user?.sponsorId || 'ROOT'}</p>
-                </div>
-                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100 md:col-span-2">
-                    <label className="text-xs font-bold text-gray-400 uppercase block mb-1">Sponsor Name</label>
-                    <p className="font-bold text-gray-800">{user?.sponsorName || 'N/A'}</p>
+                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100 col-span-2">
+                    <label className="text-[10px] md:text-xs font-bold text-gray-400 uppercase block mb-1">Sponsor Name</label>
+                    <p className="font-bold text-sm md:text-base text-gray-800 truncate">{user?.sponsorName || 'N/A'}</p>
                 </div>
             </div>
         </div>
@@ -193,21 +193,30 @@ const Profile = () => {
             </div>
 
             {/* Mobile Tabs */}
-            <div className="md:hidden flex space-x-2 overflow-x-auto pb-2 scrollbar-none">
-                {['profile', 'security', 'wallet', 'system'].map((tab) => (
-                    <button
-                        key={tab}
-                        onClick={() => setActiveTab(tab)}
-                        className={cn(
-                            "px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all",
-                            activeTab === tab
-                                ? "bg-black text-white shadow-lg"
-                                : "bg-white text-gray-500 border border-gray-200"
-                        )}
-                    >
-                        {tab}
-                    </button>
-                ))}
+            <div className="md:hidden flex space-x-2 overflow-x-auto pb-2 scrollbar-none bg-gray-300 p-2 rounded-lg">
+                {[
+                    { id: 'profile', label: 'Profile', icon: User },
+                    { id: 'security', label: 'Security', icon: Lock },
+                    { id: 'wallet', label: 'Wallet', icon: CreditCard },
+                    { id: 'system', label: 'System', icon: Settings }
+                ].map((tab) => {
+                    const Icon = tab.icon;
+                    return (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={cn(
+                                "flex items-center gap-1.5 px-4 md:px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all",
+                                activeTab === tab.id
+                                    ? "bg-[#c9a05b] text-white shadow-xl"
+                                    : "bg-white text-gray-500 border border-gray-200 hover:bg-gray-50"
+                            )}
+                        >
+                            <Icon className="w-3.5 h-3.5" />
+                            {tab.label}
+                        </button>
+                    );
+                })}
             </div>
 
             {/* Content Area */}

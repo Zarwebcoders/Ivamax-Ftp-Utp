@@ -433,23 +433,25 @@ const Company = () => {
                     </div>
                 </div>
 
-                <div className="flex p-1 bg-gray-300 rounded-xl relative z-10">
+                <div className="flex p-1 bg-[#d9dde0] rounded-2xl relative z-10 w-full sm:w-auto overflow-x-auto scrollbar-hide gap-1">
                     <button
                         onClick={() => setActiveTab('support')}
-                        className={`px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'support'
-                            ? 'bg-white text-text-main shadow-sm'
-                            : 'text-gray-500 hover:text-gray-700'
+                        className={`flex flex-1 items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all whitespace-nowrap ${activeTab === 'support'
+                            ? 'bg-white text-text-main shadow-md'
+                            : 'text-[#58728d] hover:text-[#3b4c5d]'
                             }`}
                     >
+                        <ShieldCheck className="w-4 h-4" />
                         Support
                     </button>
                     <button
                         onClick={() => setActiveTab('marketing')}
-                        className={`px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'marketing'
-                            ? 'bg-white text-text-main shadow-sm'
-                            : 'text-gray-500 hover:text-gray-700'
+                        className={`flex flex-1 items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all whitespace-nowrap ${activeTab === 'marketing'
+                            ? 'bg-white text-text-main shadow-md'
+                            : 'text-[#58728d] hover:text-[#3b4c5d]'
                             }`}
                     >
+                        <Library className="w-4 h-4" />
                         Marketing Material
                     </button>
                 </div>

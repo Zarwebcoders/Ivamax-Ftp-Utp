@@ -194,7 +194,7 @@ const IMXTransfer = () => {
                         onClick={() => setHistoryType('captok')}
                         className={`text-sm font-bold uppercase tracking-wider pb-2 border-b-2 transition-all whitespace-nowrap ${historyType === 'captok'
                             ? 'text-primary border-primary'
-                            : 'text-gray-500 border-transparent hover:text-gray-300'
+                            : 'text-gray-500 border-transparent hover:text-gray-400'
                             }`}
                     >
                         Captok History
@@ -203,7 +203,7 @@ const IMXTransfer = () => {
                         onClick={() => setHistoryType('protok')}
                         className={`text-sm font-bold uppercase tracking-wider pb-2 border-b-2 transition-all whitespace-nowrap ${historyType === 'protok'
                             ? 'text-primary border-primary'
-                            : 'text-gray-500 border-transparent hover:text-gray-300'
+                            : 'text-gray-500 border-transparent hover:text-gray-400'
                             }`}
                     >
                         Protok History
@@ -212,13 +212,13 @@ const IMXTransfer = () => {
 
                 <div className="space-y-6">
                     {/* Simplified History Display for now */}
-                    <div className="bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden">
+                    <div className="bg-white rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden">
                         <div className="p-4 border-b border-gray-800">
-                            <h3 className="text-white font-bold uppercase text-sm tracking-wider">Recent Transactions ({historyType})</h3>
+                            <h3 className="text-black font-bold uppercase text-sm tracking-wider">Recent Transactions ({historyType})</h3>
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full">
-                                <thead className="bg-gray-900/50 text-xs font-bold text-gray-400 uppercase">
+                                <thead className="border-b border-gray-800 text-xs font-bold text-gray-400 uppercase">
                                     <tr>
                                         <th className="px-6 py-3 text-left">Type</th>
                                         <th className="px-6 py-3 text-left">Amount</th>

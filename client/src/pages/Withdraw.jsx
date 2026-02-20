@@ -79,7 +79,7 @@ const Withdraw = () => {
                     </button>
                 </div>
 
-                <div className="bg-black rounded-3xl border border-gray-800 shadow-xl shadow-gray-400 min-h-[150px] flex items-center justify-center">
+                <div className="bg-white rounded-3xl border border-gray-800 shadow-xl shadow-gray-400 min-h-[150px] flex items-center justify-center">
                     <div className="text-center">
                         <p className="text-gray-500 font-bold uppercase text-xs tracking-widest flex items-center gap-2 justify-center">
                             <AlertCircle className="w-4 h-4" />

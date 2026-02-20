@@ -138,12 +138,12 @@ const Wallet = () => {
             </div>
 
             {/* Mobile Tab Navigation */}
-            <div className="md:hidden bg-black p-2 rounded-2xl border border-gray-800 flex gap-1 overflow-x-auto scrollbar-hide">
+            <div className="md:hidden bg-gray-300 p-2 rounded-2xl border border-gray-800 flex gap-1 overflow-x-auto scrollbar-hide">
                 <button
                     onClick={() => setMobileTab('captok')}
                     className={`flex-1 min-w-[80px] py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'captok'
-                        ? 'bg-blue-500/20 text-blue-400 shadow-lg border border-blue-500/30'
-                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        ? 'bg-blue-500/20 text-blue-800 shadow-lg border border-blue-500/50'
+                        : 'text-gray-500 hover:text-white hover:bg-gray-900'
                         }`}
                 >
                     Captok
@@ -151,8 +151,8 @@ const Wallet = () => {
                 <button
                     onClick={() => setMobileTab('protok')}
                     className={`flex-1 min-w-[80px] py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'protok'
-                        ? 'bg-purple-500/20 text-purple-400 shadow-lg border border-purple-500/30'
-                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        ? 'bg-purple-500/20 text-purple-800 shadow-lg border border-purple-500/50'
+                        : 'text-gray-500 hover:text-white hover:bg-gray-900'
                         }`}
                 >
                     Protok
@@ -160,8 +160,8 @@ const Wallet = () => {
                 <button
                     onClick={() => setMobileTab('ftp')}
                     className={`flex-1 min-w-[80px] py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'ftp'
-                        ? 'bg-amber-500/20 text-amber-400 shadow-lg border border-amber-500/30'
-                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        ? 'bg-amber-500/20 text-amber-800 shadow-lg border border-amber-500/50'
+                        : 'text-gray-500 hover:text-white hover:bg-gray-900'
                         }`}
                 >
                     FTP
@@ -169,8 +169,8 @@ const Wallet = () => {
                 <button
                     onClick={() => setMobileTab('utp')}
                     className={`flex-1 min-w-[80px] py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'utp'
-                        ? 'bg-emerald-500/20 text-emerald-400 shadow-lg border border-emerald-500/30'
-                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        ? 'bg-emerald-500/20 text-emerald-800 shadow-lg border border-emerald-500/50'
+                        : 'text-gray-500 hover:text-white hover:bg-gray-900'
                         }`}
                 >
                     UTP

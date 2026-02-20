@@ -42,10 +42,10 @@ const IntroductionClubContent = () => {
                 </div>
             </div>
 
-            <div className="bg-black rounded-3xl border border-gray-800 p-4 shadow-lg shadow-gray-600 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="bg-white rounded-3xl border border-gray-800 p-4 shadow-lg shadow-gray-600 flex flex-col md:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-3 w-full md:w-auto">
                     <Filter className="w-5 h-5 text-primary" />
-                    <span className="text-white font-bold uppercase text-xs tracking-wider whitespace-nowrap">Filter by Level :</span>
+                    <span className="text-black font-bold uppercase text-xs tracking-wider whitespace-nowrap">Filter by Level :</span>
                 </div>
 
                 <div className="relative w-full md:w-64">
@@ -64,11 +64,11 @@ const IntroductionClubContent = () => {
                 </div>
             </div>
 
-            <div className="bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden shadow-lg">
+            <div className="bg-white rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden shadow-lg">
                 <div className="p-4 border-b border-gray-800 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-2">
                         <Download className="w-4 h-4 text-primary" />
-                        <h3 className="text-white font-bold uppercase text-sm tracking-wider">Reward History</h3>
+                        <h3 className="text-black font-bold uppercase text-sm tracking-wider">Reward History</h3>
                     </div>
 
                     <div className="bg-gray-900 px-4 py-2 rounded-lg border border-gray-700">
@@ -80,11 +80,11 @@ const IntroductionClubContent = () => {
                 <div className="overflow-x-auto">
                     <table className="w-full">
                         <thead>
-                            <tr className="bg-gray-900/50">
-                                <th className="text-left py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">From Address</th>
-                                <th className="text-left py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">Reward Source</th>
-                                <th className="text-left py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">Amount</th>
-                                <th className="text-right py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">Date</th>
+                            <tr className="border-b border-gray-800">
+                                <th className="text-left py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">From Address</th>
+                                <th className="text-left py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Reward Source</th>
+                                <th className="text-left py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Amount</th>
+                                <th className="text-right py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -138,20 +138,20 @@ const StarRoyaltyContent = () => {
                 </div>
             </div>
 
-            <div className="bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden shadow-lg">
+            <div className="bg-white rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden shadow-lg">
                 <div className="p-4 border-b border-gray-800 flex items-center gap-3">
                     <Crown className="w-4 h-4 text-primary" />
-                    <h3 className="text-white font-bold uppercase text-sm tracking-wider">Your Royalty Earnings</h3>
+                    <h3 className="text-black font-bold uppercase text-sm tracking-wider">Your Royalty Earnings</h3>
                 </div>
 
                 <div className="overflow-x-auto">
                     <table className="w-full">
                         <thead>
-                            <tr className="bg-gray-900/50">
-                                <th className="text-left py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">Rank Info</th>
-                                <th className="text-left py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">Business Metrics</th>
-                                <th className="text-left py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">Income</th>
-                                <th className="text-right py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">Date</th>
+                            <tr className="border-b border-gray-800">
+                                <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Rank Info</th>
+                                <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Business Metrics</th>
+                                <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Income</th>
+                                <th className="text-right py-4 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -210,10 +210,10 @@ const PayPerRoyaltyContent = () => {
                 </div>
             </div>
 
-            <div className="bg-black rounded-3xl border border-gray-800 p-4 shadow-lg shadow-gray-600 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="bg-white rounded-3xl border border-gray-800 p-4 shadow-lg shadow-gray-600 flex flex-col md:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-3 w-full md:w-auto">
                     <Filter className="w-5 h-5 text-primary" />
-                    <span className="text-white font-bold uppercase text-xs tracking-wider whitespace-nowrap">Filter by Level :</span>
+                    <span className="text-gray-500 font-bold uppercase text-xs tracking-wider whitespace-nowrap">Filter by Level :</span>
                 </div>
 
                 <div className="relative w-full md:w-64">
@@ -232,20 +232,20 @@ const PayPerRoyaltyContent = () => {
                 </div>
             </div>
 
-            <div className="bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden shadow-lg">
+            <div className="bg-white rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden shadow-lg">
                 <div className="p-4 border-b border-gray-800 flex items-center gap-3">
                     <Download className="w-4 h-4 text-primary" />
-                    <h3 className="text-white font-bold uppercase text-sm tracking-wider">Reward History</h3>
+                    <h3 className="text-black font-bold uppercase text-sm tracking-wider">Reward History</h3>
                 </div>
 
                 <div className="overflow-x-auto">
                     <table className="w-full">
                         <thead>
-                            <tr className="bg-gray-900/50">
-                                <th className="text-left py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">Level Type</th>
-                                <th className="text-left py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">Income Distribution Details</th>
-                                <th className="text-left py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">Amount</th>
-                                <th className="text-right py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">Date</th>
+                            <tr className="border-b border-gray-800">
+                                <th className="text-left py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Level Type</th>
+                                <th className="text-left py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Income Distribution Details</th>
+                                <th className="text-left py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Amount</th>
+                                <th className="text-right py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Date</th>
                             </tr>
                         </thead>
                         <tbody>
