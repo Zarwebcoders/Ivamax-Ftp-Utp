@@ -167,7 +167,7 @@ const Dashboard = () => {
             </div>
 
             {/* Mobile Tab Navigation */}
-            <div className="md:hidden overflow-x-auto pb-4 -mx-4 px-4 scrollbar-hide">
+            <div className="md:hidden overflow-x-auto bg-gray-300 rounded-xl p-1 -mx-4 scrollbar-hide">
                 <div className="flex space-x-2">
                     {tabs.map((tab) => {
                         const Icon = tab.icon;
@@ -176,10 +176,10 @@ const Dashboard = () => {
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`
-                                    flex items-center space-x-2 px-4 py-2.5 rounded-xl whitespace-nowrap transition-all
+                                    flex items-center space-x-2 px-4 py-2.5 rounded-lg whitespace-nowrap transition-all
                                     ${activeTab === tab.id
-                                        ? 'bg-primary text-white shadow-lg shadow-primary/20'
-                                        : 'bg-white text-text-muted border border-gray-200'}
+                                        ? 'bg-white text-primary'
+                                        : 'text-text-muted'}
                                 `}
                             >
                                 <Icon className="w-4 h-4" />
@@ -204,7 +204,7 @@ const Dashboard = () => {
                     {/* Profile Details */}
                     <div className="bg-white border border-gray-400 rounded-3xl p-6 shadow-lg shadow-gray-400 hover:shadow-2xl transition-all duration-300 hover:shadow-golden-300 hover:border-golden-400">
                         <SectionHeader title="Joining Details" icon={User} />
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 lg:grid-cols-2 gap-4">
                             <DetailCard label="Username" value={user?.username || data?.user?.username || "Update Profile"} alert={!user?.username} />
                             <DetailCard label="Email" value={user?.email || data?.user?.email || "Update Profile"} alert={!user?.email} />
                             <DetailCard label="Account" value={data?.user?.sponsorAddress || "0xa887...508854"} subValue="Connected" />
@@ -220,14 +220,14 @@ const Dashboard = () => {
                                 Sponsor Info
                             </h2>
                         </div>
-                        <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
                             <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/5">
-                                <p className="text-xs font-bold text-gray-400 uppercase mb-1">Sponsor Name</p>
-                                <p className="text-lg font-bold text-white">{data?.user?.sponsorName || "N/A"}</p>
+                                <p className="text-[10px] md:text-xs font-bold text-gray-400 uppercase mb-1">Sponsor Name</p>
+                                <p className="text-sm md:text-lg font-bold text-white truncate">{data?.user?.sponsorName || "N/A"}</p>
                             </div>
-                            <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/5">
-                                <p className="text-xs font-bold text-gray-400 uppercase mb-1">Sponsor Address</p>
-                                <p className="text-sm font-bold text-white/80 font-mono truncate">{data?.user?.sponsorAddress || "N/A"}</p>
+                            <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/5 overflow-hidden">
+                                <p className="text-[10px] md:text-xs font-bold text-gray-400 uppercase mb-1">Sponsor Address</p>
+                                <p className="text-xs md:text-sm font-bold text-white/80 font-mono truncate">{data?.user?.sponsorAddress || "N/A"}</p>
                             </div>
                         </div>
                     </div>

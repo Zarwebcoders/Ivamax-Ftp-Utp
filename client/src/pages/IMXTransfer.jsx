@@ -4,23 +4,23 @@ import api from '../lib/axios';
 import { useAuthStore } from '../store/useAuthStore';
 
 const WalletCard = ({ title, items, icon: Icon }) => (
-    <div className="bg-surface border border-gray-400 rounded-3xl p-4 shadow-lg shadow-gray-400 hover:shadow-md transition-all group relative overflow-hidden">
-        <div className="flex justify-between items-center mb-6 relative z-10">
-            <h3 className="text-sm font-bold text-primary uppercase tracking-wider flex items-center gap-2">
-                {Icon && <Icon className="w-4 h-4" />}
+    <div className="bg-surface border border-gray-400 rounded-3xl p-3 md:p-4 shadow-lg shadow-gray-400 hover:shadow-md transition-all group relative overflow-hidden">
+        <div className="flex justify-between items-center mb-4 md:mb-6 relative z-10">
+            <h3 className="text-xs md:text-sm font-bold text-primary uppercase tracking-wider flex items-center gap-2">
+                {Icon && <Icon className="w-3 h-3 md:w-4 md:h-4" />}
                 {title}
             </h3>
-            <div className="p-2 bg-gray-50 rounded-lg text-gray-400 group-hover:text-primary transition-colors">
-                <Wallet className="w-4 h-4" />
+            <div className="p-1.5 md:p-2 bg-gray-50 rounded-lg text-gray-400 group-hover:text-primary transition-colors">
+                <Wallet className="w-3 h-3 md:w-4 md:h-4" />
             </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 relative z-10">
             {items.map((item, idx) => (
-                <div key={idx} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                    <p className="text-[10px] font-bold text-gray-400 uppercase mb-1">{item.label}</p>
-                    <p className="text-lg font-bold text-text-main text-green-600">{item.value}</p>
-                    <p className="text-[10px] font-bold text-text-muted mt-1">{item.subtext}</p>
+                <div key={idx} className="bg-gray-50 rounded-xl p-3 md:p-4 border border-gray-100">
+                    <p className="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase mb-0.5 md:mb-1">{item.label}</p>
+                    <p className="text-base md:text-lg font-bold text-text-main text-green-600">{item.value}</p>
+                    <p className="text-[9px] md:text-[10px] font-bold text-text-muted mt-0.5 md:mt-1">{item.subtext}</p>
                 </div>
             ))}
         </div>

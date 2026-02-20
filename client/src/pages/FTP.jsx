@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { FileText, History, DollarSign, Calendar, TrendingUp, Clock } from 'lucide-react';
+import { FileText, History, DollarSign, Calendar, TrendingUp, Clock, Activity, ArrowRightLeft } from 'lucide-react';
 
 const SummaryCard = ({ title, value, subValue }) => (
-    <div className="bg-surface border border-gray-400 shadow-lg shadow-gray-600 hover:shadow-md rounded-3xl p-6 transition-all group relative overflow-hidden">
-        <div className="relative z-10 text-center">
-            <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-2">{title}</h3>
-            <div className="text-2xl font-bold text-text-main mb-1">{value}</div>
-            {subValue && <div className="text-xs font-bold text-primary">{subValue}</div>}
+    <div className="bg-surface border border-gray-400 shadow-lg shadow-gray-600 hover:shadow-md rounded-2xl md:rounded-3xl p-3 md:p-6 transition-all group relative overflow-hidden flex flex-col items-center justify-center">
+        <div className="relative z-10 text-center w-full">
+            <h3 className="text-[10px] md:text-xs font-bold text-text-muted uppercase tracking-wider mb-1 md:mb-2 leading-tight">{title}</h3>
+            <div className="text-xl md:text-2xl font-bold text-text-main mb-0.5 md:mb-1">{value}</div>
+            {subValue && <div className="text-[9px] md:text-xs font-bold text-primary">{subValue}</div>}
         </div>
         {/* Decorative background */}
-        <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full blur-2xl opacity-50 bg-primary/10"></div>
+        <div className="absolute -bottom-6 -right-6 w-16 md:w-24 h-16 md:h-24 rounded-full blur-2xl opacity-50 bg-primary/10"></div>
     </div>
 );
 
@@ -71,6 +71,7 @@ const HistoryTable = ({ title, subtitle, columns, data = [], emptyMessage, icon:
 const FTP = () => {
     const [amount, setAmount] = useState('');
     const [activeTab, setActiveTab] = useState('records');
+    const [mobileTab, setMobileTab] = useState('overview'); // 'overview', 'invest', 'history'
 
     return (
         <div className="space-y-8 pb-12">
@@ -87,15 +88,49 @@ const FTP = () => {
                 </div>
             </div>
 
+            {/* Mobile Tab Navigation */}
+            <div className="md:hidden bg-black p-2 rounded-2xl border border-gray-800 flex gap-2">
+                <button
+                    onClick={() => setMobileTab('overview')}
+                    className={`flex-1 flex flex-col items-center justify-center py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'overview'
+                        ? 'bg-primary text-black shadow-lg shadow-primary/20'
+                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        }`}
+                >
+                    <Activity className="w-5 h-5 mb-1" />
+                    Stats
+                </button>
+                <button
+                    onClick={() => setMobileTab('invest')}
+                    className={`flex-1 flex flex-col items-center justify-center py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'invest'
+                        ? 'bg-primary text-black shadow-lg shadow-primary/20'
+                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        }`}
+                >
+                    <TrendingUp className="w-5 h-5 mb-1" />
+                    Invest
+                </button>
+                <button
+                    onClick={() => setMobileTab('history')}
+                    className={`flex-1 flex flex-col items-center justify-center py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'history'
+                        ? 'bg-primary text-black shadow-lg shadow-primary/20'
+                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        }`}
+                >
+                    <History className="w-5 h-5 mb-1" />
+                    Records
+                </button>
+            </div>
+
             {/* Top Summary Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className={`grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 ${mobileTab === 'overview' ? 'block' : 'hidden'} md:grid`}>
                 <SummaryCard title="No of Unit" value="0" />
                 <SummaryCard title="FTP Investment" value="$0.00" subValue="0.00 IMX" />
                 <SummaryCard title="FTP Profit" value="$0.00" subValue="0.00 IMX" />
             </div>
 
             {/* Invest FTP Stake Process */}
-            <div className="bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 p-8">
+            <div className={`bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 p-8 ${mobileTab === 'invest' ? 'block' : 'hidden'} md:block`}>
                 <h2 className="text-white font-bold uppercase text-center mb-8 tracking-widest text-sm">Invest FTP Stake Process</h2>
 
                 <div className="space-y-6">
@@ -132,7 +167,7 @@ const FTP = () => {
             </div>
 
             {/* Tables Section with Tabs */}
-            <div className="space-y-6">
+            <div className={`space-y-6 ${mobileTab === 'history' ? 'block' : 'hidden'} md:block`}>
                 {/* Custom Tab Navigation */}
                 <div className="bg-black p-2 rounded-2xl border border-gray-800 flex flex-wrap gap-2">
                     <button

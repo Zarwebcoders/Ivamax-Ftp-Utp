@@ -117,6 +117,7 @@ const WalletCard = ({ title, items, icon: Icon }) => {
 const Wallet = () => {
     // These could fulfill the "Add Funds" and "Withdraw" actions
     // For now, we will layout the UI as requested.
+    const [mobileTab, setMobileTab] = useState('captok'); // 'captok', 'protok', 'ftp', 'utp'
 
     return (
         <div className="space-y-8 pb-12">
@@ -136,46 +137,98 @@ const Wallet = () => {
                 </div>
             </div>
 
+            {/* Mobile Tab Navigation */}
+            <div className="md:hidden bg-black p-2 rounded-2xl border border-gray-800 flex gap-1 overflow-x-auto scrollbar-hide">
+                <button
+                    onClick={() => setMobileTab('captok')}
+                    className={`flex-1 min-w-[80px] py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'captok'
+                        ? 'bg-blue-500/20 text-blue-400 shadow-lg border border-blue-500/30'
+                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        }`}
+                >
+                    Captok
+                </button>
+                <button
+                    onClick={() => setMobileTab('protok')}
+                    className={`flex-1 min-w-[80px] py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'protok'
+                        ? 'bg-purple-500/20 text-purple-400 shadow-lg border border-purple-500/30'
+                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        }`}
+                >
+                    Protok
+                </button>
+                <button
+                    onClick={() => setMobileTab('ftp')}
+                    className={`flex-1 min-w-[80px] py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'ftp'
+                        ? 'bg-amber-500/20 text-amber-400 shadow-lg border border-amber-500/30'
+                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        }`}
+                >
+                    FTP
+                </button>
+                <button
+                    onClick={() => setMobileTab('utp')}
+                    className={`flex-1 min-w-[80px] py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'utp'
+                        ? 'bg-emerald-500/20 text-emerald-400 shadow-lg border border-emerald-500/30'
+                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        }`}
+                >
+                    UTP
+                </button>
+            </div>
+
             {/* Wallet Holdings Section */}
             <div className="space-y-6 pt-2">
-                <h2 className="text-xl font-bold text-text-main uppercase border-l-4 border-primary pl-4">Wallet Holdings</h2>
+                <h2 className="hidden md:block text-xl font-bold text-text-main uppercase border-l-4 border-primary pl-4">Wallet Holdings</h2>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <WalletCard
-                        title="Captok Wallet"
-                        icon={CreditCard}
-                        items={[
-                            { label: "Captok Balance", value: "$0.00", subtext: "0.00 IMX" },
-                            { label: "Used Balance", value: "$0.00", subtext: "0.00 IMX" },
-                            { label: "Free Balance", value: "$0.00", subtext: "0.00 IMX" }
-                        ]}
-                    />
-                    <WalletCard
-                        title="Protok Wallet"
-                        icon={Layers}
-                        items={[
-                            { label: "Protok Balance", value: "$0.00", subtext: "0.00 IMX" },
-                            { label: "FTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" },
-                            { label: "UTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" }
-                        ]}
-                    />
-                    <WalletCard
-                        title="FTP Plan"
-                        icon={Activity}
-                        items={[
-                            { label: "FTP Stake Inv.", value: "$0.00", subtext: "0.00 IMX" },
-                            { label: "FTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" },
-                        ]}
-                    />
-                    <WalletCard
-                        title="UTP Plan"
-                        icon={Activity}
-                        items={[
-                            { label: "UTP Unit", value: "$0.00", subtext: "0.00 IMX" },
-                            { label: "UTP Stake Inv.", value: "$0.00", subtext: "0.00 IMX" },
-                            { label: "UTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" }
-                        ]}
-                    />
+                    <div className={`${mobileTab === 'captok' ? 'block' : 'hidden'} md:block`}>
+                        <WalletCard
+                            title="Captok Wallet"
+                            icon={CreditCard}
+                            items={[
+                                { label: "Captok Balance", value: "$0.00", subtext: "0.00 IMX" },
+                                { label: "Used Balance", value: "$0.00", subtext: "0.00 IMX" },
+                                { label: "Free Balance", value: "$0.00", subtext: "0.00 IMX" }
+                            ]}
+                        />
+                    </div>
+
+                    <div className={`${mobileTab === 'protok' ? 'block' : 'hidden'} md:block`}>
+                        <WalletCard
+                            title="Protok Wallet"
+                            icon={Layers}
+                            items={[
+                                { label: "Protok Balance", value: "$0.00", subtext: "0.00 IMX" },
+                                { label: "FTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" },
+                                { label: "UTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" }
+                            ]}
+                        />
+                    </div>
+
+                    <div className={`${mobileTab === 'ftp' ? 'block' : 'hidden'} md:block`}>
+                        <WalletCard
+                            title="FTP Plan"
+                            icon={Activity}
+                            items={[
+                                { label: "FTP Unit", value: "$0.00", subtext: "0.00 IMX" },
+                                { label: "FTP Stake Inv.", value: "$0.00", subtext: "0.00 IMX" },
+                                { label: "FTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" },
+                            ]}
+                        />
+                    </div>
+
+                    <div className={`${mobileTab === 'utp' ? 'block' : 'hidden'} md:block`}>
+                        <WalletCard
+                            title="UTP Plan"
+                            icon={Activity}
+                            items={[
+                                { label: "UTP Unit", value: "$0.00", subtext: "0.00 IMX" },
+                                { label: "UTP Stake Inv.", value: "$0.00", subtext: "0.00 IMX" },
+                                { label: "UTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" }
+                            ]}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

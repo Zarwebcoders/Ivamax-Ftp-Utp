@@ -16,27 +16,44 @@ const TreeNode = ({ node, level = 0 }) => {
         </div>
     );
 
+    const hasChildren = node.left || node.right;
+
     return (
         <div className="flex flex-col items-center">
-            <div
-                className={cn(
-                    "relative flex flex-col items-center p-4 border-2 rounded-2xl min-w-[140px] transition-all cursor-pointer hover:shadow-lg hover:-translate-y-1 bg-white",
-                    node.rank === 'Member' ? 'border-gray-200' : 'border-primary/50 shadow-md shadow-primary/10'
-                )}
-                onClick={() => setExpanded(!expanded)}
-            >
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold mb-2 shadow-lg shadow-primary/20 text-lg">
-                    {node.name?.[0]}
+            <div className="relative">
+                <div
+                    className={cn(
+                        "relative flex flex-col items-center p-4 border-2 rounded-2xl min-w-[140px] transition-all bg-white mb-2",
+                        node.rank === 'Member' ? 'border-gray-200' : 'border-primary/50 shadow-md shadow-primary/10'
+                    )}
+                >
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold mb-2 shadow-lg shadow-primary/20 text-lg">
+                        {node.name?.[0] || <User className="w-5 h-5" />}
+                    </div>
+                    <h3 className="text-sm font-bold text-text-main">{node.userId}</h3>
+                    <p className="text-xs text-text-muted font-medium bg-gray-100 px-2 py-0.5 rounded-md mt-1">{node.name}</p>
+                    <span className="text-[10px] uppercase tracking-wider bg-primary/10 px-2 py-0.5 rounded-full mt-2 text-primary font-bold">
+                        {node.rank}
+                    </span>
+
+                    {/* Expand/Collapse Button */}
+                    {hasChildren && (
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setExpanded(!expanded);
+                            }}
+                            className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white border border-gray-300 rounded-full flex items-center justify-center text-gray-500 hover:text-primary hover:border-primary hover:shadow-md transition-all z-10"
+                            title={expanded ? "Collapse" : "Expand"}
+                        >
+                            {expanded ? <span className="text-lg font-bold leading-none mb-1">-</span> : <span className="text-lg font-bold leading-none mb-0.5">+</span>}
+                        </button>
+                    )}
                 </div>
-                <h3 className="text-sm font-bold text-text-main">{node.userId}</h3>
-                <p className="text-xs text-text-muted font-medium bg-gray-100 px-2 py-0.5 rounded-md mt-1">{node.name}</p>
-                <span className="text-[10px] uppercase tracking-wider bg-primary/10 px-2 py-0.5 rounded-full mt-2 text-primary font-bold">
-                    {node.rank}
-                </span>
             </div>
 
             {/* Connection Line */}
-            {(node.left || node.right) && expanded && (
+            {hasChildren && expanded && (
                 <div className="flex flex-col items-center w-full">
                     <div className="h-6 w-0.5 bg-gray-300"></div>
                     <div className="flex w-full justify-center relative">

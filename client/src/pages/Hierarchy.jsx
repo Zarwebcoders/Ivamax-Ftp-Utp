@@ -43,39 +43,56 @@ const treeData = {
 
 // Simplified Recursive Tree Component to handle lines correctly
 const TreeView = ({ node }) => {
+    const [expanded, setExpanded] = useState(false);
     const hasChildren = node.children && node.children.length > 0;
 
     return (
         <div className="flex flex-col items-center">
             {/* Node Card */}
-            <div className="bg-white border-2 border-primary/30 hover:border-primary rounded-xl p-3 w-40 shadow-lg shadow-gray-400 hover:shadow-lg transition-all cursor-pointer flex flex-col items-center text-center z-10 relative">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white mb-2 shadow-lg">
-                    <User className="w-5 h-5" />
-                </div>
-                <p className="text-xs font-bold text-gray-400 uppercase mb-0.5">{node.id}</p>
-                <p className="text-sm font-bold text-text-main truncate w-full">{node.name}</p>
-                <div className="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full mt-1 mb-2">
-                    {node.rank}
+            <div className="relative z-10">
+                <div className="bg-white border-2 border-primary/30 hover:border-primary rounded-xl p-3 w-40 shadow-lg shadow-gray-400 hover:shadow-lg transition-all flex flex-col items-center text-center">
+                    <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white mb-2 shadow-lg">
+                        <User className="w-5 h-5" />
+                    </div>
+                    <p className="text-xs font-bold text-gray-400 uppercase mb-0.5">{node.id}</p>
+                    <p className="text-sm font-bold text-text-main truncate w-full">{node.name}</p>
+                    <div className="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full mt-1 mb-2">
+                        {node.rank}
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-1 w-full pt-2 border-t border-gray-100">
+                        <div className="flex flex-col">
+                            <span className="text-[8px] text-gray-400 font-bold">SELF</span>
+                            <span className="text-[10px] font-bold text-gray-800">{node.self}</span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-[8px] text-gray-400 font-bold">TEAM</span>
+                            <span className="text-[10px] font-bold text-gray-800">{node.team}</span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-[8px] text-gray-400 font-bold">BUS.</span>
+                            <span className="text-[10px] font-bold text-gray-800">{node.teamBus}</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-1 w-full pt-2 border-t border-gray-100">
-                    <div className="flex flex-col">
-                        <span className="text-[8px] text-gray-400 font-bold">SELF</span>
-                        <span className="text-[10px] font-bold text-gray-800">{node.self}</span>
-                    </div>
-                    <div className="flex flex-col">
-                        <span className="text-[8px] text-gray-400 font-bold">TEAM</span>
-                        <span className="text-[10px] font-bold text-gray-800">{node.team}</span>
-                    </div>
-                    <div className="flex flex-col">
-                        <span className="text-[8px] text-gray-400 font-bold">BUS.</span>
-                        <span className="text-[10px] font-bold text-gray-800">{node.teamBus}</span>
-                    </div>
-                </div>
+                {/* Toggle Button */}
+                {hasChildren && (
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setExpanded(!expanded);
+                        }}
+                        className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white border border-gray-300 rounded-full flex items-center justify-center text-gray-500 hover:text-primary hover:border-primary hover:shadow-md transition-all z-20"
+                        title={expanded ? "Collapse" : "Expand"}
+                    >
+                        {expanded ? <span className="text-lg font-bold leading-none mb-1">-</span> : <span className="text-lg font-bold leading-none mb-0.5">+</span>}
+                    </button>
+                )}
             </div>
 
             {/* Children Container */}
-            {hasChildren && (
+            {hasChildren && expanded && (
                 <div className="flex flex-col items-center">
                     {/* Vertical Line from Parent Card Down to Crossbar */}
                     <div className="w-px h-8 bg-gray-400"></div>
