@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Wallet, History, ArrowRightLeft, CreditCard, Layers, Activity } from 'lucide-react';
+import api from '../lib/axios';
+import { useAuthStore } from '../store/useAuthStore';
 
 const WalletCard = ({ title, items, icon: Icon }) => (
     <div className="bg-surface border border-gray-400 rounded-3xl p-4 shadow-lg shadow-gray-400 hover:shadow-md transition-all group relative overflow-hidden">
@@ -56,10 +58,46 @@ const HistorySection = ({ title, activeTab, onTabChange }) => (
 );
 
 const IMXTransfer = () => {
+    const { user, token } = useAuthStore();
     const [captokTab, setCaptokTab] = useState('FTP');
     const [protokTab, setProtokTab] = useState('FTP');
     const [activeTab, setActiveTab] = useState('holdings'); // 'holdings', 'history'
     const [historyType, setHistoryType] = useState('captok'); // 'captok', 'protok'
+    const [transactions, setTransactions] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchHistory = async () => {
+            try {
+                const res = await api.get('/wallet/history');
+                setTransactions(res.data);
+            } catch (err) {
+                console.error("Failed to fetch history", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (token) fetchHistory();
+    }, [token]);
+
+
+    // Helper to filter transactions
+    const getFilteredTransactions = (type, tab) => {
+        if (!transactions) return [];
+        // Filter by history type (Captok/Protok context) - Simplified logic as backend doesn't explicitly separate yet
+        // For now, we'll just show all relevant transactions
+        return transactions;
+    };
+
+
+    const captokBalance = user?.wallet?.captok?.main || 0;
+    const captokUsed = user?.wallet?.captok?.used || 0;
+    const captokFree = user?.wallet?.captok?.free || 0;
+
+    const protokBalance = user?.wallet?.protok?.profit || 0;
+    const protokReleased = user?.wallet?.protok?.released || 0;
+    // Assuming 'released' or similar tracks used/withdrawn from protok
 
     return (
         <div className="space-y-8 pb-12">
@@ -110,20 +148,21 @@ const IMXTransfer = () => {
                         title="Captok Wallet"
                         icon={CreditCard}
                         items={[
-                            { label: "Captok Balance", value: "$0", subtext: "0 IMX" },
-                            { label: "Used Balance", value: "$0", subtext: "0 IMX" },
-                            { label: "Free Balance", value: "$0", subtext: "0 IMX" }
+                            { label: "Captok Balance", value: `$${captokBalance.toFixed(2)}`, subtext: `${captokBalance.toFixed(2)} IMX` },
+                            { label: "Used Balance", value: `$${captokUsed.toFixed(2)}`, subtext: `${captokUsed.toFixed(2)} IMX` },
+                            { label: "Free Balance", value: `$${captokFree.toFixed(2)}`, subtext: `${captokFree.toFixed(2)} IMX` }
                         ]}
                     />
                     <WalletCard
                         title="Protok Wallet"
                         icon={Layers}
                         items={[
-                            { label: "Protok Balance", value: "$0", subtext: "0 IMX" },
-                            { label: "FTP Pro Balance", value: "$0", subtext: "0 IMX" },
-                            { label: "UTP Pro Balance", value: "$0", subtext: "0 IMX" }
+                            { label: "Protok Balance", value: `$${protokBalance.toFixed(2)}`, subtext: `${protokBalance.toFixed(2)} IMX` },
+                            { label: "Released", value: `$${protokReleased.toFixed(2)}`, subtext: `${protokReleased.toFixed(2)} IMX` }, // Using released as placeholder
+                            // { label: "UTP Pro Balance", value: "$0", subtext: "0 IMX" }
                         ]}
                     />
+                    {/* 
                     <WalletCard
                         title="FTP Plan"
                         icon={Activity}
@@ -140,7 +179,8 @@ const IMXTransfer = () => {
                             { label: "UTP Stake Inv.", value: "$0", subtext: "0 IMX" },
                             { label: "UTP Pro Balance", value: "$0", subtext: "0 IMX" }
                         ]}
-                    />
+                    /> 
+                    */}
                 </div>
             </div>
 
@@ -171,20 +211,52 @@ const IMXTransfer = () => {
                 </div>
 
                 <div className="space-y-6">
-                    {historyType === 'captok' && (
-                        <HistorySection
-                            title="Captok History"
-                            activeTab={captokTab}
-                            onTabChange={setCaptokTab}
-                        />
-                    )}
-                    {historyType === 'protok' && (
-                        <HistorySection
-                            title="Protok History"
-                            activeTab={protokTab}
-                            onTabChange={setProtokTab}
-                        />
-                    )}
+                    {/* Simplified History Display for now */}
+                    <div className="bg-black rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden">
+                        <div className="p-4 border-b border-gray-800">
+                            <h3 className="text-white font-bold uppercase text-sm tracking-wider">Recent Transactions ({historyType})</h3>
+                        </div>
+                        <div className="overflow-x-auto">
+                            <table className="w-full">
+                                <thead className="bg-gray-900/50 text-xs font-bold text-gray-400 uppercase">
+                                    <tr>
+                                        <th className="px-6 py-3 text-left">Type</th>
+                                        <th className="px-6 py-3 text-left">Amount</th>
+                                        <th className="px-6 py-3 text-left">Date</th>
+                                        <th className="px-6 py-3 text-left">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-800">
+                                    {transactions.length > 0 ? (
+                                        transactions.map((tx) => (
+                                            <tr key={tx._id} className="text-sm font-medium text-gray-300 hover:bg-gray-900/30 transition-colors">
+                                                <td className="px-6 py-4">{tx.type}</td>
+                                                <td className={`px-6 py-4 ${tx.type === 'Withdrawal' || tx.type.includes('Transfer') ? 'text-red-400' : 'text-green-400'}`}>
+                                                    {tx.type === 'Withdrawal' || (tx.type === 'Transfer' && tx.description.includes('to')) ? '-' : '+'}
+                                                    {tx.amount} IMX
+                                                </td>
+                                                <td className="px-6 py-4">{new Date(tx.createdAt).toLocaleDateString()}</td>
+                                                <td className="px-6 py-4">
+                                                    <span className={`px-2 py-1 rounded-full text-[10px] uppercase font-bold ${tx.status === 'Completed' ? 'bg-green-500/10 text-green-500' :
+                                                        tx.status === 'Pending' ? 'bg-yellow-500/10 text-yellow-500' :
+                                                            'bg-red-500/10 text-red-500'
+                                                        }`}>
+                                                        {tx.status}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="4" className="px-6 py-12 text-center text-gray-500 uppercase font-bold text-xs tracking-widest">
+                                                No Transactions Found
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
