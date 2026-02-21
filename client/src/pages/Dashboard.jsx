@@ -39,13 +39,77 @@ const DisplayBanner = () => (
     </div>
 );
 
-const ROCBanner = () => (
-    <div className="bg-gradient-to-r from-orange-400 to-red-500 rounded-3xl p-6 text-white text-center shadow-lg shadow-gray-500 h-40 flex flex-col items-center justify-center">
-        <Trophy className="w-12 h-12 mb-2 opacity-80" />
-        <h3 className="text-xl font-bold uppercase">ROC Banner</h3>
-        <p className="text-xs opacity-90">Changes every week</p>
-    </div>
-);
+const ROCBanner = () => {
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    const slides = [
+        {
+            id: 1,
+            title: "SPECIAL EVENT",
+            desc: "Join our exclusive",
+            gradient: "from-[#f27a24] to-[#e33633]",
+            icon: Trophy
+        },
+        {
+            id: 2,
+            title: "New Staking Pools",
+            desc: "Explore High-Yield FTP Plans available now.",
+            gradient: "from-blue-500 to-indigo-600",
+            icon: Layout
+        },
+        {
+            id: 3,
+            title: "Global Summit 2026",
+            desc: "Register early for the upcoming community gathering.",
+            gradient: "from-emerald-500 to-teal-600",
+            icon: Megaphone
+        }
+    ];
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % slides.length);
+        }, 5000);
+        return () => clearInterval(timer);
+    }, [slides.length]);
+
+    return (
+        <div className="relative w-full rounded-[2rem] overflow-hidden shadow-2xl shadow-gray-400 h-56 md:h-80 lg:h-96">
+            {slides.map((slide, index) => {
+                const Icon = slide.icon;
+                return (
+                    <div
+                        key={slide.id}
+                        className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out bg-gradient-to-r ${slide.gradient} p-8 md:p-16 text-white flex items-center
+                            ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                    >
+                        <div className="relative z-20 space-y-1 md:space-y-2">
+                            <h3 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-none drop-shadow-sm">{slide.title.substring(0, slide.title.indexOf(' '))} <br /> {slide.title.substring(slide.title.indexOf(' ') + 1)}</h3>
+                            <p className="text-lg md:text-2xl font-bold opacity-90 mt-2">{slide.desc}</p>
+                        </div>
+
+                        {/* Huge Watermark Icon */}
+                        <div className="absolute right-[-10%] top-1/2 -translate-y-1/2 z-10 opacity-[0.15]">
+                            <Icon className="w-80 h-80 md:w-[32rem] md:h-[32rem] transform rotate-12" />
+                        </div>
+                    </div>
+                );
+            })}
+
+            {/* Slider Navigation Dots */}
+            <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+                {slides.map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => setCurrentSlide(index)}
+                        className={`h-2.5 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-8 md:w-10 bg-white' : 'w-2.5 bg-white/50 hover:bg-white/80'}`}
+                        aria-label={`Go to slide ${index + 1}`}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+};
 
 const AdvisorRanking = () => (
     <div className="bg-surface border border-gray-400 rounded-3xl p-3 shadow-lg shadow-gray-400">
@@ -116,7 +180,7 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true);
 
     // Tab State
-    const [activeTab, setActiveTab] = useState('joining'); // Default tab
+    const [activeTab, setActiveTab] = useState('display_banner'); // Default tab
 
     useEffect(() => {
         const fetchDashboardData = async () => {
@@ -141,7 +205,6 @@ const Dashboard = () => {
 
     const tabs = [
         { id: 'display_banner', label: 'Display Banner', icon: ImageIcon },
-        { id: 'joining', label: 'Joining Details', icon: User },
         { id: 'roc_banner', label: 'ROC Banner', icon: Trophy },
         { id: 'advisor_ranking', label: 'Advisor Ranking', icon: Trophy },
         { id: 'news', label: 'News', icon: Newspaper },
@@ -198,43 +261,10 @@ const Dashboard = () => {
                     <DisplayBanner />
                 </div>
 
-                {/* Joining Details (Profile & Sponsor) */}
-                {/* Spanning 2 columns on large screens for better layout */}
-                <div className={`${getVisibilityClass('joining')} md:col-span-2 space-y-6`}>
-                    {/* Profile Details */}
-                    <div className="bg-white border border-gray-400 rounded-3xl p-6 shadow-lg shadow-gray-400 hover:shadow-2xl transition-all duration-300 hover:shadow-golden-300 hover:border-golden-400">
-                        <SectionHeader title="Joining Details" icon={User} />
-                        <div className="grid grid-cols-2 lg:grid-cols-2 gap-4">
-                            <DetailCard label="Username" value={user?.username || data?.user?.username || "Update Profile"} alert={!user?.username} />
-                            <DetailCard label="Email" value={user?.email || data?.user?.email || "Update Profile"} alert={!user?.email} />
-                            <DetailCard label="Account" value={data?.user?.sponsorAddress || "0xa887...508854"} subValue="Connected" />
-                            <DetailCard label="Rank" value={data?.user?.rank || "No Rank"} subValue="Current Status" />
-                        </div>
-                    </div>
 
-                    {/* Sponsor Info */}
-                    <div className="bg-white border border-gray-400 rounded-3xl p-6 shadow-lg shadow-gray-400 bg-gradient-to-br from-gray-600 to-gray-600 text-white hover:shadow-2xl transition-all duration-300 hover:shadow-golden-300 hover:border-golden-400">
-                        <div className="flex items-center space-x-2 mb-6">
-                            <Shield className="w-5 h-5 text-primary" />
-                            <h2 className="text-xl font-bold text-white uppercase tracking-wide border-l-4 border-primary pl-3">
-                                Sponsor Info
-                            </h2>
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/5">
-                                <p className="text-[10px] md:text-xs font-bold text-gray-400 uppercase mb-1">Sponsor Name</p>
-                                <p className="text-sm md:text-lg font-bold text-white truncate">{data?.user?.sponsorName || "N/A"}</p>
-                            </div>
-                            <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/5 overflow-hidden">
-                                <p className="text-[10px] md:text-xs font-bold text-gray-400 uppercase mb-1">Sponsor Address</p>
-                                <p className="text-xs md:text-sm font-bold text-white/80 font-mono truncate">{data?.user?.sponsorAddress || "N/A"}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 {/* ROC Banner */}
-                <div className={`${getVisibilityClass('roc_banner')}`}>
+                <div className={`${getVisibilityClass('roc_banner')} md:col-span-2 lg:col-span-3 mb-6`}>
                     <ROCBanner />
                 </div>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Banknote, Wallet, History, AlertCircle } from 'lucide-react';
+import { Banknote, Wallet, History, AlertCircle, TrendingUp, CheckCircle2 } from 'lucide-react';
 
 const Withdraw = () => {
     const [amount, setAmount] = useState('');
@@ -19,6 +19,30 @@ const Withdraw = () => {
                 <div>
                     <h1 className="hidden md:block text-2xl font-bold text-text-main uppercase">Withdraw Protok</h1>
                     <p className="text-xs md:text-sm font-bold text-text-muted uppercase">Securely withdraw your earned rewards</p>
+                </div>
+            </div>
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Available Profit */}
+                <div className="bg-white border border-gray-400 rounded-2xl p-6 shadow-xl shadow-gray-400 flex items-center justify-between">
+                    <div>
+                        <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Available Profit</p>
+                        <h3 className="text-2xl font-bold text-text-main">$0.00</h3>
+                    </div>
+                    <div className="w-12 h-12 bg-green-200 rounded-xl flex items-center justify-center text-green-600">
+                        <TrendingUp className="w-6 h-6" />
+                    </div>
+                </div>
+
+                {/* Total Withdraw */}
+                <div className="bg-white border border-gray-400 rounded-2xl p-6 shadow-xl shadow-gray-400 flex items-center justify-between">
+                    <div>
+                        <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Total Withdraw</p>
+                        <h3 className="text-2xl font-bold text-text-main">$0.00</h3>
+                    </div>
+                    <div className="w-12 h-12 bg-purple-200 rounded-xl flex items-center justify-center text-purple-600">
+                        <CheckCircle2 className="w-6 h-6" />
+                    </div>
                 </div>
             </div>
 
@@ -88,7 +112,7 @@ const Withdraw = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

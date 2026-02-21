@@ -19,8 +19,6 @@ const Layout = () => {
                 return { title: 'Buy IMX', subtitle: 'Purchase and manage your IMX tokens' };
             case '/hierarchy':
                 return { title: 'Network Hierarchy', subtitle: 'Visual representation of your team structure' };
-            case '/imx-transfer':
-                return { title: 'Reward Center', subtitle: 'Manage your IMX transfers and rewards' };
             case '/ftp':
                 return { title: 'Finance Tenure Package', subtitle: 'Manage your FTP investments' };
             case '/utp':
@@ -31,8 +29,6 @@ const Layout = () => {
                 return { title: 'All Rewards', subtitle: 'Manage all your rewards and bonuses' };
             case '/withdraw':
                 return { title: 'Withdraw', subtitle: 'Manage your withdrawals' };
-            case '/wallet-statement':
-                return { title: 'Wallet Statement', subtitle: 'View your transaction history' };
             case '/company':
                 return { title: 'Company', subtitle: 'Manage your company information' };
             case '/profile':

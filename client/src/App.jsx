@@ -11,12 +11,11 @@ import Stake from './pages/Stake';
 import BuyIMX from './pages/BuyIMX';
 import Hierarchy from './pages/Hierarchy';
 import AllRewards from './pages/AllRewards';
-import IMXTransfer from './pages/IMXTransfer';
 import FTP from './pages/FTP';
 import UTP from './pages/UTP';
 
 import Withdraw from './pages/Withdraw';
-import WalletStatement from './pages/WalletStatement';
+
 import Company from './pages/Company';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import UserManagement from './pages/admin/UserManagement';
@@ -55,12 +54,11 @@ function App() {
           <Route path="/buy-imx" element={<BuyIMX />} />
           <Route path="/hierarchy" element={<Hierarchy />} />
 
-          <Route path="/imx-transfer" element={<IMXTransfer />} />
           <Route path="/ftp" element={<FTP />} />
           <Route path="/utp" element={<UTP />} />
           <Route path="/all-rewards" element={<AllRewards />} />
           <Route path="/withdraw" element={<Withdraw />} />
-          <Route path="/wallet-statement" element={<WalletStatement />} />
+
           <Route path="/company" element={<Company />} />
 
           {/* Admin Routes */}

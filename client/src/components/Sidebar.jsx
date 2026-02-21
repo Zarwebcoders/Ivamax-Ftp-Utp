@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Wallet, Users, ArrowRightLeft, FileText, Activity, MessageSquare, User, Network, ShoppingCart, LogOut, ChevronLeft, ChevronRight, Share2, Headphones, Presentation, Award, Star, BadgeDollarSign, ScrollText, Building2, Banknote } from 'lucide-react';
+import { LayoutDashboard, Wallet, Users, ArrowRightLeft, FileText, Activity, MessageSquare, User, Network, ShoppingCart, LogOut, ChevronLeft, ChevronRight, Share2, Headphones, Presentation, Award, Star, BadgeDollarSign, Building2, Banknote } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 import { cn } from '../utils/cn';
 
@@ -13,13 +13,11 @@ const Sidebar = ({ isOpen, onClose }) => {
         { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
         { name: 'Buy IMX', path: '/buy-imx', icon: ShoppingCart },
         { name: 'Hierarchy', path: '/hierarchy', icon: Network },
-        { name: 'IMX Transfer', path: '/imx-transfer', icon: ArrowRightLeft },
         { name: 'FTP', path: '/ftp', icon: FileText },
         { name: 'UTP', path: '/utp', icon: Activity },
         { name: 'Wallet', path: '/wallet', icon: Wallet },
         { name: 'All Rewards', path: '/all-rewards', icon: Award },
         { name: 'Withdraw', path: '/withdraw', icon: Banknote },
-        { name: 'Wallet Statements', path: '/wallet-statement', icon: ScrollText },
         { name: 'Company', path: '/company', icon: Building2 },
         { name: 'Profile', path: '/profile', icon: User },
     ];

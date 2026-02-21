@@ -192,8 +192,8 @@ const Profile = () => {
                 </div>
             </div>
 
-            {/* Mobile Tabs */}
-            <div className="md:hidden flex space-x-2 overflow-x-auto pb-2 scrollbar-none bg-gray-300 p-2 rounded-lg">
+            {/* Tabs Navigation (Responsive) */}
+            <div className="flex p-1.5 bg-[#d9dde0] rounded-2xl relative w-full overflow-x-auto scrollbar-hide gap-4 shadow-inner">
                 {[
                     { id: 'profile', label: 'Profile', icon: User },
                     { id: 'security', label: 'Security', icon: Lock },
@@ -206,13 +206,13 @@ const Profile = () => {
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={cn(
-                                "flex items-center gap-1.5 px-4 md:px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all",
+                                "flex flex-1 items-center justify-center gap-2 px-6 py-3 rounded-xl text-[11px] md:text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all",
                                 activeTab === tab.id
-                                    ? "bg-[#c9a05b] text-white shadow-xl"
-                                    : "bg-white text-gray-500 border border-gray-200 hover:bg-gray-50"
+                                    ? "bg-primary text-white shadow-md transform scale-[1.02]"
+                                    : "text-[#58728d] hover:text-[#3b4c5d] hover:bg-white/40"
                             )}
                         >
-                            <Icon className="w-3.5 h-3.5" />
+                            <Icon className="w-4 h-4 md:w-5 md:h-5" />
                             {tab.label}
                         </button>
                     );
@@ -220,47 +220,32 @@ const Profile = () => {
             </div>
 
             {/* Content Area */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Left Column (Main Info) */}
-                <div className={cn("lg:col-span-2 space-y-6",
-                    // On mobile, only show if appropriate tab is active
-                    "md:block",
-                    activeTab === 'profile' || activeTab === 'wallet' ? 'block' : 'hidden md:block'
-                )}>
-                    {/* On Desktop show everything, on mobile filtered by tab if we wanted strict separation, 
-                        but here I will use conditional rendering based on tab for mobile, and show all for desktop */}
-
-                    <div className={cn("md:block", activeTab === 'profile' ? 'block' : 'hidden md:block')}>
-                        <ProfileDetails />
+            <div className="animate-fade-in-up mt-8">
+                {activeTab === 'profile' && (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div className="space-y-6">
+                            <ProfileDetails />
+                        </div>
+                        <div className="space-y-6">
+                            <SocialAndRef />
+                        </div>
                     </div>
-
-                    <div className={cn("md:block", activeTab === 'wallet' ? 'block' : 'hidden md:block mt-6')}>
-                        <WalletInfo />
-                    </div>
-                </div>
-
-                {/* Right Column (Security, Social, System) */}
-                <div className={cn("lg:col-span-1 space-y-6",
-                    "md:block",
-                    activeTab === 'security' || activeTab === 'system' ? 'block' : 'hidden md:block'
-                )}>
-                    <div className={cn("md:block", activeTab === 'profile' ? 'block' : 'hidden md:block')}>
-                        {/* Show Social on Profile tab in mobile for better flow, or separate? 
-                            Let's put Social in 'profile' tab for mobile consistency or 'system'?
-                            Actually user asked for "Profile" page details.
-                            Let's keep generic right column visibility.
-                        */}
-                        <SocialAndRef />
-                    </div>
-
-                    <div className={cn("md:block", activeTab === 'security' ? 'block' : 'hidden md:block')}>
+                )}
+                {activeTab === 'security' && (
+                    <div className="max-w-2xl mx-auto space-y-6">
                         <SecuritySettings />
                     </div>
-
-                    <div className={cn("md:block", activeTab === 'system' ? 'block' : 'hidden md:block')}>
+                )}
+                {activeTab === 'wallet' && (
+                    <div className="max-w-2xl mx-auto space-y-6">
+                        <WalletInfo />
+                    </div>
+                )}
+                {activeTab === 'system' && (
+                    <div className="max-w-2xl mx-auto space-y-6">
                         <SystemStatus />
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Wallet as WalletIcon, ArrowDownLeft, ArrowUpRight, DollarSign, Layers, CreditCard, Activity, Landmark, Download, TrendingUp, PieChart, Shield } from 'lucide-react';
+import { Wallet as WalletIcon, ArrowDownLeft, ArrowUpRight, DollarSign, Layers, CreditCard, Activity, Landmark, Download, TrendingUp, PieChart, Shield, History, ChevronDown, Search, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const ActionButton = ({ icon: Icon, label, colorClass, onClick, link }) => {
@@ -114,123 +114,205 @@ const WalletCard = ({ title, items, icon: Icon }) => {
     );
 };
 
+const WalletStatementContent = () => {
+    const [walletFilter, setWalletFilter] = useState('All Wallets');
+    const [typeFilter, setTypeFilter] = useState('All Types');
+
+    return (
+        <div className="space-y-6 animate-fade-in-up">
+            {/* Header Section */}
+            <header className="bg-black rounded-3xl p-4 shadow-xl border border-gray-800 shadow-gray-400 flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-64 h-64 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl pointer-events-none"></div>
+
+                <div className="relative z-10 flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gray-900 rounded-2xl flex items-center justify-center text-primary border border-gray-700">
+                        <History className="w-6 h-6" />
+                    </div>
+                    <div>
+                        <h1 className="text-xl font-bold text-white uppercase tracking-wide">Wallet Statements</h1>
+                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Track all your transactions and rewards</p>
+                    </div>
+                </div>
+
+                {/* Filters */}
+                <div className="relative z-10 flex flex-wrap gap-4">
+                    <div className="relative group">
+                        <button className="flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-5 py-3 rounded-xl border border-gray-700 transition-all font-bold text-xs uppercase tracking-wider">
+                            <span>{walletFilter}</span>
+                            <ChevronDown className="w-4 h-4 text-primary" />
+                        </button>
+                    </div>
+                    <div className="relative group">
+                        <button className="flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-5 py-3 rounded-xl border border-gray-700 transition-all font-bold text-xs uppercase tracking-wider">
+                            <span>{typeFilter}</span>
+                            <ChevronDown className="w-4 h-4 text-primary" />
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            {/* Main Content - Empty State */}
+            <div className="bg-white rounded-3xl border border-gray-400 shadow-xl shadow-gray-400 min-h-[500px] flex flex-col items-center justify-center p-8 relative overflow-hidden">
+                <div className="text-center space-y-6 z-10">
+                    <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mx-auto border-4 border-gray-100 shadow-inner">
+                        <Search className="w-10 h-10 text-gray-300" />
+                    </div>
+                    <div className="space-y-2">
+                        <h3 className="text-lg font-bold text-text-main uppercase tracking-widest">No Transactions Found</h3>
+                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Try adjusting your filters</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const Wallet = () => {
-    // These could fulfill the "Add Funds" and "Withdraw" actions
-    // For now, we will layout the UI as requested.
+    const [mainTab, setMainTab] = useState('overview'); // 'overview', 'statements'
     const [mobileTab, setMobileTab] = useState('captok'); // 'captok', 'protok', 'ftp', 'utp'
 
     return (
         <div className="space-y-8 pb-12">
             {/* Page Header */}
-            <div className="flex flex-col md:flex-row md:items-center gap-4 md:space-x-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white shrink-0">
                         <WalletIcon className="w-6 h-6" />
                     </div>
-                    <div className="md:hidden">
-                        <h1 className="text-xl font-bold text-text-main uppercase">Financial Center</h1>
+                    <div>
+                        <h1 className="text-xl md:text-2xl font-bold text-text-main uppercase">Financial Center</h1>
+                        <p className="text-xs md:text-sm font-bold text-text-muted uppercase">Ecosystem Liquidity & Portfolio Overview</p>
                     </div>
                 </div>
-                <div>
-                    <h1 className="hidden md:block text-2xl font-bold text-text-main uppercase">Financial Center</h1>
-                    <p className="text-xs md:text-sm font-bold text-text-muted uppercase">Ecosystem Liquidity & Portfolio Overview</p>
+
+                {/* Main Tabs Navigation */}
+                <div className="flex p-1.5 bg-[#d9dde0] rounded-2xl relative w-full md:w-auto overflow-x-auto scrollbar-hide gap-1.5 shadow-inner">
+                    <button
+                        onClick={() => setMainTab('overview')}
+                        className={`flex flex-1 md:flex-none items-center justify-center gap-2 px-6 py-3 rounded-xl text-[11px] md:text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all ${mainTab === 'overview'
+                                ? "bg-white text-text-main shadow-md transform scale-[1.02]"
+                                : "text-[#58728d] hover:text-[#3b4c5d] hover:bg-white/40"
+                            }`}
+                    >
+                        <PieChart className="w-4 h-4" />
+                        Overview
+                    </button>
+                    <button
+                        onClick={() => setMainTab('statements')}
+                        className={`flex flex-1 md:flex-none items-center justify-center gap-2 px-6 py-3 rounded-xl text-[11px] md:text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all ${mainTab === 'statements'
+                                ? "bg-[#c9a05b] text-white shadow-md transform scale-[1.02]"
+                                : "text-[#58728d] hover:text-[#3b4c5d] hover:bg-white/40"
+                            }`}
+                    >
+                        <FileText className="w-4 h-4" />
+                        Wallet Statements
+                    </button>
                 </div>
             </div>
 
-            {/* Mobile Tab Navigation */}
-            <div className="md:hidden bg-gray-300 p-2 rounded-2xl border border-gray-800 flex gap-1 overflow-x-auto scrollbar-hide">
-                <button
-                    onClick={() => setMobileTab('captok')}
-                    className={`flex-1 min-w-[80px] py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'captok'
-                        ? 'bg-blue-500/20 text-blue-800 shadow-lg border border-blue-500/50'
-                        : 'text-gray-500 hover:text-white hover:bg-gray-900'
-                        }`}
-                >
-                    Captok
-                </button>
-                <button
-                    onClick={() => setMobileTab('protok')}
-                    className={`flex-1 min-w-[80px] py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'protok'
-                        ? 'bg-purple-500/20 text-purple-800 shadow-lg border border-purple-500/50'
-                        : 'text-gray-500 hover:text-white hover:bg-gray-900'
-                        }`}
-                >
-                    Protok
-                </button>
-                <button
-                    onClick={() => setMobileTab('ftp')}
-                    className={`flex-1 min-w-[80px] py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'ftp'
-                        ? 'bg-amber-500/20 text-amber-800 shadow-lg border border-amber-500/50'
-                        : 'text-gray-500 hover:text-white hover:bg-gray-900'
-                        }`}
-                >
-                    FTP
-                </button>
-                <button
-                    onClick={() => setMobileTab('utp')}
-                    className={`flex-1 min-w-[80px] py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'utp'
-                        ? 'bg-emerald-500/20 text-emerald-800 shadow-lg border border-emerald-500/50'
-                        : 'text-gray-500 hover:text-white hover:bg-gray-900'
-                        }`}
-                >
-                    UTP
-                </button>
-            </div>
-
-            {/* Wallet Holdings Section */}
-            <div className="space-y-6 pt-2">
-                <h2 className="hidden md:block text-xl font-bold text-text-main uppercase border-l-4 border-primary pl-4">Wallet Holdings</h2>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div className={`${mobileTab === 'captok' ? 'block' : 'hidden'} md:block`}>
-                        <WalletCard
-                            title="Captok Wallet"
-                            icon={CreditCard}
-                            items={[
-                                { label: "Captok Balance", value: "$0.00", subtext: "0.00 IMX" },
-                                { label: "Used Balance", value: "$0.00", subtext: "0.00 IMX" },
-                                { label: "Free Balance", value: "$0.00", subtext: "0.00 IMX" }
-                            ]}
-                        />
+            {/* Main Content Area */}
+            {mainTab === 'overview' && (
+                <div className="animate-fade-in-up space-y-6">
+                    {/* Mobile Tab Navigation for Wallets */}
+                    <div className="md:hidden bg-gray-300 p-2 rounded-2xl border border-gray-800 flex gap-1 overflow-x-auto scrollbar-hide">
+                        <button
+                            onClick={() => setMobileTab('captok')}
+                            className={`flex-1 min-w-[80px] py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'captok'
+                                ? 'bg-blue-500/20 text-blue-800 shadow-lg border border-blue-500/50'
+                                : 'text-gray-500 hover:text-white hover:bg-gray-900'
+                                }`}
+                        >
+                            Captok
+                        </button>
+                        <button
+                            onClick={() => setMobileTab('protok')}
+                            className={`flex-1 min-w-[80px] py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'protok'
+                                ? 'bg-purple-500/20 text-purple-800 shadow-lg border border-purple-500/50'
+                                : 'text-gray-500 hover:text-white hover:bg-gray-900'
+                                }`}
+                        >
+                            Protok
+                        </button>
+                        <button
+                            onClick={() => setMobileTab('ftp')}
+                            className={`flex-1 min-w-[80px] py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'ftp'
+                                ? 'bg-amber-500/20 text-amber-800 shadow-lg border border-amber-500/50'
+                                : 'text-gray-500 hover:text-white hover:bg-gray-900'
+                                }`}
+                        >
+                            FTP
+                        </button>
+                        <button
+                            onClick={() => setMobileTab('utp')}
+                            className={`flex-1 min-w-[80px] py-3 px-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${mobileTab === 'utp'
+                                ? 'bg-emerald-500/20 text-emerald-800 shadow-lg border border-emerald-500/50'
+                                : 'text-gray-500 hover:text-white hover:bg-gray-900'
+                                }`}
+                        >
+                            UTP
+                        </button>
                     </div>
 
-                    <div className={`${mobileTab === 'protok' ? 'block' : 'hidden'} md:block`}>
-                        <WalletCard
-                            title="Protok Wallet"
-                            icon={Layers}
-                            items={[
-                                { label: "Protok Balance", value: "$0.00", subtext: "0.00 IMX" },
-                                { label: "FTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" },
-                                { label: "UTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" }
-                            ]}
-                        />
-                    </div>
+                    {/* Wallet Holdings Section */}
+                    <div className="space-y-6 pt-2">
+                        <h2 className="hidden md:block text-xl font-bold text-text-main uppercase border-l-4 border-primary pl-4">Wallet Holdings</h2>
 
-                    <div className={`${mobileTab === 'ftp' ? 'block' : 'hidden'} md:block`}>
-                        <WalletCard
-                            title="FTP Plan"
-                            icon={Activity}
-                            items={[
-                                { label: "FTP Unit", value: "$0.00", subtext: "0.00 IMX" },
-                                { label: "FTP Stake Inv.", value: "$0.00", subtext: "0.00 IMX" },
-                                { label: "FTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" },
-                            ]}
-                        />
-                    </div>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div className={`${mobileTab === 'captok' ? 'block' : 'hidden'} md:block`}>
+                                <WalletCard
+                                    title="Captok Wallet"
+                                    icon={CreditCard}
+                                    items={[
+                                        { label: "Captok Balance", value: "$0.00", subtext: "0.00 IMX" },
+                                        { label: "Used Balance", value: "$0.00", subtext: "0.00 IMX" },
+                                        { label: "Free Balance", value: "$0.00", subtext: "0.00 IMX" }
+                                    ]}
+                                />
+                            </div>
 
-                    <div className={`${mobileTab === 'utp' ? 'block' : 'hidden'} md:block`}>
-                        <WalletCard
-                            title="UTP Plan"
-                            icon={Activity}
-                            items={[
-                                { label: "UTP Unit", value: "$0.00", subtext: "0.00 IMX" },
-                                { label: "UTP Stake Inv.", value: "$0.00", subtext: "0.00 IMX" },
-                                { label: "UTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" }
-                            ]}
-                        />
+                            <div className={`${mobileTab === 'protok' ? 'block' : 'hidden'} md:block`}>
+                                <WalletCard
+                                    title="Protok Wallet"
+                                    icon={Layers}
+                                    items={[
+                                        { label: "Protok Balance", value: "$0.00", subtext: "0.00 IMX" },
+                                        { label: "FTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" },
+                                        { label: "UTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" }
+                                    ]}
+                                />
+                            </div>
+
+                            <div className={`${mobileTab === 'ftp' ? 'block' : 'hidden'} md:block`}>
+                                <WalletCard
+                                    title="FTP Plan"
+                                    icon={Activity}
+                                    items={[
+                                        { label: "FTP Unit", value: "$0.00", subtext: "0.00 IMX" },
+                                        { label: "FTP Stake Inv.", value: "$0.00", subtext: "0.00 IMX" },
+                                        { label: "FTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" },
+                                    ]}
+                                />
+                            </div>
+
+                            <div className={`${mobileTab === 'utp' ? 'block' : 'hidden'} md:block`}>
+                                <WalletCard
+                                    title="UTP Plan"
+                                    icon={Activity}
+                                    items={[
+                                        { label: "UTP Unit", value: "$0.00", subtext: "0.00 IMX" },
+                                        { label: "UTP Stake Inv.", value: "$0.00", subtext: "0.00 IMX" },
+                                        { label: "UTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" }
+                                    ]}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
+
+            {mainTab === 'statements' && (
+                <WalletStatementContent />
+            )}
         </div>
     );
 };
