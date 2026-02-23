@@ -190,8 +190,8 @@ const Wallet = () => {
                     <button
                         onClick={() => setMainTab('overview')}
                         className={`flex flex-1 md:flex-none items-center justify-center gap-2 px-6 py-3 rounded-xl text-[11px] md:text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all ${mainTab === 'overview'
-                                ? "bg-white text-text-main shadow-md transform scale-[1.02]"
-                                : "text-[#58728d] hover:text-[#3b4c5d] hover:bg-white/40"
+                            ? "bg-white text-text-main shadow-md transform scale-[1.02]"
+                            : "text-[#58728d] hover:text-[#3b4c5d] hover:bg-white/40"
                             }`}
                     >
                         <PieChart className="w-4 h-4" />
@@ -200,8 +200,8 @@ const Wallet = () => {
                     <button
                         onClick={() => setMainTab('statements')}
                         className={`flex flex-1 md:flex-none items-center justify-center gap-2 px-6 py-3 rounded-xl text-[11px] md:text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all ${mainTab === 'statements'
-                                ? "bg-[#c9a05b] text-white shadow-md transform scale-[1.02]"
-                                : "text-[#58728d] hover:text-[#3b4c5d] hover:bg-white/40"
+                            ? "bg-[#c9a05b] text-white shadow-md transform scale-[1.02]"
+                            : "text-[#58728d] hover:text-[#3b4c5d] hover:bg-white/40"
                             }`}
                     >
                         <FileText className="w-4 h-4" />

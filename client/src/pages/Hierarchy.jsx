@@ -212,21 +212,6 @@ const Hierarchy = () => {
                         </div>
                     </div>
 
-                    {/* Rank Legend */}
-                    <div className="bg-surface border border-gray-400 shadow-lg shadow-gray-400 rounded-2xl p-4">
-                        <h3 className="text-sm font-bold text-primary uppercase mb-4 flex items-center">
-                            <Award className="w-4 h-4 mr-2" />
-                            Rank Legend
-                        </h3>
-                        <div className="flex flex-wrap gap-4">
-                            {['Star 1', 'Star 2', 'Star 3', 'Star 4', 'Star 5', 'Star 6', 'Star 7', 'No Rank'].map((rank, idx) => (
-                                <div key={idx} className="flex items-center space-x-2">
-                                    <div className={`w-3 h-3 rounded-full border border-gray-300 ${idx < 3 ? 'bg-primary' : rank === 'No Rank' ? 'bg-gray-400' : 'bg-secondary'}`}></div>
-                                    <span className="text-xs font-bold text-text-muted uppercase">{rank}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
                 </div>
             )}
 

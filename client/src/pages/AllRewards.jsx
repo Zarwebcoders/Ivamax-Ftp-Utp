@@ -52,7 +52,7 @@ const IntroductionClubContent = () => {
                     <select
                         value={selectedLevel}
                         onChange={(e) => setSelectedLevel(e.target.value)}
-                        className="w-full bg-gray-900 border border-gray-700 text-white rounded-xl py-3 px-4 appearance-none font-bold text-xs uppercase focus:outline-none focus:border-primary cursor-pointer hover:bg-gray-800 transition-colors"
+                        className="w-full bg-primary border border-gray-700 text-white rounded-xl py-3 px-4 appearance-none font-bold text-xs uppercase focus:outline-none focus:border-primary cursor-pointer hover:bg-gray-800 transition-colors"
                     >
                         {levels.map((level) => (
                             <option key={level} value={level}>{level}</option>
@@ -71,9 +71,9 @@ const IntroductionClubContent = () => {
                         <h3 className="text-black font-bold uppercase text-sm tracking-wider">Reward History</h3>
                     </div>
 
-                    <div className="bg-gray-900 px-4 py-2 rounded-lg border border-gray-700">
-                        <span className="text-[10px] text-gray-400 font-bold uppercase mr-2">Total:</span>
-                        <span className="text-primary font-bold text-sm">0.00 IMX</span>
+                    <div className="bg-primary px-4 py-2 rounded-lg border border-gray-700">
+                        <span className="text-[10px] text-white font-bold uppercase mr-2">Total:</span>
+                        <span className="text-white font-bold text-sm">0.00 IMX</span>
                     </div>
                 </div>
 
@@ -220,7 +220,7 @@ const PayPerRoyaltyContent = () => {
                     <select
                         value={selectedLevel}
                         onChange={(e) => setSelectedLevel(e.target.value)}
-                        className="w-full bg-gray-900 border border-gray-700 text-white rounded-xl py-3 px-4 appearance-none font-bold text-xs uppercase focus:outline-none focus:border-primary cursor-pointer hover:bg-gray-800 transition-colors"
+                        className="w-full bg-primary border border-gray-700 text-white rounded-xl py-3 px-4 appearance-none font-bold text-xs uppercase focus:outline-none focus:border-primary cursor-pointer hover:bg-gray-800 transition-colors"
                     >
                         {levels.map((level) => (
                             <option key={level} value={level}>{level}</option>
@@ -271,7 +271,7 @@ const AllRewards = () => {
     return (
         <div className="space-y-8 pb-12">
             {/* Top Navigation / Header Area */}
-            <div className="bg-surface border border-gray-400 shadow-lg shadow-gray-400 rounded-3xl p-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="bg-surface border border-gray-400 shadow-lg shadow-gray-400 rounded-3xl p-6 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white">
                         <Trophy className="w-6 h-6" />
@@ -282,39 +282,74 @@ const AllRewards = () => {
                     </div>
                 </div>
 
-                {/* Tab Switcher */}
-                <div className="flex bg-gray-300 p-1 rounded-xl overflow-x-auto max-w-full">
-                    <button
-                        onClick={() => setActiveTab('intro')}
-                        className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-bold transition-all whitespace-nowrap ${activeTab === 'intro'
-                            ? 'bg-white text-primary shadow-sm'
-                            : 'text-gray-500 hover:text-gray-700'
-                            }`}
-                    >
-                        <Award className="w-4 h-4" />
-                        <span>Intro Club</span>
+                {/* Export Buttons from Reference Image */}
+                <div className="flex gap-3">
+                    <button className="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-400 hover:bg-gray-200 transition-colors bg-white font-bold text-xs uppercase shadow-sm">
+                        <Award className="w-4 h-4 text-gray-500" />
+                        Select Period
                     </button>
-                    <button
-                        onClick={() => setActiveTab('star')}
-                        className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-bold transition-all whitespace-nowrap ${activeTab === 'star'
-                            ? 'bg-white text-primary shadow-sm'
-                            : 'text-gray-500 hover:text-gray-700'
-                            }`}
-                    >
-                        <Crown className="w-4 h-4" />
-                        <span>Star Royalty</span>
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('payper')}
-                        className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-bold transition-all whitespace-nowrap ${activeTab === 'payper'
-                            ? 'bg-white text-primary shadow-sm'
-                            : 'text-gray-500 hover:text-gray-700'
-                            }`}
-                    >
-                        <BadgeDollarSign className="w-4 h-4" />
-                        <span>Pay Per Royalty</span>
+                    <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#e3cd83] hover:bg-[#d4be72] border border-[#af8c30] text-[#735a16] transition-colors font-bold text-xs uppercase shadow-sm">
+                        <Download className="w-4 h-4" />
+                        Export PDF
                     </button>
                 </div>
+            </div>
+
+            {/* Big Cards Tab Switcher */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Intro Club Card */}
+                <button
+                    onClick={() => setActiveTab('intro')}
+                    className={`p-6 rounded-3xl flex flex-col items-start gap-12 border-2 transition-all text-left shadow-lg ${activeTab === 'intro'
+                            ? 'bg-[#eef5fd] border-2 border-gray-400 shadow-blue-300'
+                            : 'bg-white border border-gray-400 shadow-gray-400 hover:border-gray-200'
+                        }`}
+                >
+                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center bg-white shadow-sm ${activeTab === 'intro' ? 'text-[#3b82f6]' : 'text-primary'
+                        }`}>
+                        <Award className="w-6 h-6" />
+                    </div>
+                    <div>
+                        <h3 className={`text-xl font-bold uppercase mb-2 tracking-wide ${activeTab === 'intro' ? 'text-[#1e3a8a]' : 'text-gray-800'}`}>Intro Club</h3>
+                        <p className={`text-xs font-bold uppercase tracking-wider ${activeTab === 'intro' ? 'text-[#3b82f6]' : 'text-gray-500'}`}>View detailed statement</p>
+                    </div>
+                </button>
+
+                {/* Star Royalty Card */}
+                <button
+                    onClick={() => setActiveTab('star')}
+                    className={`p-6 rounded-3xl flex flex-col items-start gap-12 border-2 transition-all text-left shadow-lg ${activeTab === 'star'
+                            ? 'bg-[#eef5fd] border-2 border-gray-400 shadow-blue-300'
+                            : 'bg-white border border-gray-400 shadow-gray-400 hover:border-gray-200'
+                        }`}
+                >
+                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center bg-white shadow-sm ${activeTab === 'star' ? 'text-[#3b82f6]' : 'text-[#d97706]'
+                        }`}>
+                        <Crown className="w-6 h-6" />
+                    </div>
+                    <div>
+                        <h3 className={`text-xl font-bold uppercase mb-2 tracking-wide ${activeTab === 'star' ? 'text-[#1e3a8a]' : 'text-gray-800'}`}>Star Royalty</h3>
+                        <p className={`text-xs font-bold uppercase tracking-wider ${activeTab === 'star' ? 'text-[#3b82f6]' : 'text-gray-500'}`}>View detailed statement</p>
+                    </div>
+                </button>
+
+                {/* Pay Per Royalty Card */}
+                <button
+                    onClick={() => setActiveTab('payper')}
+                    className={`p-6 rounded-3xl flex flex-col items-start gap-12 border-2 transition-all text-left shadow-lg ${activeTab === 'payper'
+                            ? 'bg-[#eef5fd] border-2 border-gray-400 shadow-blue-300'
+                            : 'bg-white border border-gray-400 shadow-gray-400 hover:border-gray-200'
+                        }`}
+                >
+                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center bg-white shadow-sm ${activeTab === 'payper' ? 'text-[#3b82f6]' : 'text-[#9333ea]'
+                        }`}>
+                        <BadgeDollarSign className="w-6 h-6" />
+                    </div>
+                    <div>
+                        <h3 className={`text-xl font-bold uppercase mb-2 tracking-wide ${activeTab === 'payper' ? 'text-[#1e3a8a]' : 'text-gray-800'}`}>Pay Per Royalty</h3>
+                        <p className={`text-xs font-bold uppercase tracking-wider ${activeTab === 'payper' ? 'text-[#3b82f6]' : 'text-gray-500'}`}>View detailed statement</p>
+                    </div>
+                </button>
             </div>
 
             {/* Content Area */}

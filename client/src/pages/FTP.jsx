@@ -129,110 +129,116 @@ const FTP = () => {
                 <SummaryCard title="FTP Profit" value="$0.00" subValue="0.00 IMX" />
             </div>
 
-            {/* Invest FTP Stake Process */}
-            <div className={`bg-white rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 p-8 ${mobileTab === 'invest' ? 'block' : 'hidden'} md:block`}>
-                <h2 className="text-black font-bold uppercase text-center mb-8 tracking-widest text-sm">Invest FTP Stake Process</h2>
+            {/* 2-Column Layout */}
+            <div className={`grid grid-cols-1 lg:grid-cols-3 gap-6 items-start ${mobileTab !== 'overview' ? 'block' : 'hidden'} md:grid`}>
 
-                <div className="space-y-6">
-                    <div className="flex justify-between items-center text-xs font-bold uppercase">
-                        <span className="text-white bg-gray-700 px-3 py-1 rounded">Available to Invest :</span>
-                        <span className="text-primary">0.0000 IMX = $0.00</span>
+                {/* Left Column: Invest FTP Stake Process */}
+                <div className={`lg:col-span-1 bg-white rounded-3xl border border-gray-400 shadow-lg shadow-gray-400 p-8 ${mobileTab === 'invest' ? 'block' : 'hidden'} md:block`}>
+                    <h2 className="text-black font-bold uppercase text-center mb-8 tracking-widest text-sm">Invest FTP Stake Process</h2>
+
+                    <div className="space-y-6">
+                        <div className="flex justify-between items-center text-xs font-bold uppercase">
+                            <span className="text-white bg-gray-700 px-3 py-1 rounded">Available to Invest :</span>
+                            <span className="text-[#c9a05b]">0.0000 IMX = $0.00</span>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Stake Volume (Units)</label>
+                            <div className="relative">
+                                <input
+                                    type="number"
+                                    placeholder="Enter Units"
+                                    className="w-full bg-transparent border border-gray-700 text-white rounded-xl py-4 pl-4 pr-12 focus:outline-none focus:border-[#d4af37] font-bold placeholder-gray-400"
+                                    value={amount}
+                                    onChange={(e) => setAmount(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Term</label>
+                            <div className="w-full bg-gray-300 border border-gray-700 text-black rounded-xl py-4 px-4 font-bold flex justify-between items-center placeholder-gray-400">
+                                <span>24 MO</span>
+                                <Clock className="w-4 h-4 text-gray-500" />
+                            </div>
+                        </div>
+
+                        <button className="w-full bg-[#d4af37] hover:bg-[#c19b26] text-black font-bold py-4 rounded-xl uppercase tracking-wider transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-[#d4af37]/20">
+                            Invest Now
+                        </button>
+                    </div>
+                </div>
+
+                {/* Right Column: Tables Section with Tabs */}
+                <div className={`lg:col-span-2 space-y-6 ${mobileTab === 'history' ? 'block' : 'hidden'} md:block`}>
+                    {/* Custom Tab Navigation */}
+                    <div className="bg-gray-300 p-2 rounded-lg border border-gray-400 flex flex-wrap gap-2 shadow-sm">
+                        <button
+                            onClick={() => setActiveTab('records')}
+                            className={`flex-1 py-3 px-4 rounded-lg text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'records'
+                                ? 'bg-[#d4af37] text-black shadow-md'
+                                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200'
+                                }`}
+                        >
+                            FTP Stake Records
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('active')}
+                            className={`flex-1 py-3 px-4 rounded-lg text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'active'
+                                ? 'bg-[#d4af37] text-black shadow-md'
+                                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200'
+                                }`}
+                        >
+                            Active FTP Stake Detail
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('deactive')}
+                            className={`flex-1 py-3 px-4 rounded-lg text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'deactive'
+                                ? 'bg-[#d4af37] text-black shadow-md'
+                                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200'
+                                }`}
+                        >
+                            Deactive FTP Stake Profit
+                        </button>
                     </div>
 
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Stake Volume (Units)</label>
-                        <div className="relative">
-                            <input
-                                type="number"
-                                placeholder="Enter Units"
-                                className="w-full bg-gray-900 border border-gray-700 text-white rounded-xl py-4 pl-4 pr-12 focus:outline-none focus:border-primary font-bold placeholder-gray-300"
-                                value={amount}
-                                onChange={(e) => setAmount(e.target.value)}
+                    <div className="space-y-6">
+                        {/* 1. FTP Stake Records */}
+                        {activeTab === 'records' && (
+                            <HistoryTable
+                                title="FTP Stake Records"
+                                subtitle="History of all stakes"
+                                icon={History}
+                                columns={['SR.NO', 'DATE', 'STAKE VOLUME', 'STAKE VALUE', 'CURRENT STATUS']}
+                                emptyMessage="No Stake Records Found"
                             />
-                        </div>
+                        )}
+
+                        {/* 2. Active FTP Stake Detail */}
+                        {activeTab === 'active' && (
+                            <HistoryTable
+                                title="Active FTP Stake Detail"
+                                subtitle="Currently active stakes"
+                                icon={TrendingUp}
+                                columns={['SR.NO', 'ACTIVATE DATE', 'MATURITY DATE', 'STAKE VOLUME', 'STAKE VALUE', 'STATUS', 'COMPLETE MONTH', 'CURRENT PROFIT', 'DETAIL']}
+                                emptyMessage="No Active Stakes Found"
+                                showViewAction={true}
+                            />
+                        )}
+
+                        {/* 3. Deactive FTP Stake Profit */}
+                        {activeTab === 'deactive' && (
+                            <HistoryTable
+                                title="Deactive FTP Stake Profit"
+                                subtitle="Completed or Closed Stakes"
+                                icon={DollarSign}
+                                columns={['SR.NO', 'ACTIVATE DATE', 'CLOSING DATE', 'STAKE VOLUME', 'STAKE VALUE', 'STATUS', 'COMPLETE MONTH', 'BOOKED PROFIT', 'DETAIL']}
+                                emptyMessage="No Deactive Stakes Found"
+                                showViewAction={true}
+                            />
+                        )}
                     </div>
-
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Term</label>
-                        <div className="w-full bg-gray-900 border border-gray-700 text-white rounded-xl py-4 px-4 font-bold flex justify-between items-center placeholder-gray-300">
-                            <span>24 MO</span>
-                            <Clock className="w-4 h-4 text-gray-500" />
-                        </div>
-                    </div>
-
-                    <button className="w-full bg-primary hover:bg-primary/90 text-black font-bold py-4 rounded-xl uppercase tracking-wider transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-primary/20">
-                        Invest Now
-                    </button>
                 </div>
-            </div>
-
-            {/* Tables Section with Tabs */}
-            <div className={`space-y-6 ${mobileTab === 'history' ? 'block' : 'hidden'} md:block`}>
-                {/* Custom Tab Navigation */}
-                <div className="bg-gray-300 p-2 rounded-lg border border-gray-800 flex flex-wrap gap-2">
-                    <button
-                        onClick={() => setActiveTab('records')}
-                        className={`flex-1 py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'records'
-                            ? 'bg-primary text-black shadow-lg shadow-primary/20'
-                            : 'text-gray-500 hover:text-white hover:bg-gray-900'
-                            }`}
-                    >
-                        FTP Stake Records
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('active')}
-                        className={`flex-1 py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'active'
-                            ? 'bg-primary text-black shadow-lg shadow-primary/20'
-                            : 'text-gray-500 hover:text-white hover:bg-gray-900'
-                            }`}
-                    >
-                        Active FTP Stake Detail
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('deactive')}
-                        className={`flex-1 py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'deactive'
-                            ? 'bg-primary text-black shadow-lg shadow-primary/20'
-                            : 'text-gray-500 hover:text-white hover:bg-gray-900'
-                            }`}
-                    >
-                        Deactive FTP Stake Profit
-                    </button>
-                </div>
-
-                {/* 1. FTP Stake Records */}
-                {activeTab === 'records' && (
-                    <HistoryTable
-                        title="FTP Stake Records"
-                        subtitle="History of all stakes"
-                        icon={History}
-                        columns={['SR.NO', 'DATE', 'STAKE VOLUME', 'STAKE VALUE', 'CURRENT STATUS']}
-                        emptyMessage="No Stake Records Found"
-                    />
-                )}
-
-                {/* 2. Active FTP Stake Detail */}
-                {activeTab === 'active' && (
-                    <HistoryTable
-                        title="Active FTP Stake Detail"
-                        subtitle="Currently active stakes"
-                        icon={TrendingUp}
-                        columns={['SR.NO', 'ACTIVATE DATE', 'MATURITY DATE', 'STAKE VOLUME', 'STAKE VALUE', 'STATUS', 'COMPLETE MONTH', 'CURRENT PROFIT', 'DETAIL']}
-                        emptyMessage="No Active Stakes Found"
-                        showViewAction={true}
-                    />
-                )}
-
-                {/* 3. Deactive FTP Stake Profit */}
-                {activeTab === 'deactive' && (
-                    <HistoryTable
-                        title="Deactive FTP Stake Profit"
-                        subtitle="Completed or Closed Stakes"
-                        icon={DollarSign}
-                        columns={['SR.NO', 'ACTIVATE DATE', 'CLOSING DATE', 'STAKE VOLUME', 'STAKE VALUE', 'STATUS', 'COMPLETE MONTH', 'BOOKED PROFIT', 'DETAIL']}
-                        emptyMessage="No Deactive Stakes Found"
-                        showViewAction={true}
-                    />
-                )}
             </div>
         </div>
     );

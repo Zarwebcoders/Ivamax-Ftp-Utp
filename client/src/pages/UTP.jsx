@@ -136,139 +136,110 @@ const UTP = () => {
                 <SummaryCard title="UTP Profit" value="$0.00" subValue="0.00 IMX" />
             </div>
 
-            {/* Invest UTP Stake Process */}
-            <div className={`bg-gray-300 rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 p-8 ${mobileTab === 'invest' ? 'block' : 'hidden'} md:block`}>
-                <h2 className="text-black font-bold uppercase text-center mb-8 tracking-widest text-sm">Invest UTP Stake Process</h2>
+            {/* 2-Column Layout */}
+            <div className={`grid grid-cols-1 lg:grid-cols-3 gap-6 items-start ${mobileTab !== 'overview' ? 'block' : 'hidden'} md:grid`}>
 
-                <div className="space-y-6">
-                    <div className="flex justify-between items-center text-xs font-bold uppercase">
-                        <span className="text-white bg-gray-700 px-3 py-1 rounded">Available :</span>
-                        <span className="text-primary">0.0000 IMX = $0.00</span>
-                    </div>
+                {/* Left Column: Invest UTP Stake Process */}
+                <div className={`lg:col-span-1 bg-white rounded-3xl border border-gray-400 shadow-lg shadow-gray-400 p-8 ${mobileTab === 'invest' ? 'block' : 'hidden'} md:block`}>
+                    <h2 className="text-black font-bold uppercase text-center mb-8 tracking-widest text-sm">Invest UTP Stake Process</h2>
 
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Stake Volume (Units)</label>
-                        <div className="relative">
-                            <input
-                                type="number"
-                                placeholder="Min 1"
-                                className="w-full bg-gray-900 border border-gray-700 text-white rounded-xl py-4 pl-4 pr-12 focus:outline-none focus:border-primary font-bold placeholder-primary"
-                                value={units}
-                                onChange={(e) => setUnits(e.target.value)}
-                            />
+                    <div className="space-y-6">
+                        <div className="flex justify-between items-center text-xs font-bold uppercase">
+                            <span className="text-white bg-gray-700 px-3 py-1 rounded">Available :</span>
+                            <span className="text-[#c9a05b]">0.0000 IMX = $0.00</span>
                         </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Stake Volume (Units)</label>
+                            <div className="relative">
+                                <input
+                                    type="number"
+                                    placeholder="Min 1"
+                                    className="w-full bg-transparent border border-gray-700 text-black rounded-xl py-4 pl-4 pr-12 focus:outline-none focus:border-[#d4af37] font-bold placeholder-gray-400"
+                                    value={units}
+                                    onChange={(e) => setUnits(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <button className="w-full bg-[#d4af37] hover:bg-[#c19b26] text-black font-bold py-4 rounded-xl uppercase tracking-wider transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-[#d4af37]/20">
+                            Invest Now
+                        </button>
+                    </div>
+                </div>
+
+                {/* Right Column: Tables Section with Tabs */}
+                <div className={`lg:col-span-2 space-y-6 ${mobileTab === 'history' ? 'block' : 'hidden'} md:block`}>
+                    {/* Custom Tab Navigation */}
+                    <div className="bg-gray-300 p-2 rounded-lg border border-gray-400 flex flex-wrap gap-2 shadow-sm">
+                        <button
+                            onClick={() => setActiveTab('records')}
+                            className={`flex-1 py-3 px-4 rounded-lg text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'records'
+                                ? 'bg-[#d4af37] text-black shadow-md'
+                                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200'
+                                }`}
+                        >
+                            UTP Stake Records
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('active')}
+                            className={`flex-1 py-3 px-4 rounded-lg text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'active'
+                                ? 'bg-[#d4af37] text-black shadow-md'
+                                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200'
+                                }`}
+                        >
+                            Active UTP Stake Detail
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('deactive')}
+                            className={`flex-1 py-3 px-4 rounded-lg text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'deactive'
+                                ? 'bg-[#d4af37] text-black shadow-md'
+                                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200'
+                                }`}
+                        >
+                            Deactive UTP Stake Profit
+                        </button>
                     </div>
 
-                    <button className="w-full bg-primary hover:bg-primary/90 text-black font-bold py-4 rounded-xl uppercase tracking-wider transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-primary/20">
-                        Invest Now
-                    </button>
+                    <div className="space-y-6">
+
+                        {/* 1. UTP Stake Records */}
+                        {activeTab === 'records' && (
+                            <HistoryTable
+                                title="UTP Stake Records"
+                                subtitle="History of all stakes"
+                                icon={History}
+                                columns={['SR.NO', 'DATE', 'STAKE VOLUME', 'STAKE VALUE', 'STATUS']}
+                                emptyMessage="No Stake Records Found"
+                            />
+                        )}
+
+                        {/* 2. Active UTP Stake Detail */}
+                        {activeTab === 'active' && (
+                            <HistoryTable
+                                title="Active UTP Stake Detail"
+                                subtitle="Currently active stakes"
+                                icon={TrendingUp}
+                                columns={['SR.NO', 'ACTIVATE DATE', 'STAKE VOLUME', 'STAKE VALUE', 'STATUS', 'LAST ROC DATE', 'LAST ROC %', 'TOTAL PROFIT', 'ACTION', 'DETAIL']}
+                                emptyMessage="No Active Stakes Found"
+                                showCloseAction={true} // For 'ACTION' column (Close button)
+                                showViewAction={true}  // For 'DETAIL' column (View button)
+                            />
+                        )}
+
+                        {/* 3. Deactive UTP Stake Profit */}
+                        {activeTab === 'deactive' && (
+                            <HistoryTable
+                                title="Deactive UTP Stake Profit"
+                                subtitle="Completed or Closed Stakes"
+                                icon={DollarSign}
+                                columns={['SR.NO', 'ACTIVATE DATE', 'STAKE VOLUME', 'STAKE VALUE', 'STATUS', 'LAST ROC DATE', 'LAST ROC %', 'TOTAL PROFIT', 'DETAIL']}
+                                emptyMessage="No Deactive Stakes Found"
+                                showViewAction={true}
+                            />
+                        )}
+                    </div>
                 </div>
-            </div>
-
-            {/* Tables Section with Tabs */}
-            <div className={`space-y-6 ${mobileTab === 'history' ? 'block' : 'hidden'} md:block`}>
-                {/* Custom Tab Navigation */}
-                <div className="bg-gray-300 p-2 rounded-lg border border-gray-800 flex flex-wrap gap-2">
-                    <button
-                        onClick={() => setActiveTab('records')}
-                        className={`flex-1 py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'records'
-                            ? 'bg-primary text-black shadow-lg shadow-primary/20'
-                            : 'text-gray-500 hover:text-white hover:bg-gray-900'
-                            }`}
-                    >
-                        UTP Stake Records
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('active')}
-                        className={`flex-1 py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'active'
-                            ? 'bg-primary text-black shadow-lg shadow-primary/20'
-                            : 'text-gray-500 hover:text-white hover:bg-gray-900'
-                            }`}
-                    >
-                        Active UTP Stake Detail
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('deactive')}
-                        className={`flex-1 py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'deactive'
-                            ? 'bg-primary text-black shadow-lg shadow-primary/20'
-                            : 'text-gray-500 hover:text-white hover:bg-gray-900'
-                            }`}
-                    >
-                        Deactive UTP Stake Profit
-                    </button>
-                </div>
-
-                {/* 1. UTP Stake Records */}
-                {activeTab === 'records' && (
-                    <HistoryTable
-                        title="UTP Stake Records"
-                        subtitle="History of all stakes"
-                        icon={History}
-                        columns={['SR.NO', 'DATE', 'STAKE VOLUME', 'STAKE VALUE', 'STATUS']}
-                        emptyMessage="No Stake Records Found"
-                    />
-                )}
-
-                {/* 2. Active UTP Stake Detail */}
-                {activeTab === 'active' && (
-                    <HistoryTable
-                        title="Active UTP Stake Detail"
-                        subtitle="Currently active stakes"
-                        icon={TrendingUp}
-                        columns={['SR.NO', 'ACTIVATE DATE', 'STAKE VOLUME', 'STAKE VALUE', 'STATUS', 'LAST ROC DATE', 'LAST ROC %', 'TOTAL PROFIT', 'ACTION', 'DETAIL']}
-                        emptyMessage="No Active Stakes Found"
-                        showCloseAction={true} // For 'ACTION' column (Close button)
-                        showViewAction={true}  // For 'DETAIL' column (View button)
-                    />
-                )}
-
-                {/* 3. Deactive UTP Stake Profit */}
-                {activeTab === 'deactive' && (
-                    <HistoryTable
-                        title="Deactive UTP Stake Profit"
-                        subtitle="Completed or Closed Stakes"
-                        icon={DollarSign}
-                        columns={['SR.NO', 'ACTIVATE DATE', 'STAKE VOLUME', 'STAKE VALUE', 'STATUS', 'LAST ROC DATE', 'LAST ROC %', 'TOTAL PROFIT', 'ACTION', 'DETAIL']}
-                        emptyMessage="No Deactive Stakes Found"
-                        showCloseAction={false} // Screenshot shows 'CLOSED' text in Action column, but for now buttons in my mock. Actually, user screenshot says 'CLOSED' text. 
-                        // I will adapt HistoryTable to handle text vs button if needed, but for now I'll use the same structure or just verify.
-                        // The user screenshot for Deactive shows 'CLOSED' under ACTION and 'VIEW' under DETAIL.
-                        // My HistoryTable `showCloseAction` adds a button. I might need a different prop or logic if it's just text.
-                        // However, since row data maps to columns, if I pass 'CLOSED' in the data for that column, it works.
-                        // But wait, the previous `showViewAction` added a whole TD.
-                        // If I want 'CLOSED' text in a column named ACTION, I should just include it in the data.
-                        // But for Active, I want a BUTTON.
-                        // So for Active, I use `showCloseAction` prop to force a button column?
-                        // Actually, looking at the screenshot: Active has 'CLOSE' button (yellow). Deactive has 'CLOSED' text.
-                        // So for Deactive, I should NOT use `showCloseAction` and instead rely on data having 'CLOSED'.
-                        // AND I should use `showViewAction` for the View button.
-                        // Columns buffer:
-                        // Active: ... PROFIT | ACTION (Button) | DETAIL (Button)
-                        // Deactive: ... PROFIT | ACTION (Text) | DETAIL (Button)
-                        // My `HistoryTable` adds `showCloseAction` as a TD.
-                        // If I want text for Deactive, I should just include 'CLOSED' in the row data and have 'ACTION' in the columns list.
-                        // But for Active, I want a button.
-                        // If I use `showCloseAction`, it adds an extra TD.
-                        // So for Active: Columns = [..., PROFIT, DETAIL]. Props: showCloseAction=true (adds Action col?), showViewAction=true (adds Detail col?).
-                        // My implementation of `HistoryTable`:
-                        // showCloseAction adds a TD. showViewAction adds a TD.
-                        // So for Active: Columns should NOT include 'ACTION' or 'DETAIL' in the text list if they are pure button columns added by props?
-                        // Let's check my Previous FTP implementation.
-                        // FTP Active: Columns included 'DETAIL'. I added `showViewAction` which added a TD.
-                        // So I had N columns in header, N-1 in data + 1 in props = N columns total.
-                        // So if I want 'ACTION' and 'DETAIL' headers:
-                        // Active: Columns=[..., 'ACTION', 'DETAIL']. Data has neither. Props: showCloseAction + showViewAction.
-                        // Deactive: Columns=[..., 'ACTION', 'DETAIL']. Data has 'CLOSED' for Action. Props: showViewAction only.
-                        // This implies mixed logic.
-                        // For simplicity in this `replace_file_content` (since I can't write complex logic in one shot easily without errors), 
-                        // I will stick to the props adding buttons.
-                        // So for Active: showCloseAction=true, showViewAction=true.
-                        // For Deactive: showViewAction=true. 'ACTION' column will need to be handled.
-                        // I'll just render the columns as per screenshot and assume data will match or I'll adjust.
-                        // The user just wants the structure/design.
-                        showViewAction={true}
-                    />
-                )}
             </div>
         </div>
     );

@@ -27,12 +27,12 @@ const Profile = () => {
             <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
                 <User className="w-5 h-5 text-primary" /> Profile Details
             </h3>
-            <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100 col-span-2 md:col-span-1">
                     <label className="text-[10px] md:text-xs font-bold text-gray-400 uppercase block mb-1">User ID</label>
                     <p className="font-mono text-sm md:text-base font-bold text-primary truncate">{user?.userId}</p>
                 </div>
-                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
+                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100 col-span-2 md:col-span-1">
                     <label className="text-[10px] md:text-xs font-bold text-gray-400 uppercase block mb-1">Full Name</label>
                     <p className="font-bold text-sm md:text-base text-gray-800 truncate">{user?.name}</p>
                 </div>
@@ -40,19 +40,19 @@ const Profile = () => {
                     <label className="text-[10px] md:text-xs font-bold text-gray-400 uppercase block mb-1">Email</label>
                     <p className="font-medium text-sm md:text-base text-gray-600 truncate">{user?.email}</p>
                 </div>
-                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
+                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100 col-span-2 md:col-span-1">
                     <label className="text-[10px] md:text-xs font-bold text-gray-400 uppercase block mb-1">Mobile</label>
                     <p className="font-medium text-sm md:text-base text-gray-600 truncate">{user?.mobile || 'N/A'}</p>
                 </div>
-                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
+                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100 col-span-2 md:col-span-1">
                     <label className="text-[10px] md:text-xs font-bold text-gray-400 uppercase block mb-1">Joined Date</label>
                     <p className="font-medium text-sm md:text-base text-gray-600 truncate">{new Date(user?.createdAt || Date.now()).toLocaleDateString()}</p>
                 </div>
-                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100">
+                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100 col-span-2 md:col-span-1">
                     <label className="text-[10px] md:text-xs font-bold text-gray-400 uppercase block mb-1">Sponsor ID</label>
                     <p className="font-mono text-sm md:text-base font-bold text-gray-800 truncate">{user?.sponsorId || 'ROOT'}</p>
                 </div>
-                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100 col-span-2">
+                <div className="bg-gray-300 p-3 rounded-xl border border-gray-100 col-span-2 md:col-span-3">
                     <label className="text-[10px] md:text-xs font-bold text-gray-400 uppercase block mb-1">Sponsor Name</label>
                     <p className="font-bold text-sm md:text-base text-gray-800 truncate">{user?.sponsorName || 'N/A'}</p>
                 </div>
@@ -80,7 +80,7 @@ const Profile = () => {
                         <input type="password" placeholder="Confirm new password" className="w-full bg-gray-300 border border-gray-400 rounded-xl p-3 focus:outline-none focus:border-primary transition-colors" />
                     </div>
                 </div>
-                <button className="w-full bg-black text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition-colors">
+                <button className="w-full bg-primary text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition-colors">
                     Update Password
                 </button>
             </div>
@@ -121,13 +121,13 @@ const Profile = () => {
     const SocialAndRef = () => (
         <div className="space-y-6">
             {/* Referral */}
-            <div className="bg-black text-white rounded-3xl p-4 shadow-lg shadow-gray-600 relative overflow-hidden">
+            <div className="bg-gray-300 text-black rounded-3xl p-4 shadow-lg shadow-gray-600 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
                 <h3 className="text-lg font-bold mb-4 flex items-center gap-2 relative z-10">
                     <Share2 className="w-5 h-5 text-primary" /> Referral Link
                 </h3>
-                <div className="bg-gray-900 border border-gray-800 rounded-xl p-3 flex items-center justify-between relative z-10">
-                    <div className="truncate text-gray-400 text-xs font-mono mr-2">
+                <div className="bg-gray-500 border border-gray-800 rounded-xl p-3 flex items-center justify-between relative z-10">
+                    <div className="truncate text-primary text-xs font-mono mr-2">
                         https://app.ivamax.finance/?ref={user?.userId}
                     </div>
                     <button onClick={copyRef} className="p-2 bg-gray-800 rounded-lg text-white hover:bg-primary transition-colors">
@@ -196,6 +196,7 @@ const Profile = () => {
             <div className="flex p-1.5 bg-[#d9dde0] rounded-2xl relative w-full overflow-x-auto scrollbar-hide gap-4 shadow-inner">
                 {[
                     { id: 'profile', label: 'Profile', icon: User },
+                    { id: 'referral', label: 'Referral', icon: Share2 },
                     { id: 'security', label: 'Security', icon: Lock },
                     { id: 'wallet', label: 'Wallet', icon: CreditCard },
                     { id: 'system', label: 'System', icon: Settings }
@@ -223,26 +224,28 @@ const Profile = () => {
             <div className="animate-fade-in-up mt-8">
                 {activeTab === 'profile' && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div className="space-y-6">
+                        <div className="space-y-6 lg:col-span-2 max-w-6xl mx-auto w-full">
                             <ProfileDetails />
-                        </div>
-                        <div className="space-y-6">
-                            <SocialAndRef />
                         </div>
                     </div>
                 )}
+                {activeTab === 'referral' && (
+                    <div className="max-w-6xl mx-auto space-y-6">
+                        <SocialAndRef />
+                    </div>
+                )}
                 {activeTab === 'security' && (
-                    <div className="max-w-2xl mx-auto space-y-6">
+                    <div className="max-w-6xl mx-auto space-y-6">
                         <SecuritySettings />
                     </div>
                 )}
                 {activeTab === 'wallet' && (
-                    <div className="max-w-2xl mx-auto space-y-6">
+                    <div className="max-w-6xl mx-auto space-y-6">
                         <WalletInfo />
                     </div>
                 )}
                 {activeTab === 'system' && (
-                    <div className="max-w-2xl mx-auto space-y-6">
+                    <div className="max-w-6xl mx-auto space-y-6">
                         <SystemStatus />
                     </div>
                 )}
