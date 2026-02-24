@@ -383,7 +383,7 @@ const MarketingContent = () => {
     const mobileTabs = [
         { id: 'advisor', label: 'Advisor', icon: FileText },
         { id: 'platform', label: 'Platform', icon: BookOpen },
-        { id: 'ftp', label: 'FTP', icon: FileText },
+        { id: 'ftp', label: 'DRP', icon: FileText },
         { id: 'utp', label: 'UTP', icon: BookOpen }
     ];
 
@@ -414,8 +414,8 @@ const MarketingContent = () => {
                             key={tab.id}
                             onClick={() => setMobileTab(tab.id)}
                             className={`flex flex-1 items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-all ${mobileTab === tab.id
-                                    ? "bg-[#794ef5] text-white shadow-md transform scale-[1.02]"
-                                    : "text-[#58728d] hover:text-[#3b4c5d] hover:bg-white/40"
+                                ? "bg-[#794ef5] text-white shadow-md transform scale-[1.02]"
+                                : "text-[#58728d] hover:text-[#3b4c5d] hover:bg-white/40"
                                 }`}
                         >
                             <Icon className="w-3.5 h-3.5" />
@@ -478,8 +478,8 @@ const MarketingContent = () => {
                             <FileText className="w-8 h-8" />
                         </div>
                         <div>
-                            <h3 className="text-xl font-bold text-text-main uppercase mb-2">Finance Tenure Bundle</h3>
-                            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">FTP Structural Rewards & Projections</p>
+                            <h3 className="text-xl font-bold text-text-main uppercase mb-2">Dividend Reward Bundle</h3>
+                            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">DRP Structural Rewards & Projections</p>
                         </div>
                         <div className="bg-gray-300 px-4 py-2 rounded-lg border border-gray-200">
                             <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">PDF Format • 1.8 MB</span>

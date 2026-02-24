@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Users, Award, DollarSign, Activity, ZoomIn, ZoomOut, User, Search, Filter, List, Network } from 'lucide-react';
+import { Users, ZoomIn, ZoomOut, User } from 'lucide-react';
 
 const StatCard = ({ title, value, subtext, icon: Icon }) => (
     <div className="bg-surface border border-gray-400 rounded-2xl p-4 shadow-lg shadow-gray-400 hover:shadow-lg transition-all group">
@@ -125,14 +125,7 @@ const TreeView = ({ node }) => {
 }
 
 const Hierarchy = () => {
-    const [viewMode, setViewMode] = useState('genealogy'); // 'genealogy' or 'list'
     const [zoom, setZoom] = useState(1);
-
-    // Team List States
-    const [searchTerm, setSearchTerm] = useState('');
-    const [statusFilter, setStatusFilter] = useState('All Members');
-    // Mock Data for Team List
-    const teamMembers = [];
 
     return (
         <div className="space-y-8 pb-12">
@@ -147,30 +140,6 @@ const Hierarchy = () => {
                         <p className="text-sm font-bold text-text-muted uppercase">Invite Partners & Earn Ecosystem Rewards</p>
                     </div>
                 </div>
-
-                {/* View Switcher */}
-                <div className="flex bg-gray-300 p-1 rounded-xl">
-                    <button
-                        onClick={() => setViewMode('genealogy')}
-                        className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-bold transition-all ${viewMode === 'genealogy'
-                            ? 'bg-white text-primary shadow-lg'
-                            : 'text-gray-500 hover:text-gray-700'
-                            }`}
-                    >
-                        <Network className="w-4 h-4" />
-                        <span>Genealogy</span>
-                    </button>
-                    <button
-                        onClick={() => setViewMode('list')}
-                        className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-bold transition-all ${viewMode === 'list'
-                            ? 'bg-white text-primary shadow-lg'
-                            : 'text-gray-500 hover:text-gray-700'
-                            }`}
-                    >
-                        <List className="w-4 h-4" />
-                        <span>Team List</span>
-                    </button>
-                </div>
             </div>
 
             {/* Stats Grid */}
@@ -184,109 +153,34 @@ const Hierarchy = () => {
             </div> */}
 
             {/* Genealogy Tree View */}
-            {viewMode === 'genealogy' && (
-                <div className="space-y-6">
-                    <div className="bg-surface border border-gray-400 rounded-3xl p-4 shadow-lg shadow-gray-400 h-[600px] flex flex-col relative overflow-hidden">
-                        <div className="flex justify-between items-center mb-6">
-                            <div className="flex items-center space-x-2">
-                                <Users className="w-5 h-5 text-primary" />
-                                <h2 className="text-xl font-bold text-text-main uppercase tracking-wide border-l-4 border-primary pl-3">
-                                    Network Genealogy
-                                </h2>
-                            </div>
-                            <div className="flex space-x-2">
-                                <button onClick={() => setZoom(z => Math.max(0.2, z - 0.1))} className="p-2 bg-gray-300 rounded-lg hover:border-gray-400 hover:border-black border hover:text-black transition-all text-gray-600">
-                                    <ZoomOut className="w-5 h-5" />
-                                </button>
-                                <button onClick={() => setZoom(z => Math.min(2, z + 0.1))} className="p-2 bg-gray-300 rounded-lg hover:border-gray-400 hover:border-black border hover:text-black transition-all text-gray-600">
-                                    <ZoomIn className="w-5 h-5" />
-                                </button>
-                            </div>
+            <div className="space-y-6">
+                <div className="bg-surface border border-gray-400 rounded-3xl p-4 shadow-lg shadow-gray-400 h-[600px] flex flex-col relative overflow-hidden">
+                    <div className="flex justify-between items-center mb-6">
+                        <div className="flex items-center space-x-2">
+                            <Users className="w-5 h-5 text-primary" />
+                            <h2 className="text-xl font-bold text-text-main uppercase tracking-wide border-l-4 border-primary pl-3">
+                                Network Genealogy
+                            </h2>
                         </div>
-
-                        <div className="flex-1 bg-gray-300 rounded-2xl border border-gray-100 overflow-auto relative cursor-grab active:cursor-grabbing no-scrollbar">
-                            <div className="min-w-max min-h-max p-20 flex justify-center origin-top-left transition-transform duration-200"
-                                style={{ transform: `scale(${zoom})`, transformOrigin: 'center top' }}>
-                                <TreeView node={treeData} />
-                            </div>
+                        <div className="flex space-x-2">
+                            <button onClick={() => setZoom(z => Math.max(0.2, z - 0.1))} className="p-2 bg-gray-300 rounded-lg hover:border-gray-400 hover:border-black border hover:text-black transition-all text-gray-600">
+                                <ZoomOut className="w-5 h-5" />
+                            </button>
+                            <button onClick={() => setZoom(z => Math.min(2, z + 0.1))} className="p-2 bg-gray-300 rounded-lg hover:border-gray-400 hover:border-black border hover:text-black transition-all text-gray-600">
+                                <ZoomIn className="w-5 h-5" />
+                            </button>
                         </div>
                     </div>
 
-                </div>
-            )}
-
-            {/* Team List View */}
-            {viewMode === 'list' && (
-                <div className="space-y-6">
-                    {/* Search and Filter Section - Dark Theme */}
-                    <div className="bg-white rounded-3xl p-4 shadow-lg shadow-gray-600 border border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
-                        <div className="relative w-full md:w-96">
-                            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
-                            <input
-                                type="text"
-                                placeholder="SEARCH USERNAME, EMAIL OR ADDRESS"
-                                className="w-full bg-gray-300 border border-gray-700 text-black rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-primary text-xs font-bold uppercase tracking-wider"
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                            />
-                        </div>
-
-                        <div className="flex items-center space-x-3 w-full md:w-auto">
-                            <Filter className="text-primary w-5 h-5" />
-                            <span className="text-black font-bold text-xs uppercase">Status :</span>
-                            <select
-                                className="bg-gray-300 border border-gray-700 text-black rounded-xl py-2 px-4 focus:outline-none focus:border-primary text-xs font-bold uppercase"
-                                value={statusFilter}
-                                onChange={(e) => setStatusFilter(e.target.value)}
-                            >
-                                <option>All Members</option>
-                                <option>Active</option>
-                                <option>Inactive</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    {/* Team Members Table - Dark Theme */}
-                    <div className="bg-white rounded-3xl border border-gray-800 shadow-gray-600 overflow-hidden shadow-lg min-h-[400px]">
-                        <div className="overflow-x-auto">
-                            <table className="w-full">
-                                <thead>
-                                    <tr className="border-b border-gray-800">
-                                        <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">User Info</th>
-                                        <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">Status</th>
-                                        <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">Business</th>
-                                        <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">FTP Stake</th>
-                                        <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">UTP Stake</th>
-                                        <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">Team Info</th>
-                                        <th className="text-left py-4 px-6 text-xs font-bold text-gray-500 uppercase">Joined Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {teamMembers.length > 0 ? (
-                                        teamMembers.map((member, index) => (
-                                            <tr key={index} className="border-b border-gray-800 hover:bg-gray-900/50 transition-colors">
-                                                <td className="py-4 px-6 text-black">{member.name}</td>
-                                                <td className="py-4 px-6 text-black">{member.status}</td>
-                                                <td className="py-4 px-6 text-black">{member.business}</td>
-                                                <td className="py-4 px-6 text-black">{member.ftpStake}</td>
-                                                <td className="py-4 px-6 text-black">{member.utpStake}</td>
-                                                <td className="py-4 px-6 text-black">{member.teamInfo}</td>
-                                                <td className="py-4 px-6 text-black">{member.joinedDate}</td>
-                                            </tr>
-                                        ))
-                                    ) : (
-                                        <tr>
-                                            <td colSpan="7" className="py-20 text-center">
-                                                <p className="text-black font-bold uppercase text-xs tracking-wider">No Team Members Found</p>
-                                            </td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
+                    <div className="flex-1 bg-gray-300 rounded-2xl border border-gray-100 overflow-auto relative cursor-grab active:cursor-grabbing no-scrollbar">
+                        <div className="min-w-max min-h-max p-20 flex justify-center origin-top-left transition-transform duration-200"
+                            style={{ transform: `scale(${zoom})`, transformOrigin: 'center top' }}>
+                            <TreeView node={treeData} />
                         </div>
                     </div>
                 </div>
-            )}
+
+            </div>
         </div>
     );
 };

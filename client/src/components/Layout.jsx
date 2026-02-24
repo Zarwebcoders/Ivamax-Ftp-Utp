@@ -19,8 +19,8 @@ const Layout = () => {
                 return { title: 'Buy IMX', subtitle: 'Purchase and manage your IMX tokens' };
             case '/hierarchy':
                 return { title: 'Network Hierarchy', subtitle: 'Visual representation of your team structure' };
-            case '/ftp':
-                return { title: 'Finance Tenure Package', subtitle: 'Manage your FTP investments' };
+            case '/drp':
+                return { title: 'Dividend Reward Package', subtitle: 'Manage your DRP investments' };
             case '/utp':
                 return { title: 'United Tenure Package', subtitle: 'Manage your UTP investments' };
             case '/wallet':

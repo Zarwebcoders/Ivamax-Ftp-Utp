@@ -6,7 +6,7 @@ import { cn } from '../utils/cn';
 
 const Stake = () => {
     const token = useAuthStore((state) => state.token);
-    const [activeTab, setActiveTab] = useState('FTP'); // FTP or UTP
+    const [activeTab, setActiveTab] = useState('DRP'); // DRP or UTP
     const [amount, setAmount] = useState('');
     const [duration, setDuration] = useState(12);
     const [stakes, setStakes] = useState([]);
@@ -48,7 +48,7 @@ const Stake = () => {
 
             {/* Tabs */}
             <div className="flex space-x-1 bg-white p-1 rounded-2xl w-fit border border-gray-200 shadow-sm">
-                {['FTP', 'UTP'].map((tab) => (
+                {['DRP', 'UTP'].map((tab) => (
                     <button
                         key={tab}
                         onClick={() => setActiveTab(tab)}
@@ -75,12 +75,12 @@ const Stake = () => {
 
                         <div className="mb-8 p-6 bg-gradient-to-br from-primary/5 to-secondary/5 border border-primary/10 rounded-2xl">
                             <div className="flex items-center justify-between mb-2">
-                                <h4 className="font-bold text-lg text-primary">{activeTab === 'FTP' ? 'Fixed Term Plan' : 'Unit Term Plan'}</h4>
+                                <h4 className="font-bold text-lg text-primary">{activeTab === 'DRP' ? 'Fixed Term Plan' : 'Unit Term Plan'}</h4>
                                 <CheckCircle2 className="w-5 h-5 text-green-500" />
                             </div>
                             <div className="h-px bg-primary/10 w-full my-3"></div>
                             <ul className="text-sm text-text-muted space-y-2 font-medium">
-                                <li className="flex justify-between"><span>ROI:</span> <span className="text-text-main font-bold">{activeTab === 'FTP' ? '3%' : '5%'} Monthly</span></li>
+                                <li className="flex justify-between"><span>ROI:</span> <span className="text-text-main font-bold">{activeTab === 'DRP' ? '3%' : '5%'} Monthly</span></li>
                                 <li className="flex justify-between"><span>Min Duration:</span> <span className="text-text-main font-bold">12 Months</span></li>
                                 <li className="flex justify-between"><span>Principal Return:</span> <span className="text-text-main font-bold">End of Term</span></li>
                             </ul>
@@ -150,7 +150,7 @@ const Stake = () => {
                                         <div className="flex items-start space-x-4">
                                             <div className={cn(
                                                 "p-3 rounded-xl",
-                                                stake.planType === 'FTP' ? "bg-blue-50 text-blue-500" : "bg-purple-50 text-purple-500"
+                                                stake.planType === 'DRP' ? "bg-blue-50 text-blue-500" : "bg-purple-50 text-purple-500"
                                             )}>
                                                 <TrendingUp className="w-6 h-6" />
                                             </div>
@@ -159,7 +159,7 @@ const Stake = () => {
                                                     <span className="font-bold text-text-main text-lg">${stake.amount.toLocaleString()}</span>
                                                     <span className={cn(
                                                         "text-xs font-bold px-2 py-0.5 rounded-full uppercase",
-                                                        stake.planType === 'FTP' ? "bg-blue-100 text-blue-600" : "bg-purple-100 text-purple-600"
+                                                        stake.planType === 'DRP' ? "bg-blue-100 text-blue-600" : "bg-purple-100 text-purple-600"
                                                     )}>
                                                         {stake.planType}
                                                     </span>

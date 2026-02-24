@@ -10,8 +10,9 @@ import Network from './pages/Network';
 import Stake from './pages/Stake';
 import BuyIMX from './pages/BuyIMX';
 import Hierarchy from './pages/Hierarchy';
+import Business from './pages/Business';
 import AllRewards from './pages/AllRewards';
-import FTP from './pages/FTP';
+import DRP from './pages/DRP';
 import UTP from './pages/UTP';
 
 import Withdraw from './pages/Withdraw';
@@ -53,8 +54,9 @@ function App() {
           <Route path="/stake" element={<Stake />} />
           <Route path="/buy-imx" element={<BuyIMX />} />
           <Route path="/hierarchy" element={<Hierarchy />} />
+          <Route path="/business" element={<Business />} />
 
-          <Route path="/ftp" element={<FTP />} />
+          <Route path="/drp" element={<DRP />} />
           <Route path="/utp" element={<UTP />} />
           <Route path="/all-rewards" element={<AllRewards />} />
           <Route path="/withdraw" element={<Withdraw />} />

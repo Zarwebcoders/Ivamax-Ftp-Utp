@@ -27,7 +27,7 @@ const WalletCard = ({ title, items, icon: Icon }) => {
                 return 'from-blue-600 to-blue-400';
             case 'Protok Wallet':
                 return 'from-purple-600 to-purple-400';
-            case 'FTP Plan':
+            case 'DRP Plan':
                 return 'from-amber-600 to-amber-400';
             case 'UTP Plan':
                 return 'from-emerald-600 to-emerald-400';
@@ -39,7 +39,7 @@ const WalletCard = ({ title, items, icon: Icon }) => {
     return (
         <div className="group relative">
             {/* Card Container with Glassmorphism effect */}
-            <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 border border-gray-700 shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]">
+            <div className="relative bg-gradient-to-br from-gray-700 to-gray-800 rounded-2xl p-6 border border-gray-700 shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]">
 
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-10">
@@ -50,8 +50,8 @@ const WalletCard = ({ title, items, icon: Icon }) => {
                 </div>
 
                 {/* Animated Gradient Orbs */}
-                <div className={`absolute -top-20 -right-20 w-48 h-48 bg-gradient-to-r ${getGradient()} rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500`}></div>
-                <div className={`absolute -bottom-20 -left-20 w-48 h-48 bg-gradient-to-r ${getGradient()} rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500`}></div>
+                <div className={`absolute -top-20 -right-20 w-48 h-48 bg-gradient-to-r ${getGradient()} rounded-full blur-3xl opacity-60 group-hover:opacity-30 transition-opacity duration-500`}></div>
+                <div className={`absolute -bottom-20 -left-20 w-48 h-48 bg-gradient-to-r ${getGradient()} rounded-full blur-3xl opacity-60 group-hover:opacity-30 transition-opacity duration-500`}></div>
 
                 {/* Header with Icon and Title */}
                 <div className="relative z-10 flex items-center justify-between mb-6">
@@ -73,7 +73,7 @@ const WalletCard = ({ title, items, icon: Icon }) => {
                     {items.map((item, idx) => (
                         <div
                             key={idx}
-                            className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 border border-gray-700 hover:border-gray-600 transition-all group/card"
+                            className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 border border-gray-700 hover:border-primary transition-all group/card"
                         >
                             <div className="flex flex-col">
                                 <span className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">
@@ -240,7 +240,7 @@ const Wallet = () => {
                                 : 'text-gray-500 hover:text-white hover:bg-gray-900'
                                 }`}
                         >
-                            FTP
+                            DRP
                         </button>
                         <button
                             onClick={() => setMobileTab('utp')}
@@ -276,7 +276,7 @@ const Wallet = () => {
                                     icon={Layers}
                                     items={[
                                         { label: "Protok Balance", value: "$0.00", subtext: "0.00 IMX" },
-                                        { label: "FTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" },
+                                        { label: "DRP Pro Balance", value: "$0.00", subtext: "0.00 IMX" },
                                         { label: "UTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" }
                                     ]}
                                 />
@@ -284,12 +284,12 @@ const Wallet = () => {
 
                             <div className={`${mobileTab === 'ftp' ? 'block' : 'hidden'} md:block`}>
                                 <WalletCard
-                                    title="FTP Plan"
+                                    title="DRP Plan"
                                     icon={Activity}
                                     items={[
-                                        { label: "FTP Unit", value: "$0.00", subtext: "0.00 IMX" },
-                                        { label: "FTP Stake Inv.", value: "$0.00", subtext: "0.00 IMX" },
-                                        { label: "FTP Pro Balance", value: "$0.00", subtext: "0.00 IMX" },
+                                        { label: "DRP Unit", value: "$0.00", subtext: "0.00 IMX" },
+                                        { label: "DRP Stake Inv.", value: "$0.00", subtext: "0.00 IMX" },
+                                        { label: "DRP Pro Balance", value: "$0.00", subtext: "0.00 IMX" },
                                     ]}
                                 />
                             </div>

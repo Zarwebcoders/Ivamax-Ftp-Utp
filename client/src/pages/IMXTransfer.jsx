@@ -38,10 +38,10 @@ const HistorySection = ({ title, activeTab, onTabChange }) => (
             </h3>
             <div className="flex gap-2">
                 <button
-                    onClick={() => onTabChange('FTP')}
-                    className={`px-4 py-2 rounded-lg text-xs font-bold uppercase transition-all ${activeTab === 'FTP' ? 'bg-primary text-black' : 'bg-gray-700 text-gray-400 hover:bg-gray-800'}`}
+                    onClick={() => onTabChange('DRP')}
+                    className={`px-4 py-2 rounded-lg text-xs font-bold uppercase transition-all ${activeTab === 'DRP' ? 'bg-primary text-black' : 'bg-gray-700 text-gray-400 hover:bg-gray-800'}`}
                 >
-                    FTP {title.split(' ')[0]}
+                    DRP {title.split(' ')[0]}
                 </button>
                 <button
                     onClick={() => onTabChange('UTP')}
@@ -59,8 +59,8 @@ const HistorySection = ({ title, activeTab, onTabChange }) => (
 
 const IMXTransfer = () => {
     const { user, token } = useAuthStore();
-    const [captokTab, setCaptokTab] = useState('FTP');
-    const [protokTab, setProtokTab] = useState('FTP');
+    const [captokTab, setCaptokTab] = useState('DRP');
+    const [protokTab, setProtokTab] = useState('DRP');
     const [activeTab, setActiveTab] = useState('holdings'); // 'holdings', 'history'
     const [historyType, setHistoryType] = useState('captok'); // 'captok', 'protok'
     const [transactions, setTransactions] = useState([]);
@@ -164,11 +164,11 @@ const IMXTransfer = () => {
                     />
                     {/* 
                     <WalletCard
-                        title="FTP Plan"
+                        title="DRP Plan"
                         icon={Activity}
                         items={[
-                            { label: "FTP Stake Inv.", value: "$0", subtext: "0 IMX" },
-                            { label: "FTP Pro Balance", value: "$0", subtext: "0 IMX" },
+                            { label: "DRP Stake Inv.", value: "$0", subtext: "0 IMX" },
+                            { label: "DRP Pro Balance", value: "$0", subtext: "0 IMX" },
                         ]}
                     />
                     <WalletCard

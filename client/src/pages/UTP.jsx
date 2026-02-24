@@ -155,11 +155,17 @@ const UTP = () => {
                                 <input
                                     type="number"
                                     placeholder="Min 1"
+                                    min="1"
                                     className="w-full bg-transparent border border-gray-700 text-black rounded-xl py-4 pl-4 pr-12 focus:outline-none focus:border-[#d4af37] font-bold placeholder-gray-400"
                                     value={units}
                                     onChange={(e) => setUnits(e.target.value)}
                                 />
                             </div>
+                            {units && Number(units) > 0 && (
+                                <p className="text-xs font-bold text-emerald-600 mt-2 text-right">
+                                    Total Investment: ${(Number(units) * 50).toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                                </p>
+                            )}
                         </div>
 
                         <button className="w-full bg-[#d4af37] hover:bg-[#c19b26] text-black font-bold py-4 rounded-xl uppercase tracking-wider transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-[#d4af37]/20">
