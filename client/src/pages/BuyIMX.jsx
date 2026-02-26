@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { ShoppingCart, TrendingUp, RefreshCw, History, Activity } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ShoppingCart, TrendingUp, RefreshCw, History, Activity, Loader } from 'lucide-react';
+import api from '../lib/axios';
+import { useAuthStore } from '../store/useAuthStore';
 
 const InfoCard = ({ title, value, subtext, highlight, icon: Icon }) => (
     <div className="bg-surface border border-gray-400 rounded-2xl p-3 md:p-4 shadow-lg shadow-gray-400 hover:shadow-lg transition-all relative overflow-hidden group">
@@ -21,9 +23,41 @@ const InfoCard = ({ title, value, subtext, highlight, icon: Icon }) => (
 const BuyIMX = () => {
     const [slots, setSlots] = useState(1);
     const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'buy', 'history'
+    const [isLoading, setIsLoading] = useState(false);
+    const [transactions, setTransactions] = useState([]);
+    
     const tokenPrice = 0.1;
     const tokensPerSlot = 250;
     const slotValue = 25;
+
+    useEffect(() => {
+        fetchHistory();
+    }, []);
+
+    const fetchHistory = async () => {
+        try {
+            const res = await api.get('/wallet/history');
+            const deposits = res.data.filter(tx => tx.type === 'Deposit');
+            setTransactions(deposits);
+        } catch (error) {
+            console.error('Failed to fetch history', error);  
+        }
+    };
+
+    const handleBuy = async () => {
+        setIsLoading(true);
+        try {
+            await api.post('/wallet/buy-imx', { slots });
+            alert('IMX Purchased Successfully!');
+            setActiveTab('history');
+            fetchHistory();
+            useAuthStore.getState().loadUser(); // Refresh global user state for balance
+        } catch (error) {
+            alert(error.response?.data?.message || 'Transaction Failed');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <div className="space-y-8 pb-12">
@@ -163,8 +197,12 @@ const BuyIMX = () => {
                                     </div>
 
                                     {/* Initiate Payment Button */}
-                                    <button className="w-full bg-[#d4af37] hover:bg-[#c19b26] text-black font-bold py-3.5 rounded-xl uppercase tracking-wider text-sm transition-all transform active:scale-95 shadow-md shadow-[#d4af37]/20">
-                                        Initiate Payment
+                                    <button 
+                                        onClick={handleBuy}
+                                        disabled={isLoading}
+                                        className="w-full bg-[#d4af37] flex items-center justify-center hover:bg-[#c19b26] text-black font-bold py-3.5 rounded-xl uppercase tracking-wider text-sm transition-all transform active:scale-95 shadow-md shadow-[#d4af37]/20 disabled:opacity-70 disabled:cursor-not-allowed"
+                                    >
+                                        {isLoading ? <Loader className="w-5 h-5 animate-spin" /> : 'Initiate Payment'}
                                     </button>
                                 </div>
                             </div>
@@ -173,15 +211,18 @@ const BuyIMX = () => {
                 </div>
 
                 {/* Right Column: Purchase Records */}
-                <div className={`lg:col-span-2 bg-white rounded-3xl shadow-gray-400 shadow-lg border border-gray-300 flex flex-col overflow-hidden min-h-[500px] ${activeTab === 'history' || activeTab === 'overview' ? 'block' : 'hidden'} md:block`}>
-                    <div className="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
+                <div className={`lg:col-span-2 bg-white rounded-3xl shadow-gray-400 shadow-lg border border-gray-400 flex flex-col overflow-hidden min-h-[500px] ${activeTab === 'history' || activeTab === 'overview' ? 'block' : 'hidden'} md:block`}>
+                    <div className="p-6  flex justify-between items-center bg-gray-50/50">
                         <div className="flex items-center space-x-3">
                             <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                                 <History className="w-4 h-4 text-primary" />
                             </div>
                             <h2 className="text-gray-800 text-sm font-bold uppercase tracking-wide">Purchase Records</h2>
                         </div>
-                        <button className="flex items-center space-x-2 bg-white border border-gray-300 text-gray-700 px-3 py-1.5 rounded-lg text-xs font-bold uppercase hover:bg-gray-50 hover:text-gray-900 transition-colors shadow-sm">
+                        <button 
+                            onClick={fetchHistory}
+                            className="flex items-center space-x-2 bg-primary border border-gray-400 text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase hover:bg-gray-50 hover:text-gray-900 transition-colors shadow-lg shadow-gray-400"
+                        >
                             <RefreshCw className="w-3.5 h-3.5" />
                             <span>Sync</span>
                         </button>
@@ -190,7 +231,7 @@ const BuyIMX = () => {
                     <div className="flex-1 overflow-x-auto p-0">
                         <table className="w-full text-left border-collapse">
                             <thead>
-                                <tr className="border-b border-gray-200 bg-gray-50/80">
+                                <tr className="border-y border-gray-400 bg-gray-50/80">
                                     <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Date</th>
                                     <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Total Lot</th>
                                     <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Value</th>
@@ -200,14 +241,34 @@ const BuyIMX = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td colSpan="6" className="py-24 text-center">
-                                        <div className="flex flex-col items-center justify-center opacity-50">
-                                            <ShoppingCart className="w-12 h-12 text-gray-400 mb-4" strokeWidth={1} />
-                                            <span className="text-gray-500 font-bold uppercase text-xs tracking-wider">No Transaction History Found</span>
-                                        </div>
-                                    </td>
-                                </tr>
+                                {transactions.length > 0 ? (
+                                    transactions.map(tx => {
+                                        const purchasedSlots = tx.amount / tokensPerSlot;
+                                        return (
+                                            <tr key={tx._id} className="border-b border-gray-200 hover:bg-gray-50/50">
+                                                <td className="py-4 px-6 text-[10px] font-bold text-gray-700 whitespace-nowrap">{new Date(tx.createdAt).toLocaleDateString()}</td>
+                                                <td className="py-4 px-6 text-sm font-bold text-gray-900">{purchasedSlots}</td>
+                                                <td className="py-4 px-6 text-sm font-bold text-gray-900">${(purchasedSlots * slotValue).toFixed(2)}</td>
+                                                <td className="py-4 px-6 text-sm font-bold text-primary">{tx.amount} IMX</td>
+                                                <td className="py-4 px-6">
+                                                    <span className={`px-2.5 py-1 rounded bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wider`}>
+                                                        {tx.status}
+                                                    </span>
+                                                </td>
+                                                <td className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase">CapTok</td>
+                                            </tr>
+                                        );
+                                    })
+                                ) : (
+                                    <tr>
+                                        <td colSpan="6" className="py-24 text-center">
+                                            <div className="flex flex-col items-center justify-center opacity-50">
+                                                <ShoppingCart className="w-12 h-12 text-gray-400 mb-4" strokeWidth={1} />
+                                                <span className="text-gray-500 font-bold uppercase text-xs tracking-wider">No Transaction History Found</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )}
                             </tbody>
                         </table>
                     </div>

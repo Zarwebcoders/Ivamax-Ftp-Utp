@@ -38,6 +38,39 @@ exports.deposit = async (req, res) => {
     }
 };
 
+// Buy IMX (Direct Auto-Approve)
+exports.buyImx = async (req, res) => {
+    try {
+        const { slots } = req.body;
+        const user = await User.findById(req.user.id);
+
+        if (!slots || slots < 1) {
+            return res.status(400).json({ message: 'Invalid slots quantity' });
+        }
+
+        const imxAmount = slots * 250;
+        const usdValue = slots * 25;
+
+        // Auto-approve and add directly to balance
+        user.wallet.captok.main += imxAmount;
+        await user.save();
+
+        // Log Transaction as Completed
+        const tx = new Transaction({
+            userId: user._id,
+            amount: imxAmount,
+            type: 'Deposit',
+            status: 'Completed',
+            description: `Buy IMX: ${slots} Lot(s) for $${usdValue}`
+        });
+        await tx.save();
+
+        res.json({ message: 'IMX Purchased Successfully', balance: user.wallet.captok.main });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
 // Transfer (P2P)
 exports.transfer = async (req, res) => {
     try {

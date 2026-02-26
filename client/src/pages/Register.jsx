@@ -44,6 +44,9 @@ const Register = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#9099a8] py-8 px-4 font-sans relative overflow-hidden">
+            {/* Background Blobs - Adjusted for Light Theme */}
+            <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-primary/60 rounded-full blur-3xl opacity-40 animate-pulse"></div>
+            <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-secondary/60 rounded-full blur-3xl opacity-40 animate-pulse delay-1000"></div>
             <div className="w-full max-w-xl bg-white rounded-3xl p-6 md:p-8 shadow-2xl relative z-10">
                 {/* Header */}
                 <div className="text-center mb-6">
@@ -65,13 +68,13 @@ const Register = () => {
                             type="text"
                             name="sponsorId"
                             value={formData.sponsorId}
-                            onChange={handleChange}
+                            readOnly
                             required
                             placeholder="Referral ID will be auto-filled from link"
-                            className="w-full bg-[#ebedf0] border border-[#d8dde3] rounded-xl px-4 py-3 font-bold text-sm text-gray-500 focus:outline-none focus:border-[#ffbc00] focus:ring-1 focus:ring-[#ffbc00] placeholder:text-[#a0abb8]"
+                            className="w-full bg-gray-200 border border-gray-300 rounded-xl px-4 py-3 font-bold text-sm text-gray-500 cursor-not-allowed focus:outline-none placeholder:text-[#a0abb8]"
                         />
                         <p className="text-[10px] font-bold text-[#fb7185] uppercase tracking-wider mt-1.5">
-                            * Registration requires a referral link. Please use one to register.
+                            * Registration requires a referral link. Manual entry is disabled.
                         </p>
                     </div>
 
@@ -88,7 +91,7 @@ const Register = () => {
                                 onChange={handleChange}
                                 required
                                 placeholder="Enter your full name"
-                                className="w-full bg-[#ebedf0] border border-[#d8dde3] rounded-xl px-4 py-3 font-bold text-sm text-gray-600 focus:outline-none focus:border-[#ffbc00] focus:ring-1 focus:ring-[#ffbc00] placeholder:text-[#a0abb8]"
+                                className="w-full bg-[#ebedf0] border border-gray-400 rounded-xl px-4 py-3 font-bold text-sm text-gray-600 focus:outline-none focus:border-[#ffbc00] focus:ring-1 focus:ring-[#ffbc00] placeholder:text-[#a0abb8]"
                             />
                         </div>
                         <div className="space-y-1.5">
@@ -102,7 +105,7 @@ const Register = () => {
                                 onChange={handleChange}
                                 required
                                 placeholder="Enter mobile number"
-                                className="w-full bg-[#ebedf0] border border-[#d8dde3] rounded-xl px-4 py-3 font-bold text-sm text-gray-600 focus:outline-none focus:border-[#ffbc00] focus:ring-1 focus:ring-[#ffbc00] placeholder:text-[#a0abb8]"
+                                className="w-full bg-[#ebedf0] border border-gray-400 rounded-xl px-4 py-3 font-bold text-sm text-gray-600 focus:outline-none focus:border-[#ffbc00] focus:ring-1 focus:ring-[#ffbc00] placeholder:text-[#a0abb8]"
                             />
                         </div>
                     </div>
@@ -119,7 +122,7 @@ const Register = () => {
                             onChange={handleChange}
                             required
                             placeholder="Enter email address"
-                            className="w-full bg-[#ebedf0] border border-[#d8dde3] rounded-xl px-4 py-3 font-bold text-sm text-gray-600 focus:outline-none focus:border-[#ffbc00] focus:ring-1 focus:ring-[#ffbc00] placeholder:text-[#a0abb8]"
+                            className="w-full bg-[#ebedf0] border border-gray-400 rounded-xl px-4 py-3 font-bold text-sm text-gray-600 focus:outline-none focus:border-[#ffbc00] focus:ring-1 focus:ring-[#ffbc00] placeholder:text-[#a0abb8]"
                         />
                     </div>
 
@@ -137,7 +140,7 @@ const Register = () => {
                                     onChange={handleChange}
                                     required
                                     placeholder="Create password"
-                                    className="w-full bg-[#ebedf0] border border-[#d8dde3] rounded-xl px-4 py-3 pr-10 font-bold text-sm text-gray-600 focus:outline-none focus:border-[#ffbc00] focus:ring-1 focus:ring-[#ffbc00] placeholder:text-[#a0abb8]"
+                                    className="w-full bg-[#ebedf0] border border-gray-400 rounded-xl px-4 py-3 pr-10 font-bold text-sm text-gray-600 focus:outline-none focus:border-[#ffbc00] focus:ring-1 focus:ring-[#ffbc00] placeholder:text-[#a0abb8]"
                                 />
                                 <button
                                     type="button"
@@ -160,7 +163,7 @@ const Register = () => {
                                     onChange={handleChange}
                                     required
                                     placeholder="Confirm password"
-                                    className="w-full bg-[#ebedf0] border border-[#d8dde3] rounded-xl px-4 py-3 pr-10 font-bold text-sm text-gray-600 focus:outline-none focus:border-[#ffbc00] focus:ring-1 focus:ring-[#ffbc00] placeholder:text-[#a0abb8]"
+                                    className="w-full bg-[#ebedf0] border border-gray-400 rounded-xl px-4 py-3 pr-10 font-bold text-sm text-gray-600 focus:outline-none focus:border-[#ffbc00] focus:ring-1 focus:ring-[#ffbc00] placeholder:text-[#a0abb8]"
                                 />
                                 <button
                                     type="button"
@@ -176,8 +179,11 @@ const Register = () => {
                     <div className="pt-4">
                         <button
                             type="submit"
-                            disabled={isLoading}
-                            className="w-full bg-[#ffbc00] hover:bg-[#eab308] text-white font-extrabold py-3.5 rounded-xl shadow-[0_4px_14px_0_rgba(255,188,0,0.39)] transition-transform active:scale-95 flex justify-center items-center text-base tracking-wider uppercase"
+                            disabled={isLoading || !formData.sponsorId}
+                            className={`w-full font-extrabold py-3.5 rounded-xl transition-transform flex justify-center items-center text-base tracking-wider uppercase ${!formData.sponsorId
+                                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed shadow-none'
+                                    : 'bg-[#ffbc00] hover:bg-[#eab308] text-white shadow-[0_4px_14px_0_rgba(255,188,0,0.39)] active:scale-95'
+                                }`}
                         >
                             {isLoading ? <Loader className="animate-spin w-5 h-5" /> : 'Create Account'}
                         </button>

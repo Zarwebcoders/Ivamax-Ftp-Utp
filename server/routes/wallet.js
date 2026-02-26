@@ -9,6 +9,9 @@ router.get('/', auth, walletController.getBalance);
 // Deposit (Simulated)
 router.post('/deposit', auth, walletController.deposit);
 
+// Buy IMX (Direct)
+router.post('/buy-imx', auth, walletController.buyImx);
+
 // Transfer
 router.post('/transfer', auth, walletController.transfer);
 
