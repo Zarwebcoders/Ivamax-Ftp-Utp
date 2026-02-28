@@ -32,6 +32,14 @@ const ProtectedRoute = ({ children }) => {
   return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
+const HomeRedirect = () => {
+  const user = useAuthStore((state) => state.user);
+  if (user?.role === 'admin') {
+    return <Navigate to="/admin/dashboard" replace />;
+  }
+  return <Navigate to="/dashboard" replace />;
+};
+
 function App() {
   const loadUser = useAuthStore((state) => state.loadUser);
   const user = useAuthStore((state) => state.user);
@@ -48,41 +56,32 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         {/* Protected Routes */}
+        {/* Protected Routes */}
         <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-          {user?.role !== 'admin' ? (
-            <>
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/wallet" element={<Wallet />} />
-              <Route path="/network" element={<Network />} />
-              <Route path="/stake" element={<Stake />} />
-              <Route path="/buy-imx" element={<BuyIMX />} />
-              <Route path="/hierarchy" element={<Hierarchy />} />
-              <Route path="/business" element={<Business />} />
+          <Route path="/" element={<HomeRedirect />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/wallet" element={<Wallet />} />
+          <Route path="/network" element={<Network />} />
+          <Route path="/stake" element={<Stake />} />
+          <Route path="/buy-imx" element={<BuyIMX />} />
+          <Route path="/hierarchy" element={<Hierarchy />} />
+          <Route path="/business" element={<Business />} />
 
-              <Route path="/drp" element={<DRP />} />
-              <Route path="/utp" element={<UTP />} />
-              <Route path="/all-rewards" element={<AllRewards />} />
-              <Route path="/withdraw" element={<Withdraw />} />
+          <Route path="/drp" element={<DRP />} />
+          <Route path="/utp" element={<UTP />} />
+          <Route path="/all-rewards" element={<AllRewards />} />
+          <Route path="/withdraw" element={<Withdraw />} />
 
-              <Route path="/company" element={<Company />} />
-            </>
-          ) : (
-            <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
-          )}
+          <Route path="/company" element={<Company />} />
 
           {/* Admin Routes */}
-          {user?.role === 'admin' && (
-            <>
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
-              <Route path="/admin/users" element={<UserManagement />} />
-              <Route path="/admin/deposits" element={<DepositRequests />} />
-              <Route path="/admin/withdrawals" element={<AdminWithdrawals />} />
-              <Route path="/admin/stakes" element={<AllStakes />} />
-              <Route path="/admin/support" element={<SupportAdmin />} />
-            </>
-          )}
+          <Route path="/admin/dashboard" element={user?.role === 'admin' ? <AdminDashboard /> : <Navigate to="/dashboard" />} />
+          <Route path="/admin/users" element={user?.role === 'admin' ? <UserManagement /> : <Navigate to="/dashboard" />} />
+          <Route path="/admin/deposits" element={user?.role === 'admin' ? <DepositRequests /> : <Navigate to="/dashboard" />} />
+          <Route path="/admin/withdrawals" element={user?.role === 'admin' ? <AdminWithdrawals /> : <Navigate to="/dashboard" />} />
+          <Route path="/admin/stakes" element={user?.role === 'admin' ? <AllStakes /> : <Navigate to="/dashboard" />} />
+          <Route path="/admin/support" element={user?.role === 'admin' ? <SupportAdmin /> : <Navigate to="/dashboard" />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/login" />} />

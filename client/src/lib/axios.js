@@ -5,7 +5,9 @@ import axios from 'axios';
 // Vite sets import.meta.env.MODE to 'development' when running npm run dev
 const isDevelopment = import.meta.env.MODE === 'development';
 
-const API_Base_URL = 'https://ivamax-ftp-utp-backend.vercel.app/api';
+const API_Base_URL = isDevelopment
+    ? 'http://localhost:5000/api'
+    : 'https://ivamax-ftp-utp-backend.vercel.app/api';
 
 console.log(`[API Config] Running in ${import.meta.env.MODE} mode. Using API: ${API_Base_URL}`);
 
