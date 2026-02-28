@@ -15,10 +15,41 @@ app.use(cors({
 }));
 app.use(cookieParser());
 
-// Database Connection
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/ivamax')
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+// Database Connection (Serverless Global Caching)
+const MONGODB_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/ivamax';
+
+if (!MONGODB_URI) {
+  throw new Error('Please define the MONGO_URI environment variable inside .env');
+}
+
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
+async function dbConnect() {
+  if (cached.conn) {
+    return cached.conn;
+  }
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false, // Important for serverless
+    };
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      console.log('MongoDB Connected / Reused');
+      return mongoose;
+    });
+  }
+  cached.conn = await cached.promise;
+  return cached.conn;
+}
+
+// Ensure DB connects before requests in Serverless
+app.use(async (req, res, next) => {
+  await dbConnect();
+  next();
+});
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
@@ -41,7 +72,12 @@ app.get('/', (req, res) => {
 require('./cron/dailyRoi');
 require('./cron/dailyBinary');
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Start Server only if NOT in Vercel Serverless environment
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+// Export for Vercel
+module.exports = app;
