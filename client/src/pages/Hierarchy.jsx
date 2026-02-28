@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Users, ZoomIn, ZoomOut, User } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Users, ZoomIn, ZoomOut, User, Loader } from 'lucide-react';
+import api from '../lib/axios';
 
 const StatCard = ({ title, value, subtext, icon: Icon }) => (
     <div className="bg-surface border border-gray-400 rounded-2xl p-4 shadow-lg shadow-gray-400 hover:shadow-lg transition-all group">
@@ -18,31 +19,10 @@ const StatCard = ({ title, value, subtext, icon: Icon }) => (
     </div>
 );
 
-// Mock Tree Data
-const treeData = {
-    id: 'user-1', name: 'You', rank: 'Star 3', self: '$500', team: '12', teamBus: '$5000',
-    children: [
-        {
-            id: 'user-2', name: 'User A', rank: 'Star 2', self: '$200', team: '5', teamBus: '$1200',
-            children: [
-                { id: 'user-4', name: 'User A1', rank: 'Star 1', self: '$100', team: '0', teamBus: '$0' },
-                { id: 'user-5', name: 'User A2', rank: 'Star 1', self: '$100', team: '0', teamBus: '$0' }
-            ]
-        },
-        {
-            id: 'user-3', name: 'User B', rank: 'Star 1', self: '$100', team: '2', teamBus: '$300',
-            children: [
-                { id: 'user-6', name: 'User B1', rank: 'No Rank', self: '$50', team: '0', teamBus: '$0' }
-            ]
-        },
-        {
-            id: 'user-7', name: 'User C', rank: 'No Rank', self: '$50', team: '0', teamBus: '$0', children: []
-        }
-    ]
-};
+// Mock Data removed, now fetched from API
 
 // Simplified Recursive Tree Component to handle lines correctly
-const TreeView = ({ node }) => {
+const TreeView = ({ node, fetchSubTree }) => {
     const [expanded, setExpanded] = useState(false);
     const hasChildren = node.children && node.children.length > 0;
 
@@ -50,7 +30,11 @@ const TreeView = ({ node }) => {
         <div className="flex flex-col items-center">
             {/* Node Card */}
             <div className="relative z-10">
-                <div className="bg-white border-2 border-primary/30 hover:border-primary rounded-xl p-3 w-40 shadow-lg shadow-gray-400 hover:shadow-lg transition-all flex flex-col items-center text-center">
+                <div
+                    onClick={() => { if (fetchSubTree) fetchSubTree(node.id); }}
+                    className="cursor-pointer bg-white border-2 border-primary/30 hover:border-primary rounded-xl p-3 w-40 shadow-lg shadow-gray-400 hover:shadow-lg transition-all flex flex-col items-center text-center"
+                    title="Click to view this user's downline"
+                >
                     <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white mb-2 shadow-lg">
                         <User className="w-5 h-5" />
                     </div>
@@ -114,7 +98,7 @@ const TreeView = ({ node }) => {
                                 {/* Vertical Line from Crossbar Down to Child Card */}
                                 <div className="w-px h-8 bg-gray-400"></div>
 
-                                <TreeView node={child} />
+                                <TreeView node={child} fetchSubTree={fetchSubTree} />
                             </div>
                         ))}
                     </div>
@@ -126,6 +110,32 @@ const TreeView = ({ node }) => {
 
 const Hierarchy = () => {
     const [zoom, setZoom] = useState(1);
+    const [treeData, setTreeData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [currentNodeId, setCurrentNodeId] = useState('null');
+
+    useEffect(() => {
+        const fetchTree = async () => {
+            setLoading(true);
+            try {
+                const response = await api.get(`/user/tree/${currentNodeId}`);
+                setTreeData(response.data);
+            } catch (error) {
+                console.error("Failed to fetch tree data", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchTree();
+    }, [currentNodeId]);
+
+    const handleRootChange = (nodeId) => {
+        setCurrentNodeId(nodeId);
+    };
+
+    const handleResetRoot = () => {
+        setCurrentNodeId('null');
+    };
 
     return (
         <div className="space-y-8 pb-12">
@@ -161,6 +171,14 @@ const Hierarchy = () => {
                             <h2 className="text-xl font-bold text-text-main uppercase tracking-wide border-l-4 border-primary pl-3">
                                 Network Genealogy
                             </h2>
+                            {currentNodeId !== 'null' && (
+                                <button
+                                    onClick={handleResetRoot}
+                                    className="ml-4 text-xs font-bold text-white bg-primary px-3 py-1 rounded-lg hover:bg-primary-dark transition-all shadow-md"
+                                >
+                                    Back to My Root
+                                </button>
+                            )}
                         </div>
                         <div className="flex space-x-2">
                             <button onClick={() => setZoom(z => Math.max(0.2, z - 0.1))} className="p-2 bg-gray-300 rounded-lg hover:border-gray-400 hover:border-black border hover:text-black transition-all text-gray-600">
@@ -173,10 +191,21 @@ const Hierarchy = () => {
                     </div>
 
                     <div className="flex-1 bg-gray-300 rounded-2xl border border-gray-100 overflow-auto relative cursor-grab active:cursor-grabbing no-scrollbar">
-                        <div className="min-w-max min-h-max p-20 flex justify-center origin-top-left transition-transform duration-200"
-                            style={{ transform: `scale(${zoom})`, transformOrigin: 'center top' }}>
-                            <TreeView node={treeData} />
-                        </div>
+                        {loading ? (
+                            <div className="flex flex-col items-center justify-center h-full text-primary">
+                                <Loader className="w-10 h-10 animate-spin mb-4" />
+                                <p className="font-bold uppercase tracking-widest text-sm text-gray-600">Building Tree...</p>
+                            </div>
+                        ) : treeData ? (
+                            <div className="min-w-max min-h-max p-20 flex justify-center origin-top-left transition-transform duration-200"
+                                style={{ transform: `scale(${zoom})`, transformOrigin: 'center top' }}>
+                                <TreeView node={treeData} fetchSubTree={handleRootChange} />
+                            </div>
+                        ) : (
+                            <div className="flex items-center justify-center h-full text-gray-500 font-bold uppercase">
+                                Failed to load tree
+                            </div>
+                        )}
                     </div>
                 </div>
 

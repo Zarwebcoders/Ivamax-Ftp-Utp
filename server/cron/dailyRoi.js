@@ -6,22 +6,27 @@ const Transaction = require('../models/Transaction');
 const calculateDailyROI = async () => {
     console.log('Running Daily ROI Calculation...');
     try {
-        const activeStakes = await Stake.find({ status: 'Active' });
+        // Only process Active DRP (or legacy FTP) stakes
+        const activeStakes = await Stake.find({
+            status: 'Active',
+            planType: { $in: ['FTP', 'DRP'] }
+        });
+
+        const today = new Date();
 
         for (const stake of activeStakes) {
-            // Calculate Daily ROI
-            // Assuming 30 days month
-            const dailyRoiAmount = (stake.amount * stake.roiPercentage) / 100 / 30;
+            // Check if DSP 7-day waiting period has elapsed
+            if (stake.roiStartDate && today < stake.roiStartDate) {
+                continue; // Skip this stake until ROI start date is reached
+            }
+
+            // Calculate Daily ROI directly based on stored daily percentage
+            const dailyRoiAmount = (stake.amount * stake.roiPercentage) / 100;
 
             // Update Stake
             stake.totalProfit += dailyRoiAmount;
-            stake.lastRoiDate = new Date();
+            stake.lastRoiDate = today;
 
-            // Check Maturity
-            if (new Date() >= stake.maturityDate) {
-                stake.status = 'Completed';
-                console.log(`Stake ${stake._id} Matured`);
-            }
             await stake.save();
 
             // Credit User

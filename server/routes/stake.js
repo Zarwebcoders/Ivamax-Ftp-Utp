@@ -9,4 +9,7 @@ router.post('/invest', auth, stakeController.invest);
 // Get My Stakes
 router.get('/', auth, stakeController.getMyStakes);
 
+// Unstake / Exit Plan
+router.post('/unstake', auth, stakeController.unstake);
+
 module.exports = router;

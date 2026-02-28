@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { FileText, History, DollarSign, Calendar, TrendingUp, Clock, Activity, ArrowRightLeft } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { FileText, History, DollarSign, Calendar, TrendingUp, Clock, Activity, ArrowRightLeft, Loader } from 'lucide-react';
+import api from '../lib/axios';
 
 const SummaryCard = ({ title, value, subValue }) => (
     <div className="bg-surface border border-gray-400 shadow-lg shadow-gray-600 hover:shadow-md rounded-2xl md:rounded-3xl p-3 md:p-6 transition-all group relative overflow-hidden flex flex-col items-center justify-center">
@@ -68,10 +69,96 @@ const HistoryTable = ({ title, subtitle, columns, data = [], emptyMessage, icon:
     </div>
 );
 
+const DSPSlabTable = () => {
+    const slabs = [
+        { sr: 1, package: 50, daily: '0.100', monthly: '3.00' },
+        { sr: 2, package: 250, daily: '0.125', monthly: '3.75' },
+        { sr: 3, package: 500, daily: '0.150', monthly: '4.50' },
+        { sr: 4, package: 1000, daily: '0.175', monthly: '5.25' },
+        { sr: 5, package: 2500, daily: '0.200', monthly: '6.00' },
+        { sr: 6, package: 5000, daily: '0.225', monthly: '6.75' },
+        { sr: 7, package: 10000, daily: '0.250', monthly: '7.50' },
+        { sr: 8, package: 25000, daily: '0.275', monthly: '8.25' },
+        { sr: 9, package: 50000, daily: '0.300', monthly: '9.00' },
+        { sr: 10, package: 75000, daily: '0.325', monthly: '9.75' },
+        { sr: 11, package: 100000, daily: '0.350', monthly: '10.50' },
+    ];
+
+    return (
+        <div className="bg-white rounded-3xl border border-gray-800 shadow-lg shadow-gray-600 overflow-hidden mb-6">
+            <div className="p-4 border-b border-gray-800 bg-gray-50 flex items-center justify-center">
+                <h3 className="text-black font-black uppercase text-sm tracking-widest text-center">DSP STAKE PACKAGE SYSTEM</h3>
+            </div>
+            <div className="overflow-x-auto">
+                <table className="w-full text-center">
+                    <thead className="bg-[#d4a04d] text-white">
+                        <tr>
+                            <th className="py-2 px-4 text-[10px] font-bold uppercase border-r border-[#be8e40]">SR.NO.</th>
+                            <th className="py-2 px-4 text-[10px] font-bold uppercase border-r border-[#be8e40]">STAKE PACKAGE ($)</th>
+                            <th className="py-2 px-4 text-[10px] font-bold uppercase border-r border-[#be8e40]">DAILY %</th>
+                            <th className="py-2 px-4 text-[10px] font-bold uppercase">MONTHLY %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {slabs.map((slab, idx) => (
+                            <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                <td className="py-2 px-4 text-xs font-bold text-gray-700 border-r border-gray-200">{slab.sr}</td>
+                                <td className="py-2 px-4 text-xs font-bold text-gray-700 border-r border-gray-200">{slab.package.toLocaleString()}</td>
+                                <td className="py-2 px-4 text-xs font-bold text-gray-700 border-r border-gray-200">{slab.daily}</td>
+                                <td className="py-2 px-4 text-xs font-bold text-gray-700">{slab.monthly}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            <div className="p-3 bg-gray-50 border-t border-gray-200 text-center">
+                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">COUNT YOUR FIRST DAYS AFTER 7 DAYS OF INVESTMENT</p>
+            </div>
+        </div>
+    );
+};
+
 const DRP = () => {
     const [amount, setAmount] = useState('');
     const [activeTab, setActiveTab] = useState('records');
     const [mobileTab, setMobileTab] = useState('overview'); // 'overview', 'invest', 'history'
+    const [loading, setLoading] = useState(false);
+
+    const handleInvest = async () => {
+        if (!amount || amount < 50) {
+            alert("Minimum investment is 50 Units (USDT)");
+            return;
+        }
+
+        if (!confirm(`Are you sure you want to invest ${amount} Units ($${amount}) in DRP?`)) return;
+
+        setLoading(true);
+        try {
+            await api.post('/stake/invest', {
+                planType: 'DRP',
+                amount: Number(amount)
+            });
+            alert('Staking Successful! ROI will start generating after 7 days.');
+            setAmount('');
+            // TODO: refresh history
+        } catch (error) {
+            alert(error.response?.data?.message || 'Failed to invest');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleUnstake = async (stakeId) => {
+        if (!confirm('Are you sure you want to exit this plan early? Your initial capital will be returned to CapTok.')) return;
+
+        try {
+            await api.post('/stake/unstake', { stakeId });
+            alert('Unstake successful. Capital returned.');
+            // TODO: refresh history
+        } catch (error) {
+            alert(error.response?.data?.message || 'Failed to unstake');
+        }
+    };
 
     return (
         <div className="space-y-8 pb-12">
@@ -83,7 +170,7 @@ const DRP = () => {
                     </div>
                     <div>
                         <h1 className="text-2xl font-bold text-text-main uppercase">DRP Stake</h1>
-                        <p className="text-xs font-bold text-text-muted uppercase">Manage Your Dividend Reward Package</p>
+                        <p className="text-xs font-bold text-text-muted uppercase">Manage Your Daily Reward Package</p>
                     </div>
                 </div>
             </div>
@@ -123,10 +210,15 @@ const DRP = () => {
             </div>
 
             {/* Top Summary Cards */}
-            <div className={`grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 ${mobileTab === 'overview' ? 'block' : 'hidden'} md:grid`}>
+            <div className={`grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 ${mobileTab === 'overview' ? 'block' : 'hidden'} md:grid mb-6`}>
                 <SummaryCard title="No of Unit" value="0" />
                 <SummaryCard title="DRP Investment" value="$0.00" subValue="0.00 IMX" />
                 <SummaryCard title="DRP Profit" value="$0.00" subValue="0.00 IMX" />
+            </div>
+
+            {/* DSP Slab Table */}
+            <div className={`${mobileTab === 'overview' ? 'block' : 'hidden'} md:block`}>
+                <DSPSlabTable />
             </div>
 
             {/* 2-Column Layout */}
@@ -138,25 +230,30 @@ const DRP = () => {
 
                     <div className="space-y-6">
                         <div className="flex justify-between items-center text-xs font-bold uppercase">
-                            <span className="text-white bg-gray-700 px-3 py-1 rounded">Available to Invest :</span>
-                            <span className="text-[#c9a05b]">0.0000 IMX = $0.00</span>
+                            <span className="text-white bg-gray-700 px-3 py-1 rounded">Min. Investment :</span>
+                            <span className="text-[#c9a05b]">$50.00 (CapTok)</span>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Stake Volume (Units)</label>
+                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Stake Volume ($)</label>
                             <div className="relative">
                                 <input
                                     type="number"
-                                    placeholder="Enter Units"
-                                    className="w-full bg-transparent border border-gray-700 text-white rounded-xl py-4 pl-4 pr-12 focus:outline-none focus:border-[#d4af37] font-bold placeholder-gray-400"
+                                    placeholder="Enter Amount"
+                                    min="50"
+                                    className="w-full bg-transparent border border-gray-700 text-black rounded-xl py-4 pl-4 pr-12 focus:outline-none focus:border-[#d4af37] font-bold placeholder-gray-400"
                                     value={amount}
                                     onChange={(e) => setAmount(e.target.value)}
                                 />
                             </div>
                         </div>
 
-                        <button className="w-full bg-[#d4af37] hover:bg-[#c19b26] text-black font-bold py-4 rounded-xl uppercase tracking-wider transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-[#d4af37]/20">
-                            Invest Now
+                        <button
+                            disabled={loading}
+                            onClick={handleInvest}
+                            className="w-full flex items-center justify-center bg-[#d4af37] hover:bg-[#c19b26] disabled:opacity-50 text-black font-bold py-4 rounded-xl uppercase tracking-wider transition-all transform hover:scale-[1.01] shadow-lg shadow-[#d4af37]/20"
+                        >
+                            {loading ? <Loader className="w-5 h-5 animate-spin" /> : 'Invest Now'}
                         </button>
                     </div>
                 </div>

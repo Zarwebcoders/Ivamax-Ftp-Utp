@@ -53,6 +53,9 @@ exports.buyImx = async (req, res) => {
 
         // Auto-approve and add directly to balance
         user.wallet.captok.main += imxAmount;
+        if (!user.isActive) {
+            user.isActive = true; // $25 minimum investment met
+        }
         await user.save();
 
         // Log Transaction as Completed

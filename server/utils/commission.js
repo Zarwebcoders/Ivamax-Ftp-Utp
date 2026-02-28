@@ -18,7 +18,7 @@ exports.distributeLevelCommission = async (stakerId, amount) => {
 
             const commission = (amount * levelPercents[i]) / 100;
 
-            if (commission > 0) {
+            if (commission > 0 && sponsor.isActive) {
                 // Add to Protok (Reward) Wallet using 'profit' field as per User model
                 // checking User model: wallet.protok.profit
                 sponsor.wallet.protok.profit += commission;

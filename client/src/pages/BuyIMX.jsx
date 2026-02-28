@@ -20,12 +20,116 @@ const InfoCard = ({ title, value, subtext, highlight, icon: Icon }) => (
     </div>
 );
 
+const TokenValuationTable = () => (
+    <div className="bg-white rounded-3xl overflow-hidden shadow-lg shadow-gray-400 border border-gray-300 mt-8">
+        <div className="bg-[#1f4a3e] py-6 px-6 text-center text-white relative overflow-hidden">
+            <h2 className="text-xl font-bold tracking-widest uppercase">Token Valuation Benefit</h2>
+            <p className="text-[#c9a05b] text-xs font-bold uppercase mt-2">Get Token Valuation as 5X to 10X & much more at listing time</p>
+        </div>
+        <div className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-center">
+                    <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mx-auto mb-2 font-bold">1</div>
+                    <h3 className="font-bold text-gray-800 uppercase text-xs">Token Distribution</h3>
+                </div>
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-center">
+                    <div className="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center mx-auto mb-2 font-bold">2</div>
+                    <h3 className="font-bold text-gray-800 uppercase text-xs">Token P2P Trading</h3>
+                </div>
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-center">
+                    <div className="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center mx-auto mb-2 font-bold">3</div>
+                    <h3 className="font-bold text-gray-800 uppercase text-xs">Token Exchange Listing</h3>
+                </div>
+            </div>
+
+            <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                    <thead>
+                        <tr className="bg-gray-800 text-white">
+                            <th className="py-3 px-4 text-[10px] md:text-xs font-bold uppercase tracking-wider">Phase</th>
+                            <th className="py-3 px-4 text-[10px] md:text-xs font-bold uppercase tracking-wider">Step</th>
+                            <th className="py-3 px-4 text-[10px] md:text-xs font-bold uppercase tracking-wider">Phase Step</th>
+                            <th className="py-3 px-4 text-[10px] md:text-xs font-bold uppercase tracking-wider">Phase Price</th>
+                            <th className="py-3 px-4 text-[10px] md:text-xs font-bold uppercase tracking-wider">Valuation</th>
+                            <th className="py-3 px-4 text-[10px] md:text-xs font-bold uppercase tracking-wider">Get Return</th>
+                        </tr>
+                    </thead>
+                    <tbody className="text-xs md:text-sm">
+                        <tr className="bg-blue-50 border-b border-blue-100">
+                            <td className="py-3 px-4 font-bold text-blue-900" rowSpan="2">PHASES -1</td>
+                            <td className="py-3 px-4 text-blue-800" rowSpan="2">TOKEN DISTRIBUTION</td>
+                            <td className="py-3 px-4 text-blue-800 font-medium">START PRISE</td>
+                            <td className="py-3 px-4 font-bold">0.10 $</td>
+                            <td className="py-3 px-4 font-bold text-[#c9a05b]">250 $</td>
+                            <td className="py-3 px-4 font-bold text-gray-500">0%</td>
+                        </tr>
+                        <tr className="bg-blue-50/50 border-b border-blue-200">
+                            <td className="py-3 px-4 text-blue-800 font-medium">END PRISE</td>
+                            <td className="py-3 px-4 font-bold">0.20 $</td>
+                            <td className="py-3 px-4 font-bold text-[#c9a05b]">500 $</td>
+                            <td className="py-3 px-4 font-bold text-green-600">100%</td>
+                        </tr>
+
+                        <tr className="bg-purple-50 border-b border-purple-100">
+                            <td className="py-3 px-4 font-bold text-purple-900" rowSpan="2">PHASE -2</td>
+                            <td className="py-3 px-4 text-purple-800" rowSpan="2">TOKEN P2P TRADING</td>
+                            <td className="py-3 px-4 text-purple-800 font-medium">START PRISE</td>
+                            <td className="py-3 px-4 font-bold">0.20 $</td>
+                            <td className="py-3 px-4 font-bold text-[#c9a05b]">500 $</td>
+                            <td className="py-3 px-4 font-bold text-green-600">100%</td>
+                        </tr>
+                        <tr className="bg-purple-50/50 border-b border-purple-200">
+                            <td className="py-3 px-4 text-purple-800 font-medium">END PRISE</td>
+                            <td className="py-3 px-4 font-bold">1.0 $</td>
+                            <td className="py-3 px-4 font-bold text-[#c9a05b]">2500 $</td>
+                            <td className="py-3 px-4 font-bold text-green-600">500%</td>
+                        </tr>
+
+                        <tr className="bg-green-50 border-b border-green-100">
+                            <td className="py-3 px-4 font-bold text-green-900" rowSpan="5">PHASE -3</td>
+                            <td className="py-3 px-4 text-green-800" rowSpan="5">TOKEN LISTING</td>
+                            <td className="py-3 px-4 text-green-800 font-medium">START PRISE</td>
+                            <td className="py-3 px-4 font-bold">1.0 $</td>
+                            <td className="py-3 px-4 font-bold text-[#c9a05b]">2500 $</td>
+                            <td className="py-3 px-4 font-bold text-green-600">500%</td>
+                        </tr>
+                        <tr className="bg-green-50/50 border-b border-green-100">
+                            <td className="py-3 px-4 text-green-800 font-medium">POTENTIAL PRISE</td>
+                            <td className="py-3 px-4 font-bold">2.0 $</td>
+                            <td className="py-3 px-4 font-bold text-[#c9a05b]">5000 $</td>
+                            <td className="py-3 px-4 font-bold text-green-600">1000%</td>
+                        </tr>
+                        <tr className="bg-green-50/50 border-b border-green-100">
+                            <td className="py-3 px-4 text-green-800 font-medium">POTENTIAL PRISE</td>
+                            <td className="py-3 px-4 font-bold">3.0 $</td>
+                            <td className="py-3 px-4 font-bold text-[#c9a05b]">7500 $</td>
+                            <td className="py-3 px-4 font-bold text-green-600">1500%</td>
+                        </tr>
+                        <tr className="bg-green-50/50 border-b border-green-100">
+                            <td className="py-3 px-4 text-green-800 font-medium">POTENTIAL PRISE</td>
+                            <td className="py-3 px-4 font-bold">5.0 $</td>
+                            <td className="py-3 px-4 font-bold text-[#c9a05b]">12500 $</td>
+                            <td className="py-3 px-4 font-bold text-green-600">2500%</td>
+                        </tr>
+                        <tr className="bg-green-50/50">
+                            <td className="py-3 px-4 text-green-800 font-medium">POTENTIAL PRISE</td>
+                            <td className="py-3 px-4 font-bold">10.0 $</td>
+                            <td className="py-3 px-4 font-bold text-[#c9a05b]">25000 $</td>
+                            <td className="py-3 px-4 font-bold text-green-600">5000%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+);
+
 const BuyIMX = () => {
     const [slots, setSlots] = useState(1);
     const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'buy', 'history'
     const [isLoading, setIsLoading] = useState(false);
     const [transactions, setTransactions] = useState([]);
-    
+
     const tokenPrice = 0.1;
     const tokensPerSlot = 250;
     const slotValue = 25;
@@ -40,7 +144,7 @@ const BuyIMX = () => {
             const deposits = res.data.filter(tx => tx.type === 'Deposit');
             setTransactions(deposits);
         } catch (error) {
-            console.error('Failed to fetch history', error);  
+            console.error('Failed to fetch history', error);
         }
     };
 
@@ -197,7 +301,7 @@ const BuyIMX = () => {
                                     </div>
 
                                     {/* Initiate Payment Button */}
-                                    <button 
+                                    <button
                                         onClick={handleBuy}
                                         disabled={isLoading}
                                         className="w-full bg-[#d4af37] flex items-center justify-center hover:bg-[#c19b26] text-black font-bold py-3.5 rounded-xl uppercase tracking-wider text-sm transition-all transform active:scale-95 shadow-md shadow-[#d4af37]/20 disabled:opacity-70 disabled:cursor-not-allowed"
@@ -211,69 +315,99 @@ const BuyIMX = () => {
                 </div>
 
                 {/* Right Column: Purchase Records */}
-                <div className={`lg:col-span-2 bg-white rounded-3xl shadow-gray-400 shadow-lg border border-gray-400 flex flex-col overflow-hidden min-h-[500px] ${activeTab === 'history' || activeTab === 'overview' ? 'block' : 'hidden'} md:block`}>
-                    <div className="p-6  flex justify-between items-center bg-gray-50/50">
-                        <div className="flex items-center space-x-3">
-                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                                <History className="w-4 h-4 text-primary" />
+                <div className={`lg:col-span-2 space-y-6 ${activeTab === 'history' || activeTab === 'overview' ? 'block' : 'hidden'} md:block`}>
+
+                    {/* CapTok Balance Display (Image 6 Rule 8) */}
+                    <div className="bg-white rounded-3xl p-6 shadow-lg shadow-gray-400 border border-gray-400 flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                                <Activity className="w-5 h-5 text-primary" />
                             </div>
-                            <h2 className="text-gray-800 text-sm font-bold uppercase tracking-wide">Purchase Records</h2>
+                            <div>
+                                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">CAPTOK WALLET BALANCE</p>
+                                <h3 className="text-xl font-bold text-gray-800">
+                                    {useAuthStore.getState().user?.wallet?.captok?.main?.toLocaleString() || 0} IMX
+                                </h3>
+                            </div>
                         </div>
-                        <button 
-                            onClick={fetchHistory}
-                            className="flex items-center space-x-2 bg-primary border border-gray-400 text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase hover:bg-gray-50 hover:text-gray-900 transition-colors shadow-lg shadow-gray-400"
-                        >
-                            <RefreshCw className="w-3.5 h-3.5" />
-                            <span>Sync</span>
-                        </button>
+                        <div className="text-right">
+                            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">VALUE IN USDT</p>
+                            <h3 className="text-xl font-bold text-green-600">
+                                ${((useAuthStore.getState().user?.wallet?.captok?.main || 0) * tokenPrice).toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                            </h3>
+                        </div>
                     </div>
 
-                    <div className="flex-1 overflow-x-auto p-0">
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr className="border-y border-gray-400 bg-gray-50/80">
-                                    <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Date</th>
-                                    <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Total Lot</th>
-                                    <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Value</th>
-                                    <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Tokens</th>
-                                    <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Token Type</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {transactions.length > 0 ? (
-                                    transactions.map(tx => {
-                                        const purchasedSlots = tx.amount / tokensPerSlot;
-                                        return (
-                                            <tr key={tx._id} className="border-b border-gray-200 hover:bg-gray-50/50">
-                                                <td className="py-4 px-6 text-[10px] font-bold text-gray-700 whitespace-nowrap">{new Date(tx.createdAt).toLocaleDateString()}</td>
-                                                <td className="py-4 px-6 text-sm font-bold text-gray-900">{purchasedSlots}</td>
-                                                <td className="py-4 px-6 text-sm font-bold text-gray-900">${(purchasedSlots * slotValue).toFixed(2)}</td>
-                                                <td className="py-4 px-6 text-sm font-bold text-primary">{tx.amount} IMX</td>
-                                                <td className="py-4 px-6">
-                                                    <span className={`px-2.5 py-1 rounded bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wider`}>
-                                                        {tx.status}
-                                                    </span>
-                                                </td>
-                                                <td className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase">CapTok</td>
-                                            </tr>
-                                        );
-                                    })
-                                ) : (
-                                    <tr>
-                                        <td colSpan="6" className="py-24 text-center">
-                                            <div className="flex flex-col items-center justify-center opacity-50">
-                                                <ShoppingCart className="w-12 h-12 text-gray-400 mb-4" strokeWidth={1} />
-                                                <span className="text-gray-500 font-bold uppercase text-xs tracking-wider">No Transaction History Found</span>
-                                            </div>
-                                        </td>
+                    <div className="bg-white rounded-3xl shadow-gray-400 shadow-lg border border-gray-400 flex flex-col overflow-hidden min-h-[500px]">
+                        <div className="p-6  flex justify-between items-center bg-gray-50/50">
+                            <div className="flex items-center space-x-3">
+                                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                                    <History className="w-4 h-4 text-primary" />
+                                </div>
+                                <h2 className="text-gray-800 text-sm font-bold uppercase tracking-wide">Purchase Records</h2>
+                            </div>
+                            <button
+                                onClick={fetchHistory}
+                                className="flex items-center space-x-2 bg-primary border border-gray-400 text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase hover:bg-gray-50 hover:text-gray-900 transition-colors shadow-lg shadow-gray-400"
+                            >
+                                <RefreshCw className="w-3.5 h-3.5" />
+                                <span>Sync</span>
+                            </button>
+                        </div>
+
+                        <div className="flex-1 overflow-x-auto p-0">
+                            <table className="w-full text-left border-collapse">
+                                <thead>
+                                    <tr className="border-y border-gray-400 bg-gray-50/80">
+                                        <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Date</th>
+                                        <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Total Lot</th>
+                                        <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Value</th>
+                                        <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Tokens</th>
+                                        <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Token Type</th>
                                     </tr>
-                                )}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {transactions.length > 0 ? (
+                                        transactions.map(tx => {
+                                            const purchasedSlots = tx.amount / tokensPerSlot;
+                                            return (
+                                                <tr key={tx._id} className="border-b border-gray-200 hover:bg-gray-50/50">
+                                                    <td className="py-4 px-6 text-[10px] font-bold text-gray-700 whitespace-nowrap">{new Date(tx.createdAt).toLocaleDateString()}</td>
+                                                    <td className="py-4 px-6 text-sm font-bold text-gray-900">{purchasedSlots}</td>
+                                                    <td className="py-4 px-6 text-sm font-bold text-gray-900">${(purchasedSlots * slotValue).toFixed(2)}</td>
+                                                    <td className="py-4 px-6 text-sm font-bold text-primary">{tx.amount} IMX</td>
+                                                    <td className="py-4 px-6">
+                                                        <span className={`px-2.5 py-1 rounded bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wider`}>
+                                                            {tx.status}
+                                                        </span>
+                                                    </td>
+                                                    <td className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase">CapTok</td>
+                                                </tr>
+                                            );
+                                        })
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="6" className="py-24 text-center">
+                                                <div className="flex flex-col items-center justify-center opacity-50">
+                                                    <ShoppingCart className="w-12 h-12 text-gray-400 mb-4" strokeWidth={1} />
+                                                    <span className="text-gray-500 font-bold uppercase text-xs tracking-wider">No Transaction History Found</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            {/* Token Valuation Table appended to the bottom of the page */}
+            <div className={`${activeTab === 'overview' ? 'block' : 'hidden'} md:block`}>
+                <TokenValuationTable />
+            </div>
+
         </div>
     );
 };

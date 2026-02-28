@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Users, Search, Filter, Users2, UserPlus, User, Briefcase, Wallet } from 'lucide-react';
+import api from '../lib/axios';
 
 const BusinessCard = ({ title, value, icon: Icon, iconBgColor, iconColor, valueColor = "text-blue-600" }) => (
     <div className="bg-white rounded-2xl p-5 border border-gray-400 shadow-gray-400 shadow-lg flex justify-between items-center transition-transform hover:scale-105">
@@ -14,11 +15,31 @@ const BusinessCard = ({ title, value, icon: Icon, iconBgColor, iconColor, valueC
 );
 
 const Business = () => {
+    const [overview, setOverview] = useState({
+        selfBusiness: 0,
+        directTeamCount: 0,
+        totalTeamSize: 0,
+        teamBusiness: 0,
+        usedBalance: 0
+    });
+
     // Team List States
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('All Members');
     // Mock Data for Team List
     const teamMembers = [];
+
+    useEffect(() => {
+        const fetchOverview = async () => {
+            try {
+                const res = await api.get('/user/business');
+                setOverview(res.data);
+            } catch (error) {
+                console.error("Failed to fetch business overview", error);
+            }
+        };
+        fetchOverview();
+    }, []);
 
     return (
         <div className="space-y-8 pb-12">
@@ -39,7 +60,7 @@ const Business = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                 <BusinessCard
                     title="Self Business"
-                    value="$0.00"
+                    value={`$${overview.selfBusiness.toFixed(2)}`}
                     icon={User}
                     iconBgColor="bg-purple-50"
                     iconColor="text-purple-500"
@@ -47,7 +68,7 @@ const Business = () => {
                 />
                 <BusinessCard
                     title="Direct Team"
-                    value="0"
+                    value={overview.directTeamCount}
                     icon={UserPlus}
                     iconBgColor="bg-blue-50"
                     iconColor="text-blue-500"
@@ -55,7 +76,7 @@ const Business = () => {
                 />
                 <BusinessCard
                     title="Total Team"
-                    value="0"
+                    value={overview.totalTeamSize}
                     icon={Users2}
                     iconBgColor="bg-indigo-50"
                     iconColor="text-indigo-500"
@@ -63,7 +84,7 @@ const Business = () => {
                 />
                 <BusinessCard
                     title="Team Business"
-                    value="$0.00"
+                    value={`$${overview.teamBusiness.toFixed(2)}`}
                     icon={Briefcase}
                     iconBgColor="bg-pink-50"
                     iconColor="text-pink-500"
@@ -71,7 +92,7 @@ const Business = () => {
                 />
                 <BusinessCard
                     title="Used Balance"
-                    value="$0.00"
+                    value={`$${overview.usedBalance.toFixed(2)}`}
                     icon={Wallet}
                     iconBgColor="bg-emerald-50"
                     iconColor="text-emerald-500"

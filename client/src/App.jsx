@@ -22,6 +22,8 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import UserManagement from './pages/admin/UserManagement';
 import DepositRequests from './pages/admin/DepositRequests';
 import SupportAdmin from './pages/admin/SupportAdmin';
+import AdminWithdrawals from './pages/admin/AdminWithdrawals';
+import AllStakes from './pages/admin/AllStakes';
 import Layout from './components/Layout';
 
 // Protected Route Wrapper
@@ -67,6 +69,8 @@ function App() {
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/users" element={<UserManagement />} />
           <Route path="/admin/deposits" element={<DepositRequests />} />
+          <Route path="/admin/withdrawals" element={<AdminWithdrawals />} />
+          <Route path="/admin/stakes" element={<AllStakes />} />
           <Route path="/admin/support" element={<SupportAdmin />} />
         </Route>
 

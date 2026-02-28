@@ -114,6 +114,61 @@ const DisplayBanner = () => {
     );
 };
 
+const EcosystemOverview = () => (
+    <div className="bg-gradient-to-r from-[#1a2333] to-[#0f172a] border border-gray-600 rounded-[2.5rem] p-6 md:p-10 shadow-xl shadow-gray-400 text-white relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 p-4 opacity-5">
+            <Layout className="w-48 h-48 transform -rotate-12 translate-x-10 -translate-y-10" />
+        </div>
+
+        <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center">
+            <div className="md:w-1/3">
+                <span className="inline-block px-3 py-1 bg-[#c9a05b]/20 text-[#c9a05b] text-[10px] font-bold uppercase tracking-wider rounded-lg mb-3 border border-[#c9a05b]/30">Plan Overview</span>
+                <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-white mb-4 leading-tight">Stake Investment <br /><span className="text-[#c9a05b]">Plan (SIP)</span></h2>
+                <p className="text-sm font-bold text-gray-300 leading-relaxed uppercase">
+                    IN THIS ECOSYSTEM, PURELY DESIGNED AS NON-WORKING USERS.
+                    USER GET BEST INVESTMENT RETURN ON STAKE INVESTMENT.
+                </p>
+            </div>
+
+            <div className="md:w-2/3 w-full">
+                <div className="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-inner">
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-bold text-gray-300 uppercase tracking-wide">
+                        <li className="flex items-start gap-3 sm:col-span-2 bg-[#d4af37]/10 p-3 rounded-xl border border-[#d4af37]/30 mb-2">
+                            <div className="w-2 h-2 mt-1 bg-[#d4af37] rounded-full shrink-0"></div>
+                            <span className="text-[#c9a05b] font-black tracking-widest">FOR USER ID NEED MINIMUM 25 $ INVESTMENT ONLY. WITH THIS, USER CAN START HIS NETWORK BASED INCOME.</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                            <div className="w-2 h-2 mt-1 bg-[#d4af37] rounded-full shrink-0"></div>
+                            <span>GET 2 TYPE INVESTMENT PRODUCTS AS STAKE INVESTMENT</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                            <div className="w-2 h-2 mt-1 bg-[#d4af37] rounded-full shrink-0"></div>
+                            <span>DAILY RETURN PLAN & MONTHLY RETURN PLAN AVAILABLE</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                            <div className="w-2 h-2 mt-1 bg-[#d4af37] rounded-full shrink-0"></div>
+                            <span>DAILY START 0.10 % TO 0.35 % GET AS DAILY RETURN</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                            <div className="w-2 h-2 mt-1 bg-[#d4af37] rounded-full shrink-0"></div>
+                            <span>MONTHLY PLAN AS PROFIT SHARING PLAN (WEEKLY PSP)</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                            <div className="w-2 h-2 mt-1 bg-[#d4af37] rounded-full shrink-0"></div>
+                            <span>INVESTMENT STARTS WITH 50 $ ONLY</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                            <div className="w-2 h-2 mt-1 bg-[#d4af37] rounded-full shrink-0"></div>
+                            <span className="text-[#c9a05b]">UNLIMITED EARNING POTENTIAL DEPEND ON INVESTMENT</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
 const ROCBanner = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -451,8 +506,9 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                 {/* Display Banner */}
-                <div className={`${getVisibilityClass('display_banner')} md:col-span-3`}>
+                <div className={`${getVisibilityClass('display_banner')} md:col-span-3 space-y-6`}>
                     <DisplayBanner />
+                    <EcosystemOverview />
                 </div>
 
 

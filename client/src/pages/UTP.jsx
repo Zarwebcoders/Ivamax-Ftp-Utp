@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Package, History, DollarSign, Activity, TrendingUp, Layers } from 'lucide-react';
+import { Package, History, DollarSign, Activity, TrendingUp, Layers, Loader } from 'lucide-react';
+import api from '../lib/axios';
 
 const SummaryCard = ({ title, value, subValue }) => (
     <div className="bg-surface border border-gray-400 shadow-lg shadow-gray-600 hover:shadow-md rounded-2xl md:rounded-3xl p-3 md:p-6 transition-all group relative overflow-hidden flex flex-col items-center justify-center">
@@ -48,7 +49,10 @@ const HistoryTable = ({ title, subtitle, columns, data = [], emptyMessage, icon:
                                 ))}
                                 {showCloseAction && (
                                     <td className="py-4 px-6 text-xs text-center">
-                                        <button className="bg-yellow-500/20 text-yellow-500 border border-yellow-500/50 hover:bg-yellow-500 hover:text-black transition-all rounded px-3 py-1 text-[10px] font-bold uppercase">
+                                        <button
+                                            onClick={() => row._id && showCloseAction(row._id)}
+                                            className="bg-red-500/20 text-red-500 border border-red-500/50 hover:bg-red-500 hover:text-black transition-all rounded px-3 py-1 text-[10px] font-bold uppercase"
+                                        >
                                             Close
                                         </button>
                                     </td>
@@ -79,6 +83,45 @@ const UTP = () => {
     const [units, setUnits] = useState('');
     const [activeTab, setActiveTab] = useState('records');
     const [mobileTab, setMobileTab] = useState('overview'); // 'overview', 'invest', 'history'
+    const [loading, setLoading] = useState(false);
+
+    const handleInvest = async () => {
+        if (!units || units < 1) {
+            alert("Minimum investment is 1 Unit ($50)");
+            return;
+        }
+
+        const totalAmount = Number(units) * 50;
+
+        if (!confirm(`Are you sure you want to invest ${units} Units ($${totalAmount}) in UTP?`)) return;
+
+        setLoading(true);
+        try {
+            await api.post('/stake/invest', {
+                planType: 'UTP',
+                amount: totalAmount
+            });
+            alert('UTP Staking Successful! Weekly PSP will be credited after declaration.');
+            setUnits('');
+            // TODO: refresh history
+        } catch (error) {
+            alert(error.response?.data?.message || 'Failed to invest');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleUnstake = async (stakeId) => {
+        if (!confirm('Are you sure you want to completely exit this UTP Plan? The original staking units will be refunded to CapTok.')) return;
+
+        try {
+            await api.post('/stake/unstake', { stakeId });
+            alert('Unstake successful. Capital returned.');
+            // TODO: refresh history
+        } catch (error) {
+            alert(error.response?.data?.message || 'Failed to unstake');
+        }
+    };
 
     return (
         <div className="space-y-8 pb-12">
@@ -145,8 +188,8 @@ const UTP = () => {
 
                     <div className="space-y-6">
                         <div className="flex justify-between items-center text-xs font-bold uppercase">
-                            <span className="text-white bg-gray-700 px-3 py-1 rounded">Available :</span>
-                            <span className="text-[#c9a05b]">0.0000 IMX = $0.00</span>
+                            <span className="text-white bg-gray-700 px-3 py-1 rounded">1 Unit :</span>
+                            <span className="text-[#c9a05b]">$50.00 (CapTok)</span>
                         </div>
 
                         <div className="space-y-2">
@@ -168,8 +211,12 @@ const UTP = () => {
                             )}
                         </div>
 
-                        <button className="w-full bg-[#d4af37] hover:bg-[#c19b26] text-black font-bold py-4 rounded-xl uppercase tracking-wider transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-[#d4af37]/20">
-                            Invest Now
+                        <button
+                            disabled={loading || !units || Number(units) < 1}
+                            onClick={handleInvest}
+                            className="w-full flex items-center justify-center bg-[#d4af37] hover:bg-[#c19b26] disabled:opacity-50 text-black font-bold py-4 rounded-xl uppercase tracking-wider transition-all transform hover:scale-[1.01] shadow-lg shadow-[#d4af37]/20"
+                        >
+                            {loading ? <Loader className="w-5 h-5 animate-spin" /> : 'Invest Now'}
                         </button>
                     </div>
                 </div>
@@ -228,7 +275,7 @@ const UTP = () => {
                                 icon={TrendingUp}
                                 columns={['SR.NO', 'ACTIVATE DATE', 'STAKE VOLUME', 'STAKE VALUE', 'STATUS', 'LAST ROC DATE', 'LAST ROC %', 'TOTAL PROFIT', 'ACTION', 'DETAIL']}
                                 emptyMessage="No Active Stakes Found"
-                                showCloseAction={true} // For 'ACTION' column (Close button)
+                                showCloseAction={handleUnstake} // Pass down handleUnstake as the action handler
                                 showViewAction={true}  // For 'DETAIL' column (View button)
                             />
                         )}

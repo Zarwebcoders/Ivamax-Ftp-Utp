@@ -15,4 +15,7 @@ router.get('/tree/:nodeId', auth, userController.getNetworkTree);
 // Get Dashboard Stats
 router.get('/dashboard', auth, userController.getDashboardStats);
 
+// Get Business Overview
+router.get('/business', auth, userController.getBusinessOverview);
+
 module.exports = router;

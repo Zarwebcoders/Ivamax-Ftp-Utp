@@ -27,6 +27,8 @@ const Sidebar = ({ isOpen, onClose }) => {
         { name: 'Admin Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
         { name: 'User Mgmt', path: '/admin/users', icon: Users },
         { name: 'Deposits', path: '/admin/deposits', icon: FileText },
+        { name: 'Withdrawals', path: '/admin/withdrawals', icon: Banknote },
+        { name: 'All Stakes', path: '/admin/stakes', icon: Activity },
         { name: 'Support Admin', path: '/admin/support', icon: Headphones },
     ];
 
