@@ -34,6 +34,7 @@ const ProtectedRoute = ({ children }) => {
 
 function App() {
   const loadUser = useAuthStore((state) => state.loadUser);
+  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
     loadUser(); // Try to load user from token on app start
@@ -48,30 +49,40 @@ function App() {
 
         {/* Protected Routes */}
         <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/wallet" element={<Wallet />} />
-          <Route path="/network" element={<Network />} />
-          <Route path="/stake" element={<Stake />} />
-          <Route path="/buy-imx" element={<BuyIMX />} />
-          <Route path="/hierarchy" element={<Hierarchy />} />
-          <Route path="/business" element={<Business />} />
+          {user?.role !== 'admin' ? (
+            <>
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/wallet" element={<Wallet />} />
+              <Route path="/network" element={<Network />} />
+              <Route path="/stake" element={<Stake />} />
+              <Route path="/buy-imx" element={<BuyIMX />} />
+              <Route path="/hierarchy" element={<Hierarchy />} />
+              <Route path="/business" element={<Business />} />
 
-          <Route path="/drp" element={<DRP />} />
-          <Route path="/utp" element={<UTP />} />
-          <Route path="/all-rewards" element={<AllRewards />} />
-          <Route path="/withdraw" element={<Withdraw />} />
+              <Route path="/drp" element={<DRP />} />
+              <Route path="/utp" element={<UTP />} />
+              <Route path="/all-rewards" element={<AllRewards />} />
+              <Route path="/withdraw" element={<Withdraw />} />
 
-          <Route path="/company" element={<Company />} />
+              <Route path="/company" element={<Company />} />
+            </>
+          ) : (
+            <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
+          )}
 
           {/* Admin Routes */}
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/admin/users" element={<UserManagement />} />
-          <Route path="/admin/deposits" element={<DepositRequests />} />
-          <Route path="/admin/withdrawals" element={<AdminWithdrawals />} />
-          <Route path="/admin/stakes" element={<AllStakes />} />
-          <Route path="/admin/support" element={<SupportAdmin />} />
+          {user?.role === 'admin' && (
+            <>
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route path="/admin/users" element={<UserManagement />} />
+              <Route path="/admin/deposits" element={<DepositRequests />} />
+              <Route path="/admin/withdrawals" element={<AdminWithdrawals />} />
+              <Route path="/admin/stakes" element={<AllStakes />} />
+              <Route path="/admin/support" element={<SupportAdmin />} />
+            </>
+          )}
         </Route>
 
         <Route path="*" element={<Navigate to="/login" />} />

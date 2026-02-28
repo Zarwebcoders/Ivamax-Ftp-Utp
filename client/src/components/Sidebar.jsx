@@ -56,7 +56,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             </div>
 
             <nav className="flex-1 px-4 space-y-1 mt-4 overflow-y-auto custom-scrollbar">
-                {navItems.map((item) => (
+                {user?.role !== 'admin' && navItems.map((item) => (
                     <NavLink
                         key={item.path}
                         to={item.path}
